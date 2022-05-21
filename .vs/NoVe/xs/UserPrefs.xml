@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/HelperDatabase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Models/User.cs">
     <Files>
       <File FileName="NoVe/Views/Home/Login.cshtml" Line="17" Column="15" />
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="63" Column="43" />
-      <File FileName="NoVe/Views/Account/Register.cshtml" Line="18" Column="74" />
-      <File FileName="NoVe/Startup.cs" Line="29" Column="142" />
-      <File FileName="NoVe/Views/Shared/_Layout.cshtml" Line="28" Column="91" />
-      <File FileName="NoVe/Controllers/HomeController.cs" Line="21" Column="1" />
-      <File FileName="NoVe/HelperDatabase.cs" Line="16" Column="26" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="70" Column="1" />
+      <File FileName="NoVe/Startup.cs" />
+      <File FileName="NoVe/Views/Shared/_Layout.cshtml" />
+      <File FileName="NoVe/Controllers/HomeController.cs" />
+      <File FileName="NoVe/HelperDatabase.cs" Line="21" Column="1" />
+      <File FileName="NoVe/Models/User.cs" Line="11" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,19 +15,17 @@
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="User.cs" selected="True" />
+              </Node>
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
                 <Node name="Home" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
-              <Node name="HelperDatabase.cs" selected="True" />
             </Node>
           </Node>
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

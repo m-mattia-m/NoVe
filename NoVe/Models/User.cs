@@ -8,5 +8,9 @@ namespace NoVe.Models
         public string PasswordHash { get; set; }
         public string Vorname { get; set; }
         public string Nachname { get; set; }
+        public string KlassenId { get; set }
+        public int VarificationKey { get; set; }
+        public int VarificationStatus { get; set; }
+        public int AdminVerification { get; set; }
     }
 }
