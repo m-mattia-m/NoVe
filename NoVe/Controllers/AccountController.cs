@@ -4,11 +4,30 @@ using NoVe.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Linq;
+using System.Diagnostics;
 
 namespace NoVe.Controllers
 {
-    public class AccountController
+    public class AccountController : Controller
     {
+        private readonly DatabaseHelper _dbContext;
+        public AccountController(DatabaseHelper dbContext) {
+          _dbContext = dbContext;
+
+          //Um diesen Constructor aufzurufen muss dieser Controller aufgerufen werden z.B. über diese Url https://localhost:5001/Account/Register
+
+          var allUsers = _dbContext.User.ToList();
+
+          var newUser = new User();
+          newUser.Vorname = "Apfel";
+          newUser.Nachname = "Most";
+          newUser.Email = "apfel@most.ch";
+          newUser.PasswordHash = "GurKenSauGeIstMeeEeGaFeiNUndMussAlsRoteFarbEkonSuMIErtwerDeN";
+
+          _dbContext.User.Add(newUser);
+          _dbContext.SaveChanges();
+        }
 
         public void setLogin(string Email, string Password) {
             Console.WriteLine(Email +  " - " + Password);
@@ -56,14 +75,6 @@ namespace NoVe.Controllers
             }
 
 
-        }
-
-        private readonly DatabaseHelper _dbContext;
-        public AccountController(DatabaseHelper dbContext)
-        {
-            _dbContext = dbContext;
-
-            dbContext.User.ToList();
         }
     }
 }

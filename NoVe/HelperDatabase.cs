@@ -17,4 +17,10 @@ public class DatabaseHelper : DbContext
     public DatabaseHelper(DbContextOptions<DatabaseHelper> options) : base(options) {
         Database.Migrate();
     }
+
+  ////Migration erstellen
+  ///
+  //1. Package Manager Console öffnen (View -> Other Windows -> Package Manager Console)
+  //2. Befehl ausführen um Migration zu erstellen (nur wenn Models angepasst und dann auch Description in Befehl anpassen): Add-Migration Description
+  //3. Befehl ausführen um Datenbank zu erstellen/updaten: Update-Database
 }

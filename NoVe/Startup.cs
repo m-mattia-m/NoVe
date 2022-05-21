@@ -26,7 +26,7 @@ namespace NoVe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<DatabaseHelper>(options => options.UseSqlServer(Configuration.GetConnectionString("NoVeContextConnection")));
+            services.AddDbContextPool<DatabaseHelper>(options => options.UseSqlServer(Configuration.GetConnectionString("NoVeContextConnection")));
 
             //services.AddControllersWithViews();
             //services.Configure<RazorViewEngineOptions>(o =>
