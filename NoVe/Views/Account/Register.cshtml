@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Registrierung";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Login</h1>
+    <div>
+        <!-- Html.BeginForm(Method, Controller) -->
+        @using (Html.BeginForm("register", "Account"))
+        {
+            <label name="email">Email</label>
+            <input type="email" name="email" id="email" />
+
+            <label name="password">Password</label>
+            <input type="password" name="password" id="password" />
+
+            <label name="passwordCheck">Password Bestätigen</label>
+            <input type="password" name="passwordCheck" id="passwordCheck" />
+
+            <input type="submit" name="submit" value="submit" />
+        }
+    </div>
+</div>

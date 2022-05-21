@@ -1,0 +1,32 @@
+﻿# STARTING: `docker-compse up`
+# STOPPING: `docker-compse stop` OR `Ctrl + C`
+# DESTROY:  `docker-compse down`
+---
+
+version: "3.3"
+services:
+  db:
+    # CONNECTION STRING: `Server=localhost,14330;Database=myDataBase;User Id=sa;Password=NoVe123456!;`
+    image: mcr.microsoft.com/azure-sql-edge:1.0.5
+    environment:
+      MSSQL_PID: "Developer"
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "NoVe123456!"
+    volumes:
+      - db-data:/var/opt/mssql
+    ports:
+      - "14330:1433"
+    networks:
+      - public
+      - local
+    hostname: db
+    restart: "no"
+
+volumes:
+  db-data: {}
+
+networks:
+  public:
+    internal: false
+  local:
+    internal: true

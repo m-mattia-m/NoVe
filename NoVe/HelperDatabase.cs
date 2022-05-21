@@ -5,6 +5,7 @@ using NoVe.Models;
 
 public class DatabaseHelper : DbContext
 {
+
     public DbSet<User> User { get; set; }
     public DbSet<Beruf> Beruf { get; set; }
     public DbSet<Fach> Fach { get; set; }
@@ -12,5 +13,8 @@ public class DatabaseHelper : DbContext
     public DbSet<Kompetenzbereich> Kompetenzbereich { get; set; }
     public DbSet<Note> Note { get; set; }
 
-    public DatabaseHelper(DbContextOptions<DatabaseHelper> options) : base(options) { }
+    //public DatabaseHelper(DbContextOptions<DatabaseHelper> options) : base(options) { }
+    public DatabaseHelper(DbContextOptions<DatabaseHelper> options) : base(options) {
+        Database.Migrate();
+    }
 }
