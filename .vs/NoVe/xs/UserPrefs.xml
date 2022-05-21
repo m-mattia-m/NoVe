@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Models/User.cs">
     <Files>
       <File FileName="NoVe/Views/Home/Login.cshtml" Line="17" Column="15" />
       <File FileName="NoVe/Controllers/AccountController.cs" Line="70" Column="1" />
@@ -7,16 +7,17 @@
       <File FileName="NoVe/Views/Shared/_Layout.cshtml" />
       <File FileName="NoVe/Controllers/HomeController.cs" />
       <File FileName="NoVe/HelperDatabase.cs" Line="21" Column="1" />
+      <File FileName="NoVe/Models/User.cs" Line="11" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="AccountController.cs" selected="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="User.cs" selected="True" />
               </Node>
-              <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
                 <Node name="Home" expanded="True" />
