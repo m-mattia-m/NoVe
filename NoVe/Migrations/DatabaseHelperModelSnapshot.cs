@@ -130,7 +130,13 @@ namespace NoVe.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AdminVerification")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KlassenId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nachname")
@@ -138,6 +144,12 @@ namespace NoVe.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VarificationKey")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VarificationStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("Vorname")
                         .HasColumnType("nvarchar(max)");
