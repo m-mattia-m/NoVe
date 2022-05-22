@@ -29,6 +29,11 @@ namespace NoVe.Controllers
           _dbContext.SaveChanges();
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         public void setLogin(string Email, string Password) {
             Console.WriteLine(Email +  " - " + Password);
             sendMail();
