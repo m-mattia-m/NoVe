@@ -6,10 +6,16 @@
     <h1 class="display-4">Login</h1>
     <div>
         <!-- Html.BeginForm(Method, Controller) -->
-        @using (Html.BeginForm("register", "Account"))
+        @using (Html.BeginForm("registerCheck", "Account"))
         {
             <label name="email">Email</label>
             <input type="email" name="email" id="email" />
+
+            <label name="vorname">Vorname</label>
+            <input type="text" name="vorname" id="vorname" />
+
+            <label name="nachname">Nachname</label>
+            <input type="text" name="nachname" id="nachname" />
 
             <label name="password">Password</label>
             <input type="password" name="password" id="password" />
@@ -17,7 +23,18 @@
             <label name="passwordCheck">Password Bestätigen</label>
             <input type="password" name="passwordCheck" id="passwordCheck" />
 
+            <label name="beruf">Beruf</label>
+            <select name="beruf" id="beruf">
+                <option value="1">Informatiker</option>
+            </select>
+
+            <label name="klasse">Klasse</label>
+            <select name="klasse" id="klasse">
+                <option value="1">INA3a</option>
+            </select>
+
             <input type="submit" name="submit" value="submit" />
         }
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
     </div>
 </div>

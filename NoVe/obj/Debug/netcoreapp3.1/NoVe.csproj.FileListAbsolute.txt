@@ -75,3 +75,5 @@
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.csproj.AssemblyReference.cache
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Login.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/RegisterCheck.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Verify.cshtml.g.cs

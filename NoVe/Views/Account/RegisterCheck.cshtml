@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Verifizierung";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Login</h1>
+    <div>
+        <!-- Html.BeginForm(Method, Controller) -->
+        @using (Html.BeginForm("verify", "Account"))
+        {
+            <label name="email">Email für den zu verifizierenden Account</label>
+            <input type="email" name="email" id="email" />
+
+            <label name="verificationKey">Verification-Code</label>
+            <input type="number" name="verificationKey" id="verificationKey" />
+
+            <input type="submit" name="submit" value="submit" />
+        }
+    </div>
+</div>

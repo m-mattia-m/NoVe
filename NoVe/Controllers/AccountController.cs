@@ -6,27 +6,19 @@ using System.Net.Mail;
 using System.Text;
 using System.Linq;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace NoVe.Controllers
 {
     public class AccountController : Controller
     {
+
         private readonly DatabaseHelper _dbContext;
         public AccountController(DatabaseHelper dbContext) {
           _dbContext = dbContext;
 
-          //Um diesen Constructor aufzurufen muss dieser Controller aufgerufen werden z.B. über diese Url https://localhost:5001/Account/Register
-
-          var allUsers = _dbContext.User.ToList();
-
-          var newUser = new User();
-          newUser.Vorname = "Apfel";
-          newUser.Nachname = "Most";
-          newUser.Email = "apfel@most.ch";
-          newUser.PasswordHash = "GurKenSauGeIstMeeEeGaFeiNUndMussAlsRoteFarbEkonSuMIErtwerDeN";
-
-          _dbContext.User.Add(newUser);
-          _dbContext.SaveChanges();
+          //Um diesen Constructor aufzurufen muss dieser Controller aufgerufen werden z.B. über diese Url https://localhost:5001/Account/Registe
         }
 
         public IActionResult Login()
@@ -34,17 +26,100 @@ namespace NoVe.Controllers
             return View();
         }
 
-        public void setLogin(string Email, string Password) {
-            Console.WriteLine(Email +  " - " + Password);
-            sendMail();
-
+        public IActionResult Register()
+        {
+            return View();
         }
 
-        public void register(string Email, string Password, string PasswordCheck)
-        {
-            if (Password == PasswordCheck) {
-                Console.WriteLine("Passwörter stimmen überein");
+        public void setLogin(string Email, string Password) {
+            Console.WriteLine(Email +  " - " + Password);
+            string passwordHash = hashPassword(Password);
+
+            try
+            {
+                var user = _dbContext.User.Where(b => b.Email == Email).FirstOrDefault();
+                if (user.PasswordHash == passwordHash)
+                {
+                    Console.WriteLine("Passwort stimmt überein");
+                }
+                else
+                {
+                    Console.WriteLine("Passwort ist falsch.");
+                }
+
             }
+            catch (Exception e) {
+                Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
+            }
+
+            var allUsers = _dbContext.User.ToList();
+            Console.Write("allUsers: ");
+            Console.WriteLine(allUsers);
+        }
+
+        public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int Beruf, int Klasse)
+        {
+            var userCount = _dbContext.User.Where(b => b.Email == Email).Count();
+            if (userCount != 0)
+            {
+                Console.WriteLine("Email existiert schon");
+            }
+            else {
+                if (Password == PasswordCheck)
+                {
+                    Console.WriteLine("Passwörter stimmen überein");
+                    Random rnd = new Random();
+                    int VerificationKey = rnd.Next(100000, 1000000);
+
+                    var newUser = new User();
+
+                    newUser.Vorname = Vorname;
+                    newUser.Nachname = Nachname;
+                    newUser.Email = Email;
+                    newUser.PasswordHash = hashPassword(Password);
+                    newUser.KlassenId = Klasse;
+                    newUser.VerificationKey = VerificationKey;
+                    newUser.VerificationStatus = 0;
+
+                    _dbContext.User.Add(newUser);
+                    _dbContext.SaveChanges();
+
+                    Console.Write("newUser: ");
+                    Console.WriteLine(newUser.ToString());
+
+                    Console.WriteLine("VerificationKey: " + VerificationKey);
+
+                    //sendMail();
+                }
+            }
+            return View();
+        }
+
+        public IActionResult verify(string Email, int verificationKey) {
+            Console.WriteLine(verificationKey);
+
+            try
+            {
+                var user = _dbContext.User.Where(b => b.Email == Email).FirstOrDefault();
+                if (user.VerificationKey == verificationKey)
+                {
+                    Console.WriteLine("Verifizierung erfolgreich");
+                    user.VerificationStatus = 1;
+                    _dbContext.SaveChanges();
+                }
+                else
+                {
+                    Console.WriteLine("Verifizierung ist fehlgeschlagen.");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
+            }
+
+            return View();
+
         }
 
         public void sendMail() {
@@ -78,8 +153,14 @@ namespace NoVe.Controllers
             catch (Exception ex) {
                 Console.WriteLine(ex);
             }
+        }
 
-
+        public string hashPassword(string Password)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(Password);
+            SHA256Managed sHA256ManagedString = new SHA256Managed();
+            byte[] hash = sHA256ManagedString.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
         }
     }
 }

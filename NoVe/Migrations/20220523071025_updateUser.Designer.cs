@@ -3,14 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace NoVe.Migrations
 {
     [DbContext(typeof(DatabaseHelper))]
-    partial class DatabaseHelperModelSnapshot : ModelSnapshot
+    [Migration("20220523071025_updateUser")]
+    partial class updateUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,10 +147,10 @@ namespace NoVe.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VerificationKey")
+                    b.Property<int>("VarificationKey")
                         .HasColumnType("int");
 
-                    b.Property<int>("VerificationStatus")
+                    b.Property<int>("VarificationStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Vorname")

@@ -1,21 +1,26 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/.gitignore">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
     <Files>
-      <File FileName="NoVe/.gitignore" Line="350" Column="9" />
+      <File FileName="NoVe/Views/Account/Login.cshtml" Line="17" Column="114" />
+      <File FileName="NoVe/Views/Account/Register.cshtml" Line="30" Column="1" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="85" Column="1" />
+      <File FileName="NoVe/Views/Account/Verify.cshtml" Line="10" Column="90" />
+      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" Line="15" Column="76" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="AccountController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
                 <Node name="Home" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
-              <Node name=".gitignore" selected="True" />
             </Node>
           </Node>
         </State>

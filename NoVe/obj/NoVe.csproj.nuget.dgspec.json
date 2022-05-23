@@ -14,7 +14,7 @@
         "outputPath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/mattiamueggler/.config/NuGet/NuGet.Config"
+          "/Users/mattiamueggler/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
