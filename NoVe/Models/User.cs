@@ -12,5 +12,6 @@ namespace NoVe.Models
         public int VerificationKey { get; set; }
         public int VerificationStatus { get; set; }
         public int AdminVerification { get; set; }
+        public string Role { get; set; }
     }
 }

@@ -8,6 +8,7 @@
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Views\Account\" />
+    <None Remove="Microsoft.AspNetCore.Session" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.25" />
@@ -16,6 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />

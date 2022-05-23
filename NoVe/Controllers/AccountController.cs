@@ -8,7 +8,10 @@ using System.Linq;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using
+    
 namespace NoVe.Controllers
 {
     public class AccountController : Controller
@@ -32,29 +35,42 @@ namespace NoVe.Controllers
         }
 
         public void setLogin(string Email, string Password) {
-            Console.WriteLine(Email +  " - " + Password);
-            string passwordHash = hashPassword(Password);
 
             try
             {
+                string passwordHash = hashPassword(Password);
                 var user = _dbContext.User.Where(b => b.Email == Email).FirstOrDefault();
-                if (user.PasswordHash == passwordHash)
+                if (user.VerificationStatus == 1)
                 {
-                    Console.WriteLine("Passwort stimmt überein");
+                    if (user.AdminVerification == 1)
+                    {
+                        if (user.PasswordHash == passwordHash)
+                        {
+                            Console.WriteLine("Passwort stimmt überein");
+                            //HttpContext.Session.SetInt32("_UserID", user.Id);
+                            //HttpContext.Session.SetString("_UserRole", user.Role);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Passwort ist falsch.");
+                        }
+                    }
+                    else {
+                        Console.WriteLine("Dein Administrator muss zuerst noch deinen Account bestätigen.");
+                    }
                 }
-                else
-                {
-                    Console.WriteLine("Passwort ist falsch.");
+                else {
+                    Console.WriteLine("Du hast deinen Account noch nicht verifiziert");
                 }
-
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
             }
 
-            var allUsers = _dbContext.User.ToList();
-            Console.Write("allUsers: ");
-            Console.WriteLine(allUsers);
+            //var allUsers = _dbContext.User.ToList();
+            //Console.Write("allUsers: ");
+            //Console.WriteLine(allUsers);
         }
 
         public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int Beruf, int Klasse)
@@ -84,6 +100,11 @@ namespace NoVe.Controllers
                     _dbContext.User.Add(newUser);
                     _dbContext.SaveChanges();
 
+
+                    HttpContext.Session.SetString("_RegisterEmail", Email);
+                    string SessionEmail = HttpContext.Session.GetString("_RegisterEmail");
+                    Console.WriteLine("Email aus Session: " + SessionEmail);
+
                     Console.Write("newUser: ");
                     Console.WriteLine(newUser.ToString());
 
@@ -95,11 +116,14 @@ namespace NoVe.Controllers
             return View();
         }
 
-        public IActionResult verify(string Email, int verificationKey) {
+        public IActionResult verify(string Email, int verificationKey) // string Email, 
+        {  
             Console.WriteLine(verificationKey);
-
+            //string Email = HttpContext.Session.GetString("_RegisterEmail");
+            //Console.WriteLine("Email aus Session: " + Email);
             try
             {
+                
                 var user = _dbContext.User.Where(b => b.Email == Email).FirstOrDefault();
                 if (user.VerificationKey == verificationKey)
                 {

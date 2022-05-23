@@ -2,10 +2,9 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
     <Files>
       <File FileName="NoVe/Views/Account/Login.cshtml" Line="17" Column="114" />
-      <File FileName="NoVe/Views/Account/Register.cshtml" Line="30" Column="1" />
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="85" Column="1" />
-      <File FileName="NoVe/Views/Account/Verify.cshtml" Line="10" Column="90" />
-      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" Line="15" Column="76" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="119" Column="73" />
+      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" Line="11" Column="13" />
+      <File FileName="NoVe/HelperDatabase.cs" Line="19" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

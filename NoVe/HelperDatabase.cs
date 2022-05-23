@@ -15,6 +15,7 @@ public class DatabaseHelper : DbContext
 
     //public DatabaseHelper(DbContextOptions<DatabaseHelper> options) : base(options) { }
     public DatabaseHelper(DbContextOptions<DatabaseHelper> options) : base(options) {
+
         Database.Migrate();
     }
 
