@@ -38,7 +38,7 @@ namespace NoVe.Controllers
             try
             {
                 string passwordHash = hashPassword(Password);
-                var user = _dbContext.User.Where(b => b.Email == Email).FirstOrDefault();
+                var user = _dbContext.Users.Where(b => b.Email == Email).FirstOrDefault();
                 if (user.VerificationStatus == 1)
                 {
                     if (user.AdminVerification == 1)
@@ -74,7 +74,7 @@ namespace NoVe.Controllers
 
         public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int Beruf, int Klasse)
         {
-            var userCount = _dbContext.User.Where(b => b.Email == Email).Count();
+            var userCount = _dbContext.Users.Where(b => b.Email == Email).Count();
             if (userCount != 0)
             {
                 Console.WriteLine("Email existiert schon");
@@ -96,7 +96,7 @@ namespace NoVe.Controllers
                     newUser.VerificationKey = VerificationKey;
                     newUser.VerificationStatus = 0;
 
-                    _dbContext.User.Add(newUser);
+                    _dbContext.Users.Add(newUser);
                     _dbContext.SaveChanges();
 
 
@@ -123,7 +123,7 @@ namespace NoVe.Controllers
             try
             {
                 
-                var user = _dbContext.User.Where(b => b.Email == Email).FirstOrDefault();
+                var user = _dbContext.Users.Where(b => b.Email == Email).FirstOrDefault();
                 if (user.VerificationKey == verificationKey)
                 {
                     Console.WriteLine("Verifizierung erfolgreich");
