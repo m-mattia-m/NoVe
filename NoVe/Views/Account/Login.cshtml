@@ -1,19 +1,25 @@
-﻿@{
+@{
     ViewData["Title"] = "Login";
 }
 
 <div class="text-center">
     <h1 class="display-4">Login</h1>
-    <div>
+    <div class="login-wrapper">
         <!-- Html.BeginForm(Method, Controller) -->
         @using (Html.BeginForm("setLogin", "Account"))
         {
-            <label name="email">Email</label>
-            <input type="email" name="email" id="email" />
-            <label name="password">Password</label>
-            <input type="password" name="password" id="password" />
-            <input type="submit" name="submit" value="submit" />
+          <div class="login-form">
+            <label class="form-login-label" name="email">Email</label>
+            <input class="form-login" type="email" name="email" id="email" />
+            <label class="form-login-label" name="password">Password</label>
+            <input class="form-login" type="password" name="password" id="password" />
+            <div class="login-buttons">
+              <input class="login-submit" type="submit" name="submit" value="Einloggen" />
+              <a class="nav-link login-button login-submit" asp-area="" asp-controller="Account" asp-action="Register">Registrieren</a>
+            </div>
+            
+          </div>
+            
         }
-        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Registrieren</a>
     </div>
 </div>

@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/NoVe.csproj": {}
+    "C:\\Users\\jjo\\Source\\Repos\\NoVe_mattia\\NoVe\\NoVe.csproj": {}
   },
   "projects": {
-    "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/NoVe.csproj": {
+    "C:\\Users\\jjo\\Source\\Repos\\NoVe_mattia\\NoVe\\NoVe.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/NoVe.csproj",
+        "projectUniqueName": "C:\\Users\\jjo\\Source\\Repos\\NoVe_mattia\\NoVe\\NoVe.csproj",
         "projectName": "NoVe",
-        "projectPath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/NoVe.csproj",
-        "packagesPath": "/Users/mattiamueggler/.nuget/packages/",
-        "outputPath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/",
+        "projectPath": "C:\\Users\\jjo\\Source\\Repos\\NoVe_mattia\\NoVe\\NoVe.csproj",
+        "packagesPath": "C:\\Users\\jjo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jjo\\Source\\Repos\\NoVe_mattia\\NoVe\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/mattiamueggler/.config/NuGet/NuGet.Config"
+          "C:\\Users\\jjo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -67,6 +69,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.1.22, 3.1.22]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -75,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/x64/sdk/6.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

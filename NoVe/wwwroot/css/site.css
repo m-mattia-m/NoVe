@@ -1,4 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -29,6 +29,7 @@ a {
 html {
   font-size: 14px;
 }
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -38,6 +39,7 @@ html {
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
@@ -59,13 +61,389 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  background-color: #2C2F33;
+  color: white !important;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+
+::selection {
+  background: #7289DA; /* WebKit/Blink Browsers */
+  color: white;
+}
+
+::-moz-selection {
+  background: #7289DA; /* Gecko Browsers */
+}
+
+a, p, div, span {
+  color: white;
+}
+
+a {
+  border-bottom: solid 2px;
+  border-color: transparent;
+}
+
+  a:hover, a:focus, a:active {
+    color: #7289DA !important;
+    text-decoration: none;
+  }
+
+.btn.btn-default {
+  background: transparent;
+  color: #7289DA;
+  border: solid 2px #7289DA;
+}
+
+.navbar a:hover, .navbar a:active, .navbar a:focus {
+  color: #7289DA !important;
+  border-bottom: solid 2px #7289DA;
+}
+
+.navbar {
+  background-color: #0d1117;
+  color: white;
+}
+
+  .navbar .navbar-collapse {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: right;
+  }
+
+.navbar-nav, .navbar-right {
+  float: none !important;
+}
+
+.navbar-collapse .navbar-nav.nav a {
+  color: white;
+}
+
+.navbar-header .navbar-brand {
+  color: #7289DA;
+}
+
+.navbar-brand {
+  color: #7289DA !important;
+}
+
+.nav-link {
+  color: white !important;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: right;
+}
+
+
+.card {
+  background-color: transparent;
+  border: 0 !important;
+}
+
+.card-header {
+  border: 0 !important;
+}
+
+.card-content {
+  border: 0 !important;
+}
+
+#Input_Domains, #Input_Email, #Input_Password, #Input_ConfirmPassword, #Input_NewPassword, #Input_OldPassword, #Username, #Input_UserRole, #Input_Klasse, #Input_Lehrmeister {
+  background-color: transparent;
+  border: 0;
+  border-bottom: solid 2px white;
+  border-radius: 0;
+  color: white;
+}
+
+.mark-table {
+  width: 100%;
+  text-align: center;
+}
+
+  .mark-table tr td:first-of-type {
+    border-right: 2px white solid;
+  }
+
+  .mark-table tr td {
+    border-top: 2px white solid;
+    padding: 10px;
+  }
+
+.display .mark-table tr td {
+  padding: 11px;
+}
+
+.mark-table th {
+  width: 50%;
+  padding-bottom: 8px;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+.mark-edit-button {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 150px;
+}
+
+.mark-table td, .mark-table th {
+  border-bottom-color: transparent;
+}
+
+.btn.btn-outline-primary {
+  border-color: white;
+  color: white;
+}
+
+  .btn.btn-outline-primary:hover, .btn.btn-outline-primary:focus, .btn.btn-outline-primary:active {
+    background: black !important;
+  }
+
+  .btn.btn-outline-primary:active {
+    box-shadow: 0 0 0 .2rem black !important;
+    border-color: white;
+  }
+
+.mark-input {
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  border-bottom: 2px white solid;
+  border: 0;
+  border-width: 1px;
+  border-bottom: 1px solid white;
+  color: white;
+}
+
+  .mark-input:focus-visible {
+    outline: 0;
+    border: 1px white solid;
+  }
+
+.box-wrapper {
+  margin-top: 50px;
+}
+
+.box {
+  background-color: #1a3956;
+  width: max-content;
+  margin: 10px;
+  display: inline-flex;
+  border-radius: 10px;
+  padding: 35px 50px;
+}
+
+.box-text {
+  padding: 30px 50px;
+  margin: 0;
+}
+
+.box-row {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 25px;
+  margin-top: 30px;
+}
+
+.vertical-separator {
+  margin: auto 15px;
+  width: 1px;
+  background-color: white;
+  height: 35px;
+}
+
+.search {
+  background-color: transparent;
+  border: 0;
+  border-bottom-color: currentcolor;
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-bottom: 1px solid white;
+  margin-right: 20px;
+  font-size: 20px;
+  color: white;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+input:focus-visible {
+  outline: 0;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 80px auto;
+  max-width: 600px;
+}
+
+.search-button {
+  background: transparent;
+  color: white;
+  border-radius: 5px;
+  padding: 0 30px;
+  font-size: 17px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 500px;
+  color: white;
+  margin: auto;
+}
+
+td, th {
+  background-color: transparent;
+  border-bottom: 1px solid #285984;
+  text-align: left;
+  padding: 8px;
+}
+
+.accept-users {
+  color: white;
+  margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+  .accept-users thead td {
+    border-bottom: 1px white solid !important;
+  }
+
+  .accept-users td, .accept-users th {
+    background-color: transparent;
+    border-bottom: 1px solid #285984;
+    text-align: left;
+    padding: 8px;
+  }
+
+.search-table {
+  margin-bottom: 100px;
+}
+
+.default-table {
+  width: 100%;
+}
+
+.my-students {
+  width: 40%;
+  margin-left: 0;
+}
+
+.navbar-brand:hover {
+  border-bottom: solid 0 #7289DA !important;
+}
+
+.alert-warning {
+  background-color: #730f00;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #7289DA;
+  border-color: transparent;
+}
+
+  .nav-pills .nav-link.active:hover {
+    color: white !important;
+  }
+
+option {
+  color: black !important;
+}
+
+.domain-input {
+  margin-right: 20px;
+}
+
+.domains-wrapper {
+  width: 70%;
+  margin: 0 auto;
+}
+
+
+.icon-row {
+  display: flex;
+  justify-content: right;
+}
+
+.edit-icon {
+  width: 50px;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-wrapper form {
+  width: 500px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+
+.form-login {
+  background: #1b172678;
+  border: 0;
+  padding: 12px 17px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+
+
+.form-login-label {
+  margin-bottom: -12px;
+  z-index: 1000;
+}
+
+.login-button {
+  width: max-content;
+}
+
+.login-submit {
+  background: transparent;
+  color: white;
+  border-radius: 5px;
+  border: solid 1px white;
+  padding: 10px 0px;
+  width: 40%;
+}
+
+  .login-submit:hover {
+    color: white !important;
+    border-color: #7289DA !important;
+  }
+
+.login-buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 26px;
+  justify-content: space-between;
 }

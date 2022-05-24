@@ -1,48 +1,53 @@
-﻿@{
+@{
     ViewData["Title"] = "Registrierung";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Login</h1>
-    <div>
+    <h1 class="display-4">Registrieren</h1>
+    <div class="login-wrapper">
         <!-- Html.BeginForm(Method, Controller) -->
         @using (Html.BeginForm("registerCheck", "Account"))
         {
-            <label name="email">Email</label>
-            <input type="email" name="email" id="email" />
+          <div class="login-form">
+            <label class="form-login-label" name="email">Email</label>
+            <input class="form-login" type="email" name="email" id="email" />
 
-            <label name="vorname">Vorname</label>
-            <input type="text" name="vorname" id="vorname" />
+            <label class="form-login-label" name="vorname">Vorname</label>
+            <input class="form-login" type="text" name="vorname" id="vorname" />
 
-            <label name="nachname">Nachname</label>
-            <input type="text" name="nachname" id="nachname" />
+            <label class="form-login-label" name="nachname">Nachname</label>
+            <input class="form-login" type="text" name="nachname" id="nachname" />
 
-            <label name="password">Password</label>
-            <input type="password" name="password" id="password" />
+            <label class="form-login-label" name="password">Password</label>
+            <input class="form-login" type="password" name="password" id="password" />
 
-            <label name="passwordCheck">Password Bestätigen</label>
-            <input type="password" name="passwordCheck" id="passwordCheck" />
+            <label class="form-login-label" name="passwordCheck">Password Bestätigen</label>
+            <input class="form-login" type="password" name="passwordCheck" id="passwordCheck" />
 
-            <label name="beruf">Beruf</label>
-            <select name="beruf" id="beruf">
-                <option value="1">Informatiker</option>
+            <label class="form-login-label" name="beruf">Beruf</label>
+            <select class="form-login" name="beruf" id="beruf">
+                <option style="color: white !important;" value="1">Informatiker</option>
             </select>
 
-            <label name="klasse">Klasse</label>
-            <select name="klasse" id="klasse">
-                <option value="1">INA3a</option>
+            <label class="form-login-label" name="klasse">Klasse</label>
+            <select class="form-login" name="klasse" id="klasse">
+                <option style="color: white !important;" value="1">INA3a</option>
             </select>
 
-            <label name="rolle">Rolle</label>
-            <select name="rolle" id="rolle">
-                <option value="Schüler">Schüler</option>
-                <option value="Berufsbildner">Berufsbildner</option>
-                <option value="Lehrer">Lehrer</option>
-                <option value="Administrator">Administrator</option>
+            <label class="form-login-label" name="rolle">Rolle</label>
+            <select class="form-login" name="rolle" id="rolle">
+                <option style="color: white !important;" value="Schüler">Schüler</option>
+                <option style="color: white !important;" value="Berufsbildner">Berufsbildner</option>
+                <option style="color: white !important;" value="Lehrer">Lehrer</option>
+                <option style="color: white !important;" value="Administrator">Administrator</option>
             </select>
 
-            <input type="submit" name="submit" value="submit" />
+            <div class="login-buttons">
+              <input class="login-submit" type="submit" name="submit" value="Registrieren" />
+              <a class="nav-link login-submit" asp-area="" asp-controller="Account" asp-action="Login">Zurück zum Login</a>
+            </div>
+         </div>
         }
-        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+        
     </div>
 </div>
