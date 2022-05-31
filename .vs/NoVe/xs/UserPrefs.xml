@@ -1,18 +1,19 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/HelperDatabase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="86" Column="164" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="99" Column="31" />
       <File FileName="NoVe/Controllers/AdminController.cs" Line="33" Column="75" />
-      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" Line="13" Column="79" />
-      <File FileName="NoVe/Views/Account/Register.cshtml" Line="49" Column="93" />
-      <File FileName="NoVe/HelperDatabase.cs" Line="20" Column="1" />
+      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" />
+      <File FileName="NoVe/Views/Account/Register.cshtml" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="AccountController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
@@ -20,7 +21,6 @@
                 <Node name="Home" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
-              <Node name="HelperDatabase.cs" selected="True" />
             </Node>
           </Node>
         </State>

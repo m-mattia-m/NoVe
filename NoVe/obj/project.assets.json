@@ -6104,14 +6104,14 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/NoVe.csproj",
+      "projectUniqueName": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/NoVe.csproj",
       "projectName": "NoVe",
-      "projectPath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/NoVe.csproj",
+      "projectPath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/NoVe.csproj",
       "packagesPath": "/Users/mattiamueggler/.nuget/packages/",
-      "outputPath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/",
+      "outputPath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/mattiamueggler/.nuget/NuGet/NuGet.Config"
+        "/Users/mattiamueggler/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

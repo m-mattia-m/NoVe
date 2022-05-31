@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j8WZhZQumt/f8xrj83z0+ugHdRnOtQDrSlhon9FCubWke5R+DsHM84ChAQ+k3Myl+4GG/z2fiSsAdAkQmrkdlw==",
+  "dgSpecHash": "Edzv9U0yb6mVSfsh4EAmLGUPsQ/KbMdjHQesOP0cRxPxlz5xxIwmPKvGqVsBFVeVXUcBTO54LGIbgk9Er9DXkQ==",
   "success": true,
-  "projectFilePath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/NoVe.csproj",
+  "projectFilePath": "/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/NoVe.csproj",
   "expectedPackageFiles": [
     "/Users/mattiamueggler/.nuget/packages/microsoft.aspnetcore.cryptography.internal/2.2.0/microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
     "/Users/mattiamueggler/.nuget/packages/microsoft.aspnetcore.dataprotection/2.2.0/microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",
