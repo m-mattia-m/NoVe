@@ -8,5 +8,6 @@ namespace NoVe.Models
         public DateTime Startdatum { get; set; }
         public DateTime EndDatum { get; set; }
         public int BerufId { get; set; }
+        public int KlassenInviteCode { get; set; }
     }
 }
