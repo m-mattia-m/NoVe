@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace NoVe.Models
 {
     public class Klasse
@@ -9,5 +11,6 @@ namespace NoVe.Models
         public DateTime EndDatum { get; set; }
         public int BerufId { get; set; }
         public int KlassenInviteCode { get; set; }
+        public List<User> Users { get; set; }
     }
 }
