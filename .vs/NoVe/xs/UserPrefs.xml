@@ -1,13 +1,11 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/appsettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/HelperDatabase.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="114" Column="51" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="86" Column="164" />
       <File FileName="NoVe/Controllers/AdminController.cs" Line="33" Column="75" />
       <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" Line="13" Column="79" />
-      <File FileName="NoVe/Views/Detail/DetailKlasse.cshtml" Line="24" Column="1" />
-      <File FileName="NoVe/Views/Detail/Detail.cshtml" Line="23" Column="1" />
+      <File FileName="NoVe/Views/Account/Register.cshtml" Line="49" Column="93" />
       <File FileName="NoVe/HelperDatabase.cs" Line="20" Column="1" />
-      <File FileName="NoVe/appsettings.json" Line="11" Column="47" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,7 +20,7 @@
                 <Node name="Home" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
-              <Node name="appsettings.json" selected="True" />
+              <Node name="HelperDatabase.cs" selected="True" />
             </Node>
           </Node>
         </State>
