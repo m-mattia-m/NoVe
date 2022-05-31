@@ -11,16 +11,31 @@ namespace NoVe.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly DatabaseHelper _dbContext;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(DatabaseHelper dbContext, ILogger<HomeController> logger)
         {
+            _dbContext = dbContext;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
+            CreateFirstAdmin();
             return View();
+        }
+
+        private void CreateFirstAdmin()
+        {
+            if (_dbContext.Users.Where(u => u.Email == "admin@admin.ch").Count() == 0)
+            {
+                User user = new User();
+                user.Email = "admin@admin.ch";
+                user.PasswordHash = AccountController.hashPassword("admin");
+                _dbContext.Add(user);
+                _dbContext.SaveChanges();
+            }
         }
 
         public IActionResult Privacy()
