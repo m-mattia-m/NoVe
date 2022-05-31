@@ -65,12 +65,17 @@ body {
   color: white !important;
 }
 
+body > .container {
+    margin-bottom: 61px;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+  background: #2c2f33;
 }
 
 
