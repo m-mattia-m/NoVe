@@ -1,27 +1,21 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Account/successfullyAnmeldung.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="61" Column="41" />
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="37" Column="51" />
-      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" Line="13" Column="79" />
-      <File FileName="NoVe/Views/Account/Register.cshtml" Line="49" Column="93" />
-      <File FileName="NoVe/Controllers/HomeController.cs" Line="35" Column="45" />
-      <File FileName="NoVe/Models/Domains.cs" Line="7" Column="37" />
-      <File FileName="NoVe/Views/Admin/keinZugriff.cshtml" Line="4" Column="1" />
-      <File FileName="NoVe/Views/Admin/Index.cshtml" Line="9" Column="1" />
-      <File FileName="NoVe/Views/Account/successfullyAnmeldung.cshtml" Line="2" Column="45" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="109" Column="1" />
+      <File FileName="NoVe/Views/Account/Register.cshtml" Line="8" Column="52" />
+      <File FileName="NoVe/Views/Account/Message.cshtml" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="AccountController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Account" expanded="True">
-                  <Node name="successfullyAnmeldung.cshtml" selected="True" />
-                </Node>
+                <Node name="Account" expanded="True" />
                 <Node name="Admin" expanded="True" />
                 <Node name="Detail" expanded="True" />
                 <Node name="Home" expanded="True" />
