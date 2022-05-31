@@ -452,3 +452,16 @@ option {
   margin-top: 26px;
   justify-content: space-between;
 }
+
+.admin-nav-item {
+  padding: 30px 45px;
+  border-radius: 15px;
+  background: #7289DA;
+}
+
+
+.admin-nav {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
