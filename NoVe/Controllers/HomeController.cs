@@ -23,6 +23,7 @@ namespace NoVe.Controllers
         public IActionResult Index()
         {
             CreateFirstAdmin();
+            InitAllowdDomains();
             return View();
         }
 
@@ -34,6 +35,17 @@ namespace NoVe.Controllers
                 user.Email = "admin@admin.ch";
                 user.PasswordHash = AccountController.hashPassword("admin");
                 _dbContext.Add(user);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        private void InitAllowdDomains()
+        {
+            if (_dbContext.Domains.Count() == 0)
+            {
+                Domains domain = new Domains();
+                domain.AllowedDomains = "gbssg.ch";
+                _dbContext.Add(domain);
                 _dbContext.SaveChanges();
             }
         }

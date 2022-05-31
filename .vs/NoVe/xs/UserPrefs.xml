@@ -1,10 +1,12 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/HomeController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="99" Column="31" />
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="33" Column="75" />
-      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="88" Column="83" />
+      <File FileName="NoVe/Controllers/AdminController.cs" Line="33" Column="13" />
+      <File FileName="NoVe/Views/Account/RegisterCheck.cshtml" Line="13" Column="79" />
       <File FileName="NoVe/Views/Account/Register.cshtml" />
+      <File FileName="NoVe/Controllers/HomeController.cs" Line="47" Column="24" />
+      <File FileName="NoVe/Models/Domains.cs" Line="7" Column="37" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,7 +14,7 @@
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="AccountController.cs" selected="True" />
+                <Node name="HomeController.cs" selected="True" />
               </Node>
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">

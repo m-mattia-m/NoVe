@@ -202,7 +202,7 @@ namespace NoVe.Controllers
             }
         }
 
-        public string hashPassword(string Password)
+        public static string hashPassword(string Password)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(Password);
             SHA256Managed sHA256ManagedString = new SHA256Managed();
