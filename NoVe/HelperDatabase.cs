@@ -11,6 +11,7 @@ public class DatabaseHelper : DbContext
     public DbSet<Klasse> Klasses { get; set; }
     public DbSet<Kompetenzbereich> Kompetenzbereichs { get; set; }
     public DbSet<Note> Notes { get; set; }
+    public DbSet<Domains> Domains { get; set; }
 
     /*public DatabaseHelper(DbContextOptions<DatabaseHelper> options) : base(options) { }*/
     /*public DatabaseHelper() { }*/

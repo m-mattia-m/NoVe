@@ -9,18 +9,18 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-    
+
 namespace NoVe.Controllers
 {
     public class AccountController : Controller
     {
 
         private readonly DatabaseHelper _dbContext;
-        public AccountController(DatabaseHelper dbContext) {
-          _dbContext = dbContext;
+        public AccountController(DatabaseHelper dbContext)
+        {
+            _dbContext = dbContext;
 
-          //Um diesen Constructor aufzurufen muss dieser Controller aufgerufen werden z.B. über diese Url https://localhost:5001/Account/Registe
+            //Um diesen Constructor aufzurufen muss dieser Controller aufgerufen werden z.B. über diese Url https://localhost:5001/Account/Registe
         }
 
         public IActionResult Login()
@@ -33,7 +33,8 @@ namespace NoVe.Controllers
             return View();
         }
 
-        public void setLogin(string Email, string Password) {
+        public void setLogin(string Email, string Password)
+        {
 
             try
             {
@@ -46,19 +47,29 @@ namespace NoVe.Controllers
                         if (user.PasswordHash == passwordHash)
                         {
                             Console.WriteLine("Passwort stimmt überein");
-                            //HttpContext.Session.SetInt32("_UserID", user.Id);
-                            //HttpContext.Session.SetString("_UserRole", user.Role);
+                            try
+                            {
+                                HttpContext.Session.SetInt32("_UserID", user.Id);
+                                HttpContext.Session.SetString("_UserRole", user.Role);
+                                Console.WriteLine("Speichern auf der Session hat funktioniert: " + user.Id);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Fehler beim speichern auf der Session");
+                            }
                         }
                         else
                         {
                             Console.WriteLine("Passwort ist falsch.");
                         }
                     }
-                    else {
+                    else
+                    {
                         Console.WriteLine("Dein Administrator muss zuerst noch deinen Account bestätigen.");
                     }
                 }
-                else {
+                else
+                {
                     Console.WriteLine("Du hast deinen Account noch nicht verifiziert");
                 }
             }
@@ -67,47 +78,59 @@ namespace NoVe.Controllers
                 Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
             }
 
-            //var allUsers = _dbContext.User.ToList();
+            //var allUsers = _dbContext.User.Where(b => b.KlassenId == Klassenid).ToList();
             //Console.Write("allUsers: ");
             //Console.WriteLine(allUsers);
         }
 
-        public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int Beruf, int Klasse)
+        public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int klasseCode, bool berufsbildner)
         {
             var userCount = _dbContext.Users.Where(b => b.Email == Email).Count();
+
             if (userCount != 0)
             {
                 Console.WriteLine("Email existiert schon");
             }
-            else {
+            else
+            {
                 if (Password == PasswordCheck)
                 {
-                    Console.WriteLine("Passwörter stimmen überein");
-                    Random rnd = new Random();
-                    int VerificationKey = rnd.Next(100000, 1000000);
+                    //var klasseCount = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).Count();
+                    var klasseCount = 0;
+                    if (klasseCount != 0)
+                    {
+                        var klasse = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode);
 
-                    var newUser = new User();
+                        Console.WriteLine("Passwörter stimmen überein");
+                        Random rnd = new Random();
+                        int VerificationKey = rnd.Next(100000, 1000000);
 
-                    newUser.Vorname = Vorname;
-                    newUser.Nachname = Nachname;
-                    newUser.Email = Email;
-                    newUser.PasswordHash = hashPassword(Password);
-                    newUser.KlassenId = Klasse;
-                    newUser.VerificationKey = VerificationKey;
-                    newUser.VerificationStatus = 0;
+                        var newUser = new User();
 
-                    _dbContext.Users.Add(newUser);
-                    _dbContext.SaveChanges();
+                        newUser.Vorname = Vorname;
+                        newUser.Nachname = Nachname;
+                        newUser.Email = Email;
+                        newUser.PasswordHash = hashPassword(Password);
+                        //newUser.klasse = klasse;
+                        newUser.VerificationKey = VerificationKey;
+                        newUser.VerificationStatus = 0;
+
+                        _dbContext.Users.Add(newUser);
+                        _dbContext.SaveChanges();
+
+                        HttpContext.Session.SetString("_RegisterEmail", Email);
+
+                        Console.Write("newUser: ");
+                        Console.WriteLine(newUser.ToString());
+
+                        Console.WriteLine("VerificationKey: " + VerificationKey);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Die Ausgewählte Klasse existiert noch nicht.");
+                    }
 
 
-                    HttpContext.Session.SetString("_RegisterEmail", Email);
-                    string SessionEmail = HttpContext.Session.GetString("_RegisterEmail");
-                    Console.WriteLine("Email aus Session: " + SessionEmail);
-
-                    Console.Write("newUser: ");
-                    Console.WriteLine(newUser.ToString());
-
-                    Console.WriteLine("VerificationKey: " + VerificationKey);
 
                     //sendMail();
                 }
@@ -115,14 +138,14 @@ namespace NoVe.Controllers
             return View();
         }
 
-        public IActionResult verify(string Email, int verificationKey) // string Email, 
-        {  
+        public IActionResult verify(int verificationKey) // string Email, 
+        {
+            string Email = HttpContext.Session.GetString("_RegisterEmail");
+            Console.WriteLine("Email aus Session: " + Email);
             Console.WriteLine(verificationKey);
-            //string Email = HttpContext.Session.GetString("_RegisterEmail");
-            //Console.WriteLine("Email aus Session: " + Email);
             try
             {
-                
+
                 var user = _dbContext.Users.Where(b => b.Email == Email).FirstOrDefault();
                 if (user.VerificationKey == verificationKey)
                 {
@@ -145,7 +168,8 @@ namespace NoVe.Controllers
 
         }
 
-        public void sendMail() {
+        public void sendMail()
+        {
             string From = "nove@mattiamueggler.ch";
             string Password = "?x9Ls!Uva77vJvic*SsF";
             string SmtpHost = "asmtp.mail.hostpoint.ch";
@@ -173,7 +197,8 @@ namespace NoVe.Controllers
                 client.Send(message);
                 Console.WriteLine("Email wurde gesendet");
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex);
             }
         }

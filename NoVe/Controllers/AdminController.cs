@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace NoVe.Models
 {
@@ -16,7 +18,24 @@ namespace NoVe.Models
 
     public IActionResult Index()
     {
-      return View(getUnconfirmedUsers());
+        string userRole;
+
+        try
+            {
+                userRole = HttpContext.Session.GetString("_UserRole");
+                if (userRole == "Admin")
+                {
+                    return View(getUnconfirmedUsers());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Fehler beim auslesen aus der Session");
+            }
+
+
+            return View("Home/View");
+            //return View(getUnconfirmedUsers());
     }
 
     public IActionResult BenutzerBestaetigen()

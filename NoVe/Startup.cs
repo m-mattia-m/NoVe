@@ -36,6 +36,7 @@ namespace NoVe
             //    o.ViewLocationFormats.Add("/Views/Home/{0}" + RazorViewEngine.ViewExtension);
             //    o.ViewLocationFormats.Add("/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
             //});
+            services.AddSession();
 
         }
 
@@ -58,6 +59,8 @@ namespace NoVe
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

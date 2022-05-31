@@ -9,8 +9,8 @@
         @using (Html.BeginForm("verify", "Account"))
         {
           <div class="login-form" style="margin-top: 30px;">
-            <label name="email" class="form-login-label">Email für den zu verifizierenden Account</label>
-            <input type="email" name="email" id="email" class="form-login"/>
+            @*<label name="email" class="form-login-label">Email für den zu verifizierenden Account</label>
+            <input type="email" name="email" id="email" class="form-login"/>*@
 
             <label name="verificationKey" class="form-login-label">Verification-Code</label>
             <input type="number" name="verificationKey" id="verificationKey" class="form-login"/>
