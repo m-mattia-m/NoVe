@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace NoVe.Controllers
 {
@@ -33,7 +35,7 @@ namespace NoVe.Controllers
             return View();
         }
 
-        public void setLogin(string Email, string Password)
+        public IActionResult setLogin(string Email, string Password)
         {
 
             try
@@ -57,25 +59,35 @@ namespace NoVe.Controllers
                             {
                                 Console.WriteLine("Fehler beim speichern auf der Session");
                             }
+                            ViewBag.Message = string.Format("Du hast dich erfolgreich angemeldet");
+                            return View("~/Views/Account/Message.cshtml");
                         }
                         else
                         {
                             Console.WriteLine("Passwort ist falsch.");
+                            ViewBag.Message = string.Format("Dein Passwort ist Falsch");
+                            return View("~/Views/Account/Message.cshtml");
                         }
                     }
                     else
                     {
                         Console.WriteLine("Dein Administrator muss zuerst noch deinen Account bestätigen.");
+                        ViewBag.Message = string.Format("Dein Administrator muss zuerst noch deinen Account bestätigen.");
+                        return View("~/Views/Account/Message.cshtml");
                     }
                 }
                 else
                 {
                     Console.WriteLine("Du hast deinen Account noch nicht verifiziert");
+                    ViewBag.Message = string.Format("Du hast deinen Account noch nicht verifiziert");
+                    return View("~/Views/Account/Message.cshtml");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
+                ViewBag.Message = string.Format("Du hast deinen Account noch nicht verifiziert");
+                return View("~/Views/Account/Message.cshtml");
             }
 
             //var allUsers = _dbContext.User.Where(b => b.KlassenId == Klassenid).ToList();
@@ -83,13 +95,29 @@ namespace NoVe.Controllers
             //Console.WriteLine(allUsers);
         }
 
-        public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int klasseCode, bool berufsbildner)
+        public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int klasseCode, string berufsbildner)
         {
             var userCount = _dbContext.Users.Where(b => b.Email == Email).Count();
 
+            Console.WriteLine("Berufsbildner: " + berufsbildner);
+            if (berufsbildner != "on")
+            { 
+                Console.WriteLine("Email-Domain wird überprüft");
+                if (checkMail(Email) == true)
+                {
+                    Console.WriteLine("Email entspricht der Domain");
+                }
+                else {
+                    Console.WriteLine("Email hat eine ungültige Domain");
+                    ViewBag.Message = string.Format("Deine Emaildomain ist nicht erlabut.");
+                    return View("~/Views/Account/Register.cshtml");
+                }
+            }
             if (userCount != 0)
             {
                 Console.WriteLine("Email existiert schon");
+                ViewBag.Message = string.Format("Email existiert schon.");
+                return View("~/Views/Account/Register.cshtml");
             }
             else
             {
@@ -113,6 +141,15 @@ namespace NoVe.Controllers
                         newUser.PasswordHash = hashPassword(Password);
                         newUser.VerificationKey = VerificationKey;
                         newUser.VerificationStatus = 0;
+                        if (berufsbildner == "on") // true
+                        {
+                            newUser.Role = "berufsbildner";
+                        }
+
+                        if (checkMailSubdomain(Email) == "edu")
+                        {
+                            newUser.Role = "schueler";
+                        }
 
                         _dbContext.Users.Add(newUser);
                         _dbContext.SaveChanges();
@@ -135,6 +172,58 @@ namespace NoVe.Controllers
                 }
             }
             return View();
+        }
+
+        public bool checkMail(string Email)
+        {
+            //string subdomain = checkMailSubdomain(Email);
+            string domain = checkMailDomain(Email);
+
+            var domains = _dbContext.Domains.ToList();
+            foreach (Domains currentDomain in domains)
+            {
+                if (currentDomain.AllowedDomains == domain) {
+                    Console.WriteLine("Whole Domain: " + domain);
+                    //Console.WriteLine("Subdomain: " + subdomain);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public string checkMailDomain(string Email)
+        {
+            Regex rg = new Regex(@"(?<=@)[^.]+([a-z0-9]+\.)*[a-z0-9]+\.[a-z]+");
+            MatchCollection emailDomain = rg.Matches(Email);
+            string emailDomainString = emailDomain[0].ToString();
+
+            string[] domainParts = emailDomainString.Split('.');
+
+            if (domainParts.Length > 2)
+            {
+                string returnVal = domainParts[1] + "." + domainParts[2];
+                return returnVal;
+            }
+            else if(domainParts.Length == 2) {
+                string returnVal = domainParts[0] + "." + domainParts[1];
+                return returnVal;
+            }
+            return "";
+        }
+
+        public string checkMailSubdomain(string Email)
+        {
+            Regex rg = new Regex(@"(?<=@)[^.]+([a-z0-9]+\.)*[a-z0-9]+\.[a-z]+");
+            MatchCollection emailDomain = rg.Matches(Email);
+            string emailDomainString = emailDomain[0].ToString();
+
+            string[] domainParts = emailDomainString.Split('.');
+
+            if (domainParts.Length > 2) {
+                return domainParts[0];
+            }
+            return "";
         }
 
         public IActionResult verify(int verificationKey) // string Email, 
