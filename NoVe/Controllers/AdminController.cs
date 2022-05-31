@@ -21,18 +21,17 @@ namespace NoVe.Models
         string userRole;
 
         try
+        {
+            userRole = HttpContext.Session.GetString("_UserRole");
+            if (userRole == "Admin")
             {
-                userRole = HttpContext.Session.GetString("_UserRole");
-                if (userRole == "Admin")
-                {
-                    return View(getUnconfirmedUsers());
-                }
+                return View(getUnconfirmedUsers());
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Fehler beim auslesen aus der Session");
-            }
-
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Fehler beim auslesen aus der Session");
+        }
 
             return View("Home/View");
             //return View(getUnconfirmedUsers());

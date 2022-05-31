@@ -96,10 +96,9 @@ namespace NoVe.Controllers
                 if (Password == PasswordCheck)
                 {
                     //var klasseCount = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).Count();
-                    var klasseCount = 0;
-                    if (klasseCount != 0)
-                    {
-                        var klasse = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode);
+                    //if (klasseCount != 0)
+                    //{
+                        //var klasse = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode);
 
                         Console.WriteLine("Passwörter stimmen überein");
                         Random rnd = new Random();
@@ -110,8 +109,8 @@ namespace NoVe.Controllers
                         newUser.Vorname = Vorname;
                         newUser.Nachname = Nachname;
                         newUser.Email = Email;
+                        //newUser.Klasse = klasse
                         newUser.PasswordHash = hashPassword(Password);
-                        //newUser.klasse = klasse;
                         newUser.VerificationKey = VerificationKey;
                         newUser.VerificationStatus = 0;
 
@@ -124,11 +123,11 @@ namespace NoVe.Controllers
                         Console.WriteLine(newUser.ToString());
 
                         Console.WriteLine("VerificationKey: " + VerificationKey);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Die Ausgewählte Klasse existiert noch nicht.");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("Die Ausgewählte Klasse existiert noch nicht.");
+                    //}
 
 
 
