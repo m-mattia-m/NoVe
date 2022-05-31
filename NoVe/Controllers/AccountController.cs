@@ -33,7 +33,7 @@ namespace NoVe.Controllers
             return View();
         }
 
-        public void setLogin(string Email, string Password)
+        public IActionResult setLogin(string Email, string Password)
         {
 
             try
@@ -57,25 +57,35 @@ namespace NoVe.Controllers
                             {
                                 Console.WriteLine("Fehler beim speichern auf der Session");
                             }
+                            ViewBag.Message = string.Format("Du hast dich erfolgreich angemeldet");
+                            return View("~/Views/Account/Message.cshtml");
                         }
                         else
                         {
                             Console.WriteLine("Passwort ist falsch.");
+                            ViewBag.Message = string.Format("Dein Passwort ist Falsch");
+                            return View("~/Views/Account/Message.cshtml");
                         }
                     }
                     else
                     {
                         Console.WriteLine("Dein Administrator muss zuerst noch deinen Account bestätigen.");
+                        ViewBag.Message = string.Format("Dein Administrator muss zuerst noch deinen Account bestätigen.");
+                        return View("~/Views/Account/Message.cshtml");
                     }
                 }
                 else
                 {
                     Console.WriteLine("Du hast deinen Account noch nicht verifiziert");
+                    ViewBag.Message = string.Format("Du hast deinen Account noch nicht verifiziert");
+                    return View("~/Views/Account/Message.cshtml");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
+                ViewBag.Message = string.Format("Du hast deinen Account noch nicht verifiziert");
+                return View("~/Views/Account/Message.cshtml");
             }
 
             //var allUsers = _dbContext.User.Where(b => b.KlassenId == Klassenid).ToList();

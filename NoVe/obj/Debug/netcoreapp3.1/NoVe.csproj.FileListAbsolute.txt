@@ -246,3 +246,5 @@ C:/Users/wick/Source/Repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KlassenVerwalten.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Detail/Detail.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Detail/DetailKlasse.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Message.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/message.cshtml.g.cs

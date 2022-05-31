@@ -23,7 +23,8 @@ namespace NoVe.Models
         try
         {
             userRole = HttpContext.Session.GetString("_UserRole");
-            if (userRole == "Admin")
+                Console.WriteLine("SessionRole: " + userRole);
+            if (userRole == "admin")
             {
                 return View(getUnconfirmedUsers());
             }
@@ -33,7 +34,8 @@ namespace NoVe.Models
             Console.WriteLine("Fehler beim auslesen aus der Session");
         }
 
-            return View("Home/View");
+            ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+            return View("~/Views/Admin/message.cshtml");
             //return View(getUnconfirmedUsers());
     }
 

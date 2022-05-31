@@ -34,6 +34,10 @@ namespace NoVe.Controllers
                 User user = new User();
                 user.Email = "admin@admin.ch";
                 user.PasswordHash = AccountController.hashPassword("admin");
+                user.VerificationKey = 123456;
+                user.AdminVerification = 1;
+                user.VerificationStatus = 1;
+                user.Role = "admin";
                 _dbContext.Add(user);
                 _dbContext.SaveChanges();
             }
