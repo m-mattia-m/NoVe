@@ -46,7 +46,6 @@
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.GeneratedMSBuildEditorConfig.editorconfig
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.AssemblyInfoInputs.cache
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.AssemblyInfo.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.csproj.CoreCompileInputs.cache
@@ -248,3 +247,11 @@ C:/Users/wick/Source/Repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/NoVe/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Detail/DetailKlasse.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Message.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/message.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Berufe.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/BerufEdit.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Kompetenzbereiche.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KompetenzbereichEdit.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Faecher.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/staticwebassets/NoVe.StaticWebAssets.xml
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/FachEdit.cshtml.g.cs

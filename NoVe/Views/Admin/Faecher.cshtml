@@ -1,0 +1,61 @@
+﻿@model IEnumerable<NoVe.Models.Fach>
+@inject DatabaseHelper helper
+
+@{
+    ViewData["Title"] = "Fächer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Liste der Fächer in dem aktuellen Kompetenzbereich</h1>
+<table class="table accept-berufe">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Gewichtung</td>
+            <td>Rundung</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (@Model.Count() != 0)
+        {
+            @foreach (var fach in Model)
+            {
+                <tr>
+                    <td>@fach.Name</td>
+                    <td>@fach.Gewichtung</td>
+                    <td>@fach.Rundung</td>
+                    <td>
+                        @Html.ActionLink("Löschen", "FachLoeschen", new { id = fach.Id })
+                        @Html.ActionLink("Bearbeiten", "FachEdit", new { id = fach.Id })
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@using (Html.BeginForm("SafeFach", "Admin"))
+{
+    <label class="form-login-label" name="name">Name</label>
+    <input class="form-login" type="text" name="name" id="name" />
+
+    <label class="form-login-label" name="gewichtung">Gewichtung</label>
+    <input class="form-login" type="number" name="gewichtung" id="gewichtung" />
+
+    <label class="form-login-label" name="rundung">Rundung</label>
+    <input class="form-login" type="number" name="rundung" id="rundung" step="0.1" />
+
+    <input class="login-submit" type="submit" name="submit" value="Speichern" />
+    @*<a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Berufe">Zurück</a>*@
+
+    @if (@Model.Count() != 0)
+    {
+        @foreach (var fach in Model)
+        {
+            <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Kompetenzbereiche/@fach.KompetenzbereichId">Zurück</a>
+            break;
+        }
+    }
+}
