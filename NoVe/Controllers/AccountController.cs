@@ -60,6 +60,13 @@ namespace NoVe.Controllers
                                 Console.WriteLine("Fehler beim speichern auf der Session");
                             }
                             ViewBag.Message = string.Format("Du hast dich erfolgreich angemeldet");
+                            if (HttpContext.Session.GetString("_UserRole") == "admin") {
+                                ViewBag.userRoleLinks = string.Format("<a class='nav-link login-submit' asp-area='' asp-controller='Admin' asp-action='Index' >Dashboard</a>");
+                            }
+                            if (HttpContext.Session.GetString("_UserRole") == "schueler")
+                            {
+                                ViewBag.userRoleLinks = string.Format("<a class='nav-link login-submit' href='./Admin' a>Notenübersicht</a>");
+                            }
                             return View("~/Views/Account/Message.cshtml");
                         }
                         else

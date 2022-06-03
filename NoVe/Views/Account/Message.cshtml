@@ -1,7 +1,12 @@
 ﻿<div class="text-center">
     @if (ViewBag.Message != null)
     {
-    <p>@Html.Raw(ViewBag.Message)</p>
+        <p>@Html.Raw(ViewBag.Message)</p>
+    }
+
+    @if (ViewBag.userRoleLinks != null)
+    {
+        <p>@Html.Raw(ViewBag.userRoleLinks)</p>
     }
 
 </div>

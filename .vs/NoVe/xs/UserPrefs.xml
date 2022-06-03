@@ -1,9 +1,10 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="109" Column="1" />
-      <File FileName="NoVe/Views/Account/Register.cshtml" Line="8" Column="52" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="68" Column="118" />
+      <File FileName="NoVe/Views/Account/Register.cshtml" />
       <File FileName="NoVe/Views/Account/Message.cshtml" />
+      <File FileName="NoVe/Controllers/AdminController.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
