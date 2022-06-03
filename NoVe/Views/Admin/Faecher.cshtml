@@ -1,12 +1,12 @@
-﻿@model IEnumerable<NoVe.Models.Kompetenzbereich>
+﻿@model IEnumerable<NoVe.Models.Fach>
 @inject DatabaseHelper helper
 
 @{
-    ViewData["Title"] = "Kompetenzbereiche";
+    ViewData["Title"] = "Fächer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Liste der Kompetenzbereiche in dem aktuellen Beruf</h1>
+<h1>Liste der Fächer in dem aktuellen Kompetenzbereich</h1>
 <table class="table accept-berufe">
     <thead>
         <tr>
@@ -19,16 +19,15 @@
     <tbody>
         @if (@Model.Count() != 0)
         {
-            @foreach (var kompetenzbereich in Model)
+            @foreach (var fach in Model)
             {
                 <tr>
-                    <td>@kompetenzbereich.Name</td>
-                    <td>@kompetenzbereich.Gewichtung</td>
-                    <td>@kompetenzbereich.Rundung</td>
+                    <td>@fach.Name</td>
+                    <td>@fach.Gewichtung</td>
+                    <td>@fach.Rundung</td>
                     <td>
-                        @Html.ActionLink("Löschen", "KompetenzbereichLoeschen", new { id = kompetenzbereich.Id })
-                        @Html.ActionLink("Bearbeiten", "KompetenzbereichEdit", new { id = kompetenzbereich.Id })
-                        @Html.ActionLink("Öffnen", "Faecher", new { id = kompetenzbereich.Id })
+                        @Html.ActionLink("Löschen", "FachLoeschen", new { id = fach.Id })
+                        @Html.ActionLink("Bearbeiten", "FachEdit", new { id = fach.Id })
                     </td>
                 </tr>
             }
@@ -37,7 +36,7 @@
     </tbody>
 </table>
 
-@using (Html.BeginForm("SafeKompetenzbereich", "Admin"))
+@using (Html.BeginForm("SafeFach", "Admin"))
 {
     <label class="form-login-label" name="name">Name</label>
     <input class="form-login" type="text" name="name" id="name" />
@@ -49,5 +48,14 @@
     <input class="form-login" type="number" name="rundung" id="rundung" step="0.1" />
 
     <input class="login-submit" type="submit" name="submit" value="Speichern" />
-    <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Berufe">Zurück</a>
+    @*<a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Berufe">Zurück</a>*@
+
+    @if (@Model.Count() != 0)
+    {
+        @foreach (var fach in Model)
+        {
+            <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Kompetenzbereiche/@fach.KompetenzbereichId">Zurück</a>
+            break;
+        }
+    }
 }

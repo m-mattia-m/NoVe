@@ -61,7 +61,6 @@ namespace NoVe.Models
 
         public IActionResult BerufEdit(int ID)
         {
-            //int ID = 2; 
             HttpContext.Session.SetInt32("_BerufID", ID);
             Beruf beruf = _dbContext.Berufs.Where(b => b.Id == ID).FirstOrDefault();
             ViewBag.Message = string.Format(beruf.Name);
@@ -75,6 +74,13 @@ namespace NoVe.Models
             return View(getSpecificKompetenzbereich(ID));
         }
 
+        public IActionResult FachEdit(int ID)
+        {
+            HttpContext.Session.SetInt32("_FachID", ID);
+            Fach fach = _dbContext.Fachs.Where(b => b.Id == ID).FirstOrDefault();
+            return View(getSpecificFach(ID));
+        }
+
         public IActionResult Kompetenzbereiche(int ID)
         {
             HttpContext.Session.SetInt32("_BerufID", ID);
@@ -83,10 +89,23 @@ namespace NoVe.Models
             return View(getKompetenzbereiche(ID));
         }
 
+        public IActionResult Faecher(int ID)
+        {
+            HttpContext.Session.SetInt32("_KompetenzbereichID", ID);
+
+            return View(getFaecher(ID));
+        }
+
         public IActionResult KompetenzbereicheBack()
         {
             int id = (int)HttpContext.Session.GetInt32("_BerufID");
             return View("Kompetenzbereiche", getKompetenzbereiche(id));
+        }
+
+        public IActionResult Fackback()
+        {
+            int id = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+            return View("Faecher", getFaecher(id));
         }
 
         public IActionResult Bestaetigen(int ID)
@@ -136,9 +155,12 @@ namespace NoVe.Models
 
         private List<Kompetenzbereich> getSpecificKompetenzbereich(int Id)
         {
-
             return _dbContext.Kompetenzbereichs.Where(u => u.Id == Id).ToList();
+        }
 
+        private List<Fach> getSpecificFach(int Id)
+        {
+            return _dbContext.Fachs.Where(u => u.Id == Id).ToList();
         }
 
         private List<User> getAllUsers()
@@ -156,6 +178,11 @@ namespace NoVe.Models
         private List<Kompetenzbereich> getKompetenzbereiche(int id)
         {
             return _dbContext.Kompetenzbereichs.Where(k => k.BerufId == id).ToList();
+        }
+
+        private List<Fach> getFaecher(int id)
+        {
+            return _dbContext.Fachs.Where(k => k.KompetenzbereichId == id).ToList();
         }
 
         public IActionResult SafeBerufe(string name) {
@@ -210,13 +237,12 @@ namespace NoVe.Models
 
         public IActionResult SafeKompetenzbereich(string name, int gewichtung, double rundung)
         {
-            var kompetenzbereichCount = _dbContext.Kompetenzbereichs.Where(b => b.Name == name).Count();
+            int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
+            var kompetenzbereichCount = _dbContext.Kompetenzbereichs.Where(b => b.Name == name).Where(b => b.BerufId == berufId).Count();
 
 
             if (kompetenzbereichCount < 1)
             {
-                int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
-
                 Kompetenzbereich kompetenzbereich = new Kompetenzbereich();
                 kompetenzbereich.Name = name;
                 kompetenzbereich.Gewichtung = gewichtung;
@@ -227,7 +253,7 @@ namespace NoVe.Models
                 _dbContext.SaveChanges();
                 return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
             }
-            ViewBag.Message = string.Format("Es existiert schon ein Beruf mit diesem Namen.");
+            ViewBag.Message = string.Format("Es existiert schon ein Kompetenzbereich mit diesem Namen in diesem Beruf.");
             return View("~/Views/Admin/message.cshtml");
         }
 
@@ -244,6 +270,54 @@ namespace NoVe.Models
             _dbContext.SaveChanges();
 
             return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+        }
+
+        public IActionResult SafeFach(string name, int gewichtung, double rundung)
+        {
+            int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+            var fachCount = _dbContext.Fachs.Where(b => b.Name == name).Where(b => b.KompetenzbereichId == kompetenzbereichId).Count();
+
+
+            if (fachCount < 1)
+            {
+                Fach fach = new Fach();
+                fach.Name = name;
+                fach.Gewichtung = gewichtung;
+                fach.Rundung = rundung;
+                fach.KompetenzbereichId = kompetenzbereichId;
+
+                _dbContext.Fachs.Add(fach);
+                _dbContext.SaveChanges();
+                return View("Faecher", getFaecher(kompetenzbereichId));
+            }
+            ViewBag.Message = string.Format("Es existiert schon ein Fach mit diesem Namen in diesem Kompetenzbereich.");
+            return View("~/Views/Admin/message.cshtml");
+        }
+
+        public async Task<IActionResult> FachLoeschen(int ID)
+        {
+            int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+
+            Fach fach = _dbContext.Fachs.FirstOrDefault(b => b.Id == ID);
+            _dbContext.Fachs.Remove(fach);
+            _dbContext.SaveChanges();
+
+            return View("Faecher", getFaecher(kompetenzbereichId));
+        }
+
+        public async Task<IActionResult> FachBearbeiten(string name, int gewichtung, double rundung)
+        {
+
+            int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+            int FachID = (int)HttpContext.Session.GetInt32("_FachID");
+
+            Fach fach = _dbContext.Fachs.FirstOrDefault(b => b.Id == FachID);
+            fach.Name = name;
+            fach.Gewichtung = gewichtung;
+            fach.Rundung = rundung;
+            _dbContext.SaveChanges();
+
+            return View("Faecher", getFaecher(kompetenzbereichID));
         }
     }
 }
