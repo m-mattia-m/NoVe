@@ -1,24 +1,23 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Admin/BerufEdit.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AdminController.cs">
     <Files>
-      <File FileName="NoVe/Views/Admin/Berufe.cshtml" Line="24" Column="86" />
-      <File FileName="NoVe/Views/Admin/BerufEdit.cshtml" Line="21" Column="126" />
-      <File FileName="NoVe/Views/Admin/AlleBenutzer.cshtml" Line="24" Column="94" />
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="65" Column="1" />
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="112" Column="21" />
+      <File FileName="NoVe/Views/Admin/Berufe.cshtml" Line="16" Column="13" />
+      <File FileName="NoVe/Views/Admin/Kompetenzbereiche.cshtml" Line="30" Column="77" />
+      <File FileName="NoVe/Controllers/AdminController.cs" Line="138" Column="86" />
+      <File FileName="NoVe/Views/Admin/KompetenzbereichEdit.cshtml" Line="16" Column="80" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="AdminController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
-                <Node name="Admin" expanded="True">
-                  <Node name="BerufEdit.cshtml" selected="True" />
-                </Node>
+                <Node name="Admin" expanded="True" />
                 <Node name="Detail" expanded="True" />
                 <Node name="Home" expanded="True" />
                 <Node name="Shared" expanded="True" />
@@ -34,7 +33,7 @@
   <MonoDevelop.Ide.ItemProperties.NoVe PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/AdminController.cs" relfile="NoVe/Controllers/AdminController.cs" line="65" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Views/Admin/KompetenzbereichEdit.cshtml" relfile="NoVe/Views/Admin/KompetenzbereichEdit.cshtml" line="16" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

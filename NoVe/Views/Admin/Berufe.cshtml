@@ -15,15 +15,18 @@
         </tr>
     </thead>
     <tbody>
+        @if(@Model.Count() != 0) { 
         @foreach (var beruf in Model)
         {
             <tr>
                 <td>@beruf.Name</td>
                 <td>
                     @Html.ActionLink("Löschen", "BerufLoeschen", new { id = beruf.Id })
-                    @Html.ActionLink("Bearbeiten", "BerufEdit", new { id = beruf.Id }) @*, new { id = beruf.Id }*@
+                    @Html.ActionLink("Bearbeiten", "BerufEdit", new { id = beruf.Id })
+                    @Html.ActionLink("Öffnen", "Kompetenzbereiche", new { id = beruf.Id })
                 </td>
             </tr>
+        }
         }
     </tbody>
 </table>

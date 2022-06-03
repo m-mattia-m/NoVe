@@ -6,7 +6,7 @@ namespace NoVe.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Gewichtung { get; set; }
-        public float Rundung { get; set; }
+        public double Rundung { get; set; }
         public int BerufId { get; set; }
     }
 }

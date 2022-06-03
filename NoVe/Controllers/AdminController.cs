@@ -68,6 +68,27 @@ namespace NoVe.Models
             return View();
         }
 
+        public IActionResult KompetenzbereichEdit(int ID)
+        {
+            HttpContext.Session.SetInt32("_KompetenzbereichID", ID);
+            Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.Where(b => b.Id == ID).FirstOrDefault();
+            return View(getSpecificKompetenzbereich(ID));
+        }
+
+        public IActionResult Kompetenzbereiche(int ID)
+        {
+            HttpContext.Session.SetInt32("_BerufID", ID);
+            Beruf beruf = _dbContext.Berufs.Where(b => b.Id == ID).FirstOrDefault();
+
+            return View(getKompetenzbereiche(ID));
+        }
+
+        public IActionResult KompetenzbereicheBack()
+        {
+            int id = (int)HttpContext.Session.GetInt32("_BerufID");
+            return View("Kompetenzbereiche", getKompetenzbereiche(id));
+        }
+
         public IActionResult Bestaetigen(int ID)
         {
 
@@ -113,6 +134,13 @@ namespace NoVe.Models
 
         }
 
+        private List<Kompetenzbereich> getSpecificKompetenzbereich(int Id)
+        {
+
+            return _dbContext.Kompetenzbereichs.Where(u => u.Id == Id).ToList();
+
+        }
+
         private List<User> getAllUsers()
         {
 
@@ -125,6 +153,11 @@ namespace NoVe.Models
             return _dbContext.Berufs.ToList();
         }
 
+        private List<Kompetenzbereich> getKompetenzbereiche(int id)
+        {
+            return _dbContext.Kompetenzbereichs.Where(k => k.BerufId == id).ToList();
+        }
+
         public IActionResult SafeBerufe(string name) {
             var berufSameNameCount = _dbContext.Berufs.Where(b => b.Name == name).Count();
 
@@ -132,7 +165,7 @@ namespace NoVe.Models
             Console.WriteLine("neuer Berufs-Name:" + name);
 
             if (berufSameNameCount < 1) {
-                var beruf = new Beruf();
+                Beruf beruf = new Beruf();
                 beruf.Name = name;
 
                 Console.WriteLine("neuer Berufs-Name:" + beruf.Name);
@@ -162,6 +195,55 @@ namespace NoVe.Models
             _dbContext.SaveChanges();
 
             return View("Berufe", getBerufe());
+        }
+
+        public async Task<IActionResult> KompetenzbereichLoeschen(int ID)
+        {
+            int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
+
+            Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.FirstOrDefault(b => b.Id == ID);
+            _dbContext.Kompetenzbereichs.Remove(kompetenzbereich);
+            _dbContext.SaveChanges();
+
+            return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+        }
+
+        public IActionResult SafeKompetenzbereich(string name, int gewichtung, double rundung)
+        {
+            var kompetenzbereichCount = _dbContext.Kompetenzbereichs.Where(b => b.Name == name).Count();
+
+
+            if (kompetenzbereichCount < 1)
+            {
+                int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
+
+                Kompetenzbereich kompetenzbereich = new Kompetenzbereich();
+                kompetenzbereich.Name = name;
+                kompetenzbereich.Gewichtung = gewichtung;
+                kompetenzbereich.Rundung = rundung;
+                kompetenzbereich.BerufId = berufId;
+
+                _dbContext.Kompetenzbereichs.Add(kompetenzbereich);
+                _dbContext.SaveChanges();
+                return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+            }
+            ViewBag.Message = string.Format("Es existiert schon ein Beruf mit diesem Namen.");
+            return View("~/Views/Admin/message.cshtml");
+        }
+
+        public async Task<IActionResult> KompetenzbereichBearbeiten(string name, int gewichtung, double rundung)
+        {
+            
+            int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+            int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
+
+            Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.FirstOrDefault(b => b.Id == kompetenzbereichID);
+            kompetenzbereich.Name = name;
+            kompetenzbereich.Gewichtung = gewichtung;
+            kompetenzbereich.Rundung = rundung;
+            _dbContext.SaveChanges();
+
+            return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
         }
     }
 }
