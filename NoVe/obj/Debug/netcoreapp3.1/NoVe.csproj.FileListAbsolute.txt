@@ -255,3 +255,6 @@ C:/Users/wick/Source/Repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/FachEdit.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/NoVe.GeneratedMSBuildEditorConfig.editorconfig
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/benutzerEdit.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Lehrer/SchuelerListe.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Lehrer/index.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Lehrer/SetZeit.cshtml.g.cs
