@@ -12,17 +12,22 @@
         <tr>
             <td>Name</td>
             <td>Email</td>
+            <td>Rolle</td>
             <td></td>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model)
         {
-            <tr>
-                <td>@user.Vorname @user.Nachname</td>
-                <td>@user.Email</td>
-                <td>@Html.ActionLink("Löschen", "benutzerloeschen", new { id = user.Id})</td>
-            </tr>
+        <tr>
+            <td>@user.Vorname @user.Nachname</td>
+            <td>@user.Email</td>
+            <td>@user.Role</td>
+            <td>
+                @Html.ActionLink("Löschen", "benutzerloeschen", new { id = user.Id })
+                @Html.ActionLink("Bearbeiten", "benutzerEdit", new { id = user.Id })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

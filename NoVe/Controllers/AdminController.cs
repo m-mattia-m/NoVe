@@ -81,6 +81,12 @@ namespace NoVe.Models
             return View(getSpecificFach(ID));
         }
 
+        public IActionResult benutzerEdit(int ID)
+        {
+            HttpContext.Session.SetInt32("_UserEditID", ID);
+            return View(getSpecificUser(ID));
+        }
+
         public IActionResult Kompetenzbereiche(int ID)
         {
             HttpContext.Session.SetInt32("_BerufID", ID);
@@ -102,10 +108,15 @@ namespace NoVe.Models
             return View("Kompetenzbereiche", getKompetenzbereiche(id));
         }
 
-        public IActionResult Fackback()
+        public IActionResult FachBack()
         {
             int id = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
             return View("Faecher", getFaecher(id));
+        }
+
+        public IActionResult UserBack()
+        {
+            return View("AlleBenutzer", getAllUsers());
         }
 
         public IActionResult Bestaetigen(int ID)
@@ -161,6 +172,11 @@ namespace NoVe.Models
         private List<Fach> getSpecificFach(int Id)
         {
             return _dbContext.Fachs.Where(u => u.Id == Id).ToList();
+        }
+
+        private List<User> getSpecificUser(int Id)
+        {
+            return _dbContext.Users.Where(u => u.Id == Id).ToList();
         }
 
         private List<User> getAllUsers()
@@ -318,6 +334,20 @@ namespace NoVe.Models
             _dbContext.SaveChanges();
 
             return View("Faecher", getFaecher(kompetenzbereichID));
+        }
+
+        public async Task<IActionResult> UserBearbeiten(string vorname, string nachname, string email, string firma, string role)
+        {
+            int id = (int)HttpContext.Session.GetInt32("_UserEditID");
+            User user = _dbContext.Users.FirstOrDefault(b => b.Id == id);
+            user.Vorname = vorname;
+            user.Nachname = nachname;
+            user.Email = email;
+            user.Firma = firma;
+            user.Role = role;
+            _dbContext.SaveChanges();
+
+            return View("AlleBenutzer", getAllUsers());
         }
     }
 }
