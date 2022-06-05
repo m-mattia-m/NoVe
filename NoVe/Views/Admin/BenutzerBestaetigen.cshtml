@@ -19,16 +19,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model)
+        @if (Model.Count() != 0)
         {
-            <tr>
-                <td>@user.Vorname @user.Nachname</td>
-                <td>@user.Email</td>
-                <td>@user.Role</td>
-                <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@user.Id>Details</a></td>
-                <td>@Html.ActionLink("Bestätigen", "bestaetigen", new { id = user.Id})</td>
-                <td>@Html.ActionLink("Ablehnen", "ablehnen", new { id = user.Id})</td>
-            </tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Vorname @user.Nachname</td>
+                    <td>@user.Email</td>
+                    <td>@user.Role</td>
+                    <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@user.Id>Details</a></td>
+                    <td>@Html.ActionLink("Bestätigen", "bestaetigen", new { id = user.Id})</td>
+                    <td>@Html.ActionLink("Ablehnen", "ablehnen", new { id = user.Id})</td>
+                </tr>
+            }
         }
     </tbody>
 </table>

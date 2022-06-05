@@ -18,14 +18,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var klasse in Model)
+        @if (Model.Count() != 0)
         {
-            <tr>
-                <td>@klasse.KlasseName</td>
-                <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@klasse.Id>Details</a></td>
-                <td><a asp-controller="Edit" asp-action="" asp-route-id=@klasse.Id>Bearbeiten</a></td>
-                <td>@Html.ActionLink("Löschen", "klasseloeschen", new { id = klasse.Id})</td>
-            </tr>
+            @foreach (var klasse in Model)
+            {
+                <tr>
+                    <td>@klasse.KlasseName</td>
+                    <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@klasse.Id>Details</a></td>
+                    <td><a asp-controller="Edit" asp-action="" asp-route-id=@klasse.Id>Bearbeiten</a></td>
+                    <td>@Html.ActionLink("Löschen", "klasseloeschen", new { id = klasse.Id})</td>
+                </tr>
+            }
         }
     </tbody>
 </table>
