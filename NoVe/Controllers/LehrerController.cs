@@ -44,15 +44,15 @@ namespace NoVe.Controllers
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
 
             // Set Class - only for testing
-            //Klasse klasse1 = _dbContext.Klasses.Where(k => k.Id == 2).FirstOrDefault();
+            //Klasse klasse1 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
             //User user1 = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
             //user1.Klasse = klasse1;
             //_dbContext.SaveChanges();
 
-            // Set Student Class - only for testing
-            //Klasse klasse1 = _dbContext.Klasses.Where(k => k.Id == 2).FirstOrDefault();
-            //User user1 = _dbContext.Users.Where(u => u.Id == 11).FirstOrDefault();
-            //user1.Klasse = klasse1;
+             //Set Student Class - only for testing
+            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 2).FirstOrDefault();
+            //User user2 = _dbContext.Users.Where(u => u.Id == 11).FirstOrDefault();
+            //user2.Klasse = klasse2;
             //_dbContext.SaveChanges();
 
             User currentUser = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();

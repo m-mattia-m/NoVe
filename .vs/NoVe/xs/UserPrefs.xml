@@ -1,11 +1,9 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/LehrerController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/LehrerController.cs" Line="75" Column="1" />
+      <File FileName="NoVe/Controllers/LehrerController.cs" Line="64" Column="47" />
       <File FileName="NoVe/Views/Lehrer/SetZeit.cshtml" Line="13" Column="26" />
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="105" Column="1" />
-      <File FileName="NoVe/Views/Admin/FachEdit.cshtml" Line="11" Column="39" />
-      <File FileName="NoVe/Views/Lehrer/index.cshtml" Line="5" Column="134" />
+      <File FileName="NoVe/Models/User.cs" Line="18" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -35,6 +33,8 @@
     <BreakpointStore>
       <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="77" column="1" />
       <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="75" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="58" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="59" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
