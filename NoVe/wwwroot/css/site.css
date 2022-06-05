@@ -469,3 +469,7 @@ option {
 .register-check {
   margin: 30px auto;
 }
+
+.add-classes {
+  padding-left: 14px;
+}

@@ -1,19 +1,16 @@
-﻿@model IEnumerable<NoVe.Models.Klasse>
+@model List<NoVe.Models.Klasse>
 @inject DatabaseHelper helper
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Klassenverwaltung";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Liste aller unbestätigten Benutzer</h1>
+<h1>Klassenverwaltung</h1>
 <table class="table accept-users">
     <thead>
         <tr>
             <td>Name</td>
-            <td>Rolle</td>
-            <td>Details</td>
-            <td>Bearbeiten</td>
             <td>Löschen</td>
         </tr>
     </thead>
@@ -32,3 +29,6 @@
         }
     </tbody>
 </table>
+<div class="login-buttons">
+  <a class="nav-link add-class-button login-submit add-classes" asp-area="" asp-controller="Admin" asp-action="KlassenHinzufuegen">Klasse Hinzufügen</a>
+</div>

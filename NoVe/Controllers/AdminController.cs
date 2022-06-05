@@ -51,13 +51,31 @@ namespace NoVe.Models
 
         public IActionResult KlassenVerwalten()
         {
-            return View();//todo klassen mitgeben
+            return View(getAllKlassen());
         }
 
         public IActionResult Berufe()
         {
             return View(getBerufe());
         }
+
+        public IActionResult KlassenHinzufuegen()
+        {
+          return View();
+        }
+
+        public IActionResult AddKlasse(string KlasseName, int AktuellesLehrjahr, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
+        {
+          var newKlasse = new Klasse();
+
+          newKlasse.KlasseName = KlasseName;
+          newKlasse.Startdatum = EingabedatumStart;
+          newKlasse.EndDatum = EingabedatumEnde;
+
+          _dbContext.Klasses.Add(newKlasse);
+          _dbContext.SaveChanges();
+          return View("KlassenVerwalten", getAllKlassen());
+    }
 
         public IActionResult BerufEdit(int ID)
         {
@@ -167,6 +185,11 @@ namespace NoVe.Models
         private List<Kompetenzbereich> getSpecificKompetenzbereich(int Id)
         {
             return _dbContext.Kompetenzbereichs.Where(u => u.Id == Id).ToList();
+        }
+
+        private List<Klasse> getAllKlassen()
+        {
+          return _dbContext.Klasses.ToList();
         }
 
         private List<Fach> getSpecificFach(int Id)
