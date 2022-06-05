@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/LehrerController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/LehrerController.cs" Line="64" Column="47" />
-      <File FileName="NoVe/Views/Lehrer/SetZeit.cshtml" Line="13" Column="26" />
-      <File FileName="NoVe/Models/User.cs" Line="18" Column="6" />
+      <File FileName="NoVe/Controllers/LehrerController.cs" Line="62" Column="1" />
+      <File FileName="NoVe/Views/Lehrer/SetZeit.cshtml" />
+      <File FileName="NoVe/Models/User.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,11 +13,8 @@
               <Node name="Controllers" expanded="True">
                 <Node name="LehrerController.cs" selected="True" />
               </Node>
-              <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Account" expanded="True" />
                 <Node name="Admin" expanded="True" />
-                <Node name="Detail" expanded="True" />
                 <Node name="Lehrer" expanded="True" />
               </Node>
             </Node>
@@ -31,10 +28,13 @@
   <MonoDevelop.Ide.ItemProperties.NoVe PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="77" column="1" />
-      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="75" column="1" />
-      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="58" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="86" column="1" />
       <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="59" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="60" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="62" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="65" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="73" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="71" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

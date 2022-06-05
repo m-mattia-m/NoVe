@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 
 using NoVe.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace NoVe.Controllers
 {
@@ -49,22 +50,32 @@ namespace NoVe.Controllers
             //user1.Klasse = klasse1;
             //_dbContext.SaveChanges();
 
-             //Set Student Class - only for testing
-            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 2).FirstOrDefault();
-            //User user2 = _dbContext.Users.Where(u => u.Id == 11).FirstOrDefault();
+            //Set Student Class - only for testing
+            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
+            //User user2 = _dbContext.Users.Where(u => u.Id == 4).FirstOrDefault();
             //user2.Klasse = klasse2;
             //_dbContext.SaveChanges();
 
-            User currentUser = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
-            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser.Klasse.Id).FirstOrDefault();
+            var currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
+            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
 
             List<User> users = new List<User>(klasse.Users.Count);
 
-            foreach (User user in klasse.Users) {
-                if (user.Role == "schueler") {
+            foreach (User user in klasse.Users)
+            {
+                if (user.Role == "schueler")
+                {
                     users.Add(user);
                 }
             }
+
+            //for (int i = 0; i < klasse.Users.Count; i++) {
+            //    if (klasse.Users[i].Role == "schueler")
+            //    {
+            //        users.Add(klasse.Users[i]);
+            //    }
+            //}
+
             return users;
         }
 
