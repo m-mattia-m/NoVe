@@ -32,3 +32,5 @@
 *.app
 /.vs/NoVe/config/applicationhost.config
 /.vs
+NoVe/obj/Debug/netcoreapp3.1/NoVe.assets.cache
+*.cache
