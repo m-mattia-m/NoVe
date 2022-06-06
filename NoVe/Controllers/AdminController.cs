@@ -49,6 +49,11 @@ namespace NoVe.Models
             return View(getAllUsers());
         }
 
+        public IActionResult Domains()
+        {
+          return View(getAllDomains());
+        }
+
         public IActionResult KlassenVerwalten()
         {
             return View(getAllKlassen());
@@ -175,6 +180,15 @@ namespace NoVe.Models
             return View("AlleBenutzer", getAllUsers());
         }
 
+        public async Task<IActionResult> DomainLoeschen(int ID)
+        {
+          Domains domain = _dbContext.Domains.FirstOrDefault(d => d.Id == ID);
+          _dbContext.Domains.Remove(domain);
+          _dbContext.SaveChanges();
+
+          return View("Domains", getAllDomains());
+        }
+
         private List<User> getUnconfirmedUsers()
         {
 
@@ -206,6 +220,13 @@ namespace NoVe.Models
         {
 
             return _dbContext.Users.Where(u => u.AdminVerification == 1).ToList();
+
+        }
+
+        private List<Domains> getAllDomains()
+        {
+
+          return _dbContext.Domains.ToList();
 
         }
 
@@ -242,6 +263,28 @@ namespace NoVe.Models
             }
             ViewBag.Message = string.Format("Es existiert schon ein Beruf mit diesem Namen.");
             return View("~/Views/Admin/message.cshtml");
+        }
+
+        public IActionResult SafeDomain(string name)
+        {
+          var domainCount = _dbContext.Domains.Where(b => b.AllowedDomains == name).Count();
+
+          Console.WriteLine("Anzahl der Domains: " + domainCount);
+          Console.WriteLine("neuer Domain-Name:" + name);
+
+          if (domainCount < 1)
+          {
+            Domains domain = new Domains();
+            domain.AllowedDomains = name;
+
+            Console.WriteLine("neuer Berufs-Name:" + domain.AllowedDomains);
+
+            _dbContext.Domains.Add(domain);
+            _dbContext.SaveChanges();
+            return View("Domains", getAllDomains());
+          }
+          ViewBag.Message = string.Format("Es existiert schon eine Domain mit diesem Namen.");
+          return View("~/Views/Admin/message.cshtml");
         }
 
         public async Task<IActionResult> BerufLoeschen(int ID)
