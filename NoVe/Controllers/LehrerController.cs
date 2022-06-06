@@ -73,7 +73,6 @@ namespace NoVe.Controllers
                     users.Add(user);
                 }
             }
-
             return users;
         }
 
@@ -118,6 +117,7 @@ namespace NoVe.Controllers
             return View("Index", Index());
         }
 
+
         public IActionResult schuelerLoeschen(int ID)
         {
             User user = _dbContext.Users.Include(k => k.Klasse).FirstOrDefault(u => u.Id == ID);
@@ -128,7 +128,6 @@ namespace NoVe.Controllers
 
             return View("SchuelerListe", getUsersFromClass());
         }
-
 
     }
 }

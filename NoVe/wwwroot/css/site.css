@@ -493,3 +493,11 @@ option {
     border-top: 0;
 }
 
+.klassenverwalten-buttons {
+  justify-content: center;
+}
+
+.klassenverwalten-buttons a {
+  display: flex;
+  justify-content: center;
+}

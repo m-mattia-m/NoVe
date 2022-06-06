@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NoVe.Models.Kompetenzbereich>
+@model IEnumerable<NoVe.Models.Kompetenzbereich>
 @inject DatabaseHelper helper
 
 @{
@@ -6,14 +6,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Liste der Kompetenzbereiche in dem aktuellen Beruf</h1>
+<h1>Kompetenzbereiche in einem Beruf</h1>
 <table class="table accept-berufe">
     <thead>
         <tr>
             <td>Name</td>
             <td>Gewichtung</td>
             <td>Rundung</td>
-            <td></td>
+            <td style="width: 25%"></td>
         </tr>
     </thead>
     <tbody>
@@ -26,9 +26,9 @@
                     <td>@kompetenzbereich.Gewichtung</td>
                     <td>@kompetenzbereich.Rundung</td>
                     <td>
-                        @Html.ActionLink("Löschen", "KompetenzbereichLoeschen", new { id = kompetenzbereich.Id })
-                        @Html.ActionLink("Bearbeiten", "KompetenzbereichEdit", new { id = kompetenzbereich.Id })
-                        @Html.ActionLink("Öffnen", "Faecher", new { id = kompetenzbereich.Id })
+                        <span style="margin-right: 10px;">@Html.ActionLink("Löschen", "KompetenzbereichLoeschen", new { id = kompetenzbereich.Id })</span>
+                        <span style="margin-right: 10px;">@Html.ActionLink("Bearbeiten", "KompetenzbereichEdit", new { id = kompetenzbereich.Id })</span>
+                        <span>@Html.ActionLink("Öffnen", "Faecher", new { id = kompetenzbereich.Id })</span>
                     </td>
                 </tr>
             }
@@ -37,17 +37,23 @@
     </tbody>
 </table>
 
-@using (Html.BeginForm("SafeKompetenzbereich", "Admin"))
-{
-    <label class="form-login-label" name="name">Name</label>
-    <input class="form-login" type="text" name="name" id="name" />
+<div class="login-wrapper text-center">
+  @using (Html.BeginForm("SafeKompetenzbereich", "Admin"))
+  {
+      <div class="login-form">
+        <label class="form-login-label" name="name">Name</label>
+        <input class="form-login" type="text" name="name" id="name" />
 
-    <label class="form-login-label" name="gewichtung">Gewichtung</label>
-    <input class="form-login" type="number" name="gewichtung" id="gewichtung" />
+        <label class="form-login-label" name="gewichtung">Gewichtung</label>
+        <input class="form-login" type="number" name="gewichtung" id="gewichtung" />
 
-    <label class="form-login-label" name="rundung">Rundung</label>
-    <input class="form-login" type="number" name="rundung" id="rundung" step="0.1" />
+        <label class="form-login-label" name="rundung">Rundung</label>
+        <input class="form-login" type="number" name="rundung" id="rundung" step="0.1" />
 
-    <input class="login-submit" type="submit" name="submit" value="Speichern" />
-    <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Berufe">Zurück</a>
-}
+        <div class="login-buttons">
+          <input class="login-submit" type="submit" name="submit" value="Speichern" />
+          <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Berufe">Zurück</a>
+        </div>
+      </div>
+  }
+</div>
