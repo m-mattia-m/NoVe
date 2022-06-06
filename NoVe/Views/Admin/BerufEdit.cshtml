@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NoVe.Models.Beruf>
+@model IEnumerable<NoVe.Models.Beruf>
 @inject DatabaseHelper helper
 
 @{
@@ -8,16 +8,21 @@
 
 <h1>Beruf bearbeiten</h1>
 
-@using (Html.BeginForm("BerufBearbeiten", "Admin"))
-{
-    <br />
-    <br />
-    <label class="form-login-label" name="name">Name</label>
-    <input class="form-login" type="text" name="name" id="name" value="@if (ViewBag.Message != null)
-                {
-                   @Html.Raw(ViewBag.Message)
-                }" />
-    <input class="login-submit" type="submit" name="submit" value="Speichern" />
-    <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Berufe">Zurück</a>
-}
-
+<div class="login-wrapper text-center">
+  @using (Html.BeginForm("BerufBearbeiten", "Admin"))
+  {
+    <div class="login-form">
+      <br />
+      <br />
+      <label class="form-login-label" name="name">Name</label>
+      <input class="form-login" type="text" name="name" id="name" value="@if (ViewBag.Message != null)
+                  {
+                     @Html.Raw(ViewBag.Message)
+                  }" />
+      <div class="login-buttons">
+        <input class="login-submit" type="submit" name="submit" value="Speichern" />
+        <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="Berufe">Zurück</a>
+      </div>
+    </div>
+  }
+</div>

@@ -154,7 +154,7 @@ namespace NoVe.Models
             _dbContext.Remove(klasse);
             _dbContext.SaveChanges();
 
-            return View("Index", getUnconfirmedUsers());
+            return View("KlassenVerwalten", getAllKlassen());
         }
 
         public async Task<IActionResult> AblehnenAsync(int ID)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NoVe.Models.Kompetenzbereich>
+@model IEnumerable<NoVe.Models.Kompetenzbereich>
 @inject DatabaseHelper helper
 
 @{
@@ -8,26 +8,31 @@
 
 <h1>Kompetenzbereich bearbeiten</h1>
 
-@using (Html.BeginForm("KompetenzbereichBearbeiten", "Admin"))
-{
+<div class="login-wrapper text-center">
+  @using (Html.BeginForm("KompetenzbereichBearbeiten", "Admin"))
+  {
 
-    @if (@Model.Count() != 0)
-    {
-        @foreach (var kompetenzbereich in Model)
+      <div class="login-form">
+        @if (@Model.Count() != 0)
         {
-            <label class="form-login-label" name="name">Name</label>
-            <input class="form-login" type="text" name="name" id="name" value="@kompetenzbereich.Name" />
+            @foreach (var kompetenzbereich in Model)
+            {
+                <label class="form-login-label" name="name">Name</label>
+                <input class="form-login" type="text" name="name" id="name" value="@kompetenzbereich.Name" />
 
-            <label class="form-login-label" name="gewichtung">Gewichtung</label>
-            <input class="form-login" type="number" name="gewichtung" id="gewichtung" value="@kompetenzbereich.Gewichtung" />
+                <label class="form-login-label" name="gewichtung">Gewichtung</label>
+                <input class="form-login" type="number" name="gewichtung" id="gewichtung" value="@kompetenzbereich.Gewichtung" />
 
-            <label class="form-login-label" name="rundung">Rundung</label>
-            <input class="form-login" type="number" name="rundung" id="rundung"  step="0.1" value="@kompetenzbereich.Rundung" />
+                <label class="form-login-label" name="rundung">Rundung</label>
+                <input class="form-login" type="number" name="rundung" id="rundung"  step="0.1" value="@kompetenzbereich.Rundung" />
 
 
+            }
+            <div class="login-buttons">
+              <input class="login-submit" type="submit" name="submit" value="Speichern" />
+              <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="KompetenzbereicheBack">Zurück</a>
+            </div>
         }
-        <input class="login-submit" type="submit" name="submit" value="Speichern" />
-        <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="KompetenzbereicheBack">Zurück</a>
-
-    }
-}
+      </div>
+  }
+</div>

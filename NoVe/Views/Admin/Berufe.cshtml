@@ -21,9 +21,9 @@
             <tr>
                 <td style="width: 70%;">@beruf.Name</td>
                 <td>
-                    @Html.ActionLink("Löschen", "BerufLoeschen", new { id = beruf.Id })
-                    @Html.ActionLink("Bearbeiten", "BerufEdit", new { id = beruf.Id })
-                    @Html.ActionLink("Öffnen", "Kompetenzbereiche", new { id = beruf.Id })
+                    <span style="margin-right: 10px;">@Html.ActionLink("Löschen", "BerufLoeschen", new { id = beruf.Id })</span>
+                    <span style="margin-right: 10px;">@Html.ActionLink("Bearbeiten", "BerufEdit", new { id = beruf.Id })</span>
+                    <span>@Html.ActionLink("Öffnen", "Kompetenzbereiche", new { id = beruf.Id })</span>
                 </td>
             </tr>
         }
