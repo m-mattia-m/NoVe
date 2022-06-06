@@ -28,36 +28,44 @@
 
             <label class="form-login-label" name="role">Rolle</label>
             @*<input class="form-login" type="text" name="role" id="role" value="@benutzer.Role" />*@
-            <select class="form-login" name="role" id="role">
-                @if (benutzer.Role == "schueler")
-                {
-                    <option selected value="schueler">Schüler</option>
-                    <option value="lehrer">Lehrer</option>
-                    <option value="berufsbildner">Berufsbildner</option>
-                    <option value="admin">Administrator</option>
-                }
-                else if (benutzer.Role == "lehrer")
-                {
-                    <option value="schueler">Schüler</option>
-                    <option selected value="lehrer">Lehrer</option>
-                    <option value="berufsbildner">Berufsbildner</option>
-                    <option value="admin">Administrator</option>
-                }
-                else if (benutzer.Role == "berufsbildner")
-                {
-                    <option value="schueler">Schüler</option>
-                    <option value="lehrer">Lehrer</option>
-                    <option selected value="berufsbildner">Berufsbildner</option>
-                    <option value="admin">Administrator</option>
-                }
-                else if (benutzer.Role == "admin")
-                {
-                    <option value="schueler">Schüler</option>
-                    <option value="lehrer">Lehrer</option>
-                    <option value="berufsbildner">Berufsbildner</option>
-                    <option selected value="admin">Administrator</option>
-                }
-            </select>
+<select class="form-login" name="role" id="role">
+    @if (benutzer.Role == "schueler")
+    {
+        <option selected value="schueler">Schüler</option>
+        <option value="lehrer">Lehrer</option>
+        <option value="berufsbildner">Berufsbildner</option>
+        <option value="admin">Administrator</option>
+    }
+    else if (benutzer.Role == "lehrer")
+    {
+        <option value="schueler">Schüler</option>
+        <option selected value="lehrer">Lehrer</option>
+        <option value="berufsbildner">Berufsbildner</option>
+        <option value="admin">Administrator</option>
+    }
+    else if (benutzer.Role == "berufsbildner")
+    {
+        <option value="schueler">Schüler</option>
+        <option value="lehrer">Lehrer</option>
+        <option selected value="berufsbildner">Berufsbildner</option>
+        <option value="admin">Administrator</option>
+    }
+    else if (benutzer.Role == "admin")
+    {
+        <option value="schueler">Schüler</option>
+        <option value="lehrer">Lehrer</option>
+        <option value="berufsbildner">Berufsbildner</option>
+        <option selected value="admin">Administrator</option>
+    }
+    else
+    {
+        <option selected disabled value="">Wähle eine Rolle aus</option>
+        <option value="schueler">Schüler</option>
+        <option value="lehrer">Lehrer</option>
+        <option value="berufsbildner">Berufsbildner</option>
+        <option value="admin">Administrator</option>
+    }
+</select>
 
         }
         <input class="login-submit" type="submit" name="submit" value="Speichern" />
