@@ -66,7 +66,7 @@ namespace NoVe.Controllers
             //_dbContext.SaveChanges();
 
             List<User> currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
-            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
+            Klasse klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
 
             List<User> users = new List<User>(klasse.Users.Count);
 
@@ -110,11 +110,13 @@ namespace NoVe.Controllers
             Regex rgDate = new Regex(@"(\d{1,2})\.(\d{1,2})\.(\d{4})");
             Regex rgTime = new Regex(@"([0-9][0-9]:[0-9][0-9])");
 
+            // Format Startzeit
             MatchCollection startdatumArray = rgDate.Matches(startdatum);
             MatchCollection startzeitArray = rgTime.Matches(startdatum);
             string startzeitBackslash = startdatumArray[0].ToString().Replace(".", "/");
             string startdatumString = startzeitBackslash + " " + startzeitArray[0].ToString();
 
+            // Format Endzeit
             MatchCollection enddatumArray = rgDate.Matches(enddatum);
             MatchCollection endzeitArray = rgTime.Matches(enddatum);
             string endzeitBackslash = enddatumArray[0].ToString().Replace(".", "/");
@@ -122,7 +124,6 @@ namespace NoVe.Controllers
 
             klasse.Startdatum = DateTime.ParseExact(startdatumString, "dd/MM/yyyy HH:mm", null);
             klasse.EndDatum = DateTime.ParseExact(enddatumString, "dd/MM/yyyy HH:mm", null);
-            //klasse.EndDatum = DateTime.Parse(enddatum);
             _dbContext.SaveChanges();
 
             return View("Index", Index());
