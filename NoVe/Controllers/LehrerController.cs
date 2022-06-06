@@ -7,6 +7,8 @@ using System;
 
 using NoVe.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace NoVe.Controllers
 {
@@ -38,7 +40,10 @@ namespace NoVe.Controllers
             return View("SchuelerListe", getUsersFromClass());
         }
 
-
+        public IActionResult ZeitBack()
+        {
+            return View("Index", Index());
+        }
 
         private List<User> getUsersFromClass()
         {
@@ -52,11 +57,15 @@ namespace NoVe.Controllers
 
             //Set Student Class - only for testing
             //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
-            //User user2 = _dbContext.Users.Where(u => u.Id == 4).FirstOrDefault();
+            //User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
+            //user2.Klasse = klasse2;
+            //_dbContext.SaveChanges();
+            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
+            //User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
             //user2.Klasse = klasse2;
             //_dbContext.SaveChanges();
 
-            var currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
+            List<User> currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
             Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
 
             List<User> users = new List<User>(klasse.Users.Count);
@@ -82,8 +91,8 @@ namespace NoVe.Controllers
         private List<Klasse> getSpecificClass()
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
-            User currentUser = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
-            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser.Klasse.Id).FirstOrDefault();
+            List<User> currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
+            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
 
             List<Klasse> klasses = new List<Klasse>();
             klasses.Add(klasse);
@@ -91,18 +100,32 @@ namespace NoVe.Controllers
             return klasses;
         }
 
-        public async Task<IActionResult> ZeitSpeichern(DateTime startdatum, DateTime enddatum)
+        public async Task<IActionResult> ZeitSpeichern(string startdatum, string enddatum)
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
 
-            User currentUser = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
-            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser.Klasse.Id).FirstOrDefault();
+            List<User> currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
+            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
 
-            klasse.Startdatum = startdatum;
-            klasse.EndDatum = enddatum;
+            Regex rgDate = new Regex(@"(\d{1,2})\.(\d{1,2})\.(\d{4})");
+            Regex rgTime = new Regex(@"([0-9][0-9]:[0-9][0-9])");
+
+            MatchCollection startdatumArray = rgDate.Matches(startdatum);
+            MatchCollection startzeitArray = rgTime.Matches(startdatum);
+            string startzeitBackslash = startdatumArray[0].ToString().Replace(".", "/");
+            string startdatumString = startzeitBackslash + " " + startzeitArray[0].ToString();
+
+            MatchCollection enddatumArray = rgDate.Matches(enddatum);
+            MatchCollection endzeitArray = rgTime.Matches(enddatum);
+            string endzeitBackslash = enddatumArray[0].ToString().Replace(".", "/");
+            string enddatumString = endzeitBackslash + " " + endzeitArray[0].ToString();
+
+            klasse.Startdatum = DateTime.ParseExact(startdatumString, "dd/MM/yyyy HH:mm", null);
+            klasse.EndDatum = DateTime.ParseExact(enddatumString, "dd/MM/yyyy HH:mm", null);
+            //klasse.EndDatum = DateTime.Parse(enddatum);
             _dbContext.SaveChanges();
 
-            return View("SchuelerListe", getUsersFromClass());
+            return View("Index", Index());
         }
 
 
