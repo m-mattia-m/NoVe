@@ -53,7 +53,7 @@ namespace NoVe.Controllers
                             {
                                 HttpContext.Session.SetInt32("_UserID", user.Id);
                                 HttpContext.Session.SetString("_UserRole", user.Role);
-                                Console.WriteLine("Speichern auf der Session hat funktioniert: " + user.Id);
+                                Console.WriteLine("Speichern auf der Session hat funktioniert '_UserID': " + user.Id);
                             }
                             catch (Exception e)
                             {

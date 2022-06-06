@@ -259,3 +259,5 @@ C:/Users/wick/Source/Repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimeconfig.cache
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/NoVe.csproj.AssemblyReference.cache
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KlassenHinzufuegen.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Noten/Index.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Noten/NotenEdit.cshtml.g.cs
