@@ -49,21 +49,17 @@ namespace NoVe.Controllers
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
 
-            // Set Class - only for testing
+            // Create Class - only for testing
             //Klasse klasse1 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
             //User user1 = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
             //user1.Klasse = klasse1;
             //_dbContext.SaveChanges();
 
-            //Set Student Class - only for testing
-            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
-            //User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
-            //user2.Klasse = klasse2;
-            //_dbContext.SaveChanges();
-            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
-            //User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
-            //user2.Klasse = klasse2;
-            //_dbContext.SaveChanges();
+            //Set Student into Class - only for testing
+            Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
+            User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
+            user2.Klasse = klasse2;
+            _dbContext.SaveChanges();
 
             List<User> currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
             Klasse klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
@@ -77,13 +73,6 @@ namespace NoVe.Controllers
                     users.Add(user);
                 }
             }
-
-            //for (int i = 0; i < klasse.Users.Count; i++) {
-            //    if (klasse.Users[i].Role == "schueler")
-            //    {
-            //        users.Add(klasse.Users[i]);
-            //    }
-            //}
 
             return users;
         }
@@ -127,6 +116,17 @@ namespace NoVe.Controllers
             _dbContext.SaveChanges();
 
             return View("Index", Index());
+        }
+
+        public IActionResult schuelerLoeschen(int ID)
+        {
+            User user = _dbContext.Users.Include(k => k.Klasse).FirstOrDefault(u => u.Id == ID);
+            //Klasse klasse = _dbContext.Klasses.Include(u => u.Users).FirstOrDefault(k => k.Id == user.Klasse.Id);
+            //klasse.Users.Remove(user);
+            user.Klasse = null;
+            _dbContext.SaveChanges();
+
+            return View("SchuelerListe", getUsersFromClass());
         }
 
 
