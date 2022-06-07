@@ -64,6 +64,12 @@ namespace NoVe.Models
             return View(getAllKlassen());
         }
 
+        public IActionResult klassenEdit(int ID)
+        {
+          HttpContext.Session.SetInt32("_KlassenID", ID);
+          return View(getSpecificKlasse(ID));
+        }
+
         public IActionResult KlassenArchiv()
         {
           return View(getAllKlassenAchive());
@@ -79,7 +85,7 @@ namespace NoVe.Models
           return View();
         }
 
-        public IActionResult AddKlasse(string KlasseName, int AktuellesLehrjahr, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
+        public IActionResult AddKlasse(string KlasseName, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
           var newKlasse = new Klasse();
           
@@ -94,6 +100,22 @@ namespace NoVe.Models
           return View("KlassenVerwalten", getAllKlassen());
         }
 
+        public IActionResult EditKlasse(string KlasseName, string EingabedatumStart, string EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
+        {
+          int Id = (int)HttpContext.Session.GetInt32("_KlassenID");
+          var editKlasse = _dbContext.Klasses.Where(x => x.Id == Id).FirstOrDefault();
+
+          var EingabedatumStartDate = DateTime.Parse(EingabedatumStart);
+          var EingabedatumEndeDate = DateTime.Parse(EingabedatumEnde);
+
+          editKlasse.KlasseName = KlasseName;
+          editKlasse.Startdatum = EingabedatumStartDate;
+          editKlasse.EndDatum = EingabedatumEndeDate;
+
+          _dbContext.SaveChanges();
+          return View("KlassenVerwalten", getAllKlassen());
+        }
+        
         public int createKey()
         {
           Random rnd = new Random();
@@ -278,6 +300,11 @@ namespace NoVe.Models
         private List<User> getSpecificUser(int Id)
         {
             return _dbContext.Users.Where(u => u.Id == Id).ToList();
+        }
+
+        private List<Klasse> getSpecificKlasse(int Id)
+        {
+          return _dbContext.Klasses.Where(k => k.Id == Id).ToList(); ;
         }
 
         private List<User> getAllUsers()

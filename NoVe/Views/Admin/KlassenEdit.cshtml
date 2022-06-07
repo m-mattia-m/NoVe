@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Klasse bearbeiten";
+}
+
+<div class="text-center">
+    <h1 class="display-4 class-title">Klasse bearbeiten</h1>
+    <div class="login-wrapper">
+        <!-- Html.BeginForm(Method, Controller) -->
+        @using (Html.BeginForm("EditKlasse", "Admin"))
+        {
+            @foreach (var klasse in Model)
+            {
+                <div class="login-form">
+                    <label class="form-login-label" name="KlasseName">Klassenname</label>
+                    <input class="form-login" type="text" name="KlasseName" id="KlasseName" value="@klasse.KlasseName"/>
+
+                    <label class="form-login-label" name="EingabedatumStart">Startdatum</label>
+                    <input class="form-login" type="text" name="EingabedatumStart" id="EingabedatumStart" value="@klasse.Startdatum"/>
+
+                    <label class="form-login-label" name="EingabedatumEnde">Enddatum</label>
+                    <input class="form-login" type="text" name="EingabedatumEnde" id="EingabedatumEnde" value="@klasse.EndDatum"/>
+
+                    <label class="form-login-label" name="BerufName">Beruf</label>
+                    <select class="form-login" name="BerufName" id="BerufName">
+                        <option style="color: white !important;" value="1">Informatiker</option>
+                    </select>
+
+                    <div class="login-buttons">
+                        <input class="login-submit" type="submit" name="submit" value="Klasse speichern" />
+                        <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenVerwalten">Zurück zur Verwaltung</a>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
