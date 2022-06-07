@@ -24,7 +24,7 @@
                 <tr>
                     <td>@klasse.KlasseName</td>
                     <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@klasse.Id>Details</a></td>
-                    <td><a asp-controller="Edit" asp-action="" asp-route-id=@klasse.Id>Bearbeiten</a></td>
+                    <td><a asp-controller="Admin" asp-action="KlassenEdit" asp-route-id=@klasse.Id>Bearbeiten</a></td>
                     <td>@Html.ActionLink("Löschen", "klasseloeschen", new { id = klasse.Id})</td>
                 </tr>
             }
