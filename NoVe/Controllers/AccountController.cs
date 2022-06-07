@@ -35,9 +35,21 @@ namespace NoVe.Controllers
       return View();
     }
 
+    public IActionResult Logout()
+      {
+        HttpContext.Session.SetInt32("_UserID", -1);
+        HttpContext.Session.SetString("_UserRole", "");
+        TempData["UserID"] = null;
+        return View("../Home/Index");
+      }
+
+      public IActionResult Register()
+      {
+        return View();
+      }
+
     public IActionResult setLogin(string Email, string Password)
     {
-
       try
       {
         string passwordHash = hashPassword(Password);
@@ -61,6 +73,50 @@ namespace NoVe.Controllers
               }
               ViewBag.Message = string.Format("Du hast dich erfolgreich angemeldet");
               return View("~/Views/Account/Message.cshtml");
+                string passwordHash = hashPassword(Password);
+                var user = _dbContext.Users.Where(b => b.Email == Email).FirstOrDefault();
+                if (user.VerificationStatus == 1)
+                {
+                    if (user.AdminVerification == 1)
+                    {
+                        if (user.PasswordHash == passwordHash)
+                        {
+                            Console.WriteLine("Passwort stimmt überein");
+                            try
+                            {
+                                HttpContext.Session.SetInt32("_UserID", user.Id);
+                                HttpContext.Session.SetString("_UserRole", user.Role);
+                                TempData["UserID"] = user.Id;
+                                Console.WriteLine("Speichern auf der Session hat funktioniert: " + user.Id);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Fehler beim speichern auf der Session");
+                            }
+                            ViewBag.Message = string.Format("Du hast dich erfolgreich angemeldet");
+                            return GetLandingPage();
+                            //return View("~/Views/Account/Message.cshtml");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Passwort ist falsch.");
+                            ViewBag.Message = string.Format("Dein Passwort ist Falsch");
+                            return View("~/Views/Account/Message.cshtml");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Dein Administrator muss zuerst noch deinen Account bestätigen.");
+                        ViewBag.Message = string.Format("Dein Administrator muss zuerst noch deinen Account bestätigen.");
+                        return View("~/Views/Account/Message.cshtml");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Du hast deinen Account noch nicht verifiziert");
+                    ViewBag.Message = string.Format("Du hast deinen Account noch nicht verifiziert");
+                    return View("~/Views/Account/Message.cshtml");
+                }
             }
             else
             {
@@ -201,9 +257,6 @@ namespace NoVe.Controllers
         }
       }
 
-      return false;
-    }
-
     public string checkMailDomain(string Email)
     {
       Regex rg = new Regex(@"(?<=@)[^.]+([a-z0-9]+\.)*[a-z0-9]+\.[a-z]+");
@@ -250,6 +303,26 @@ namespace NoVe.Controllers
 
         var user = _dbContext.Users.Where(b => b.Email == Email).FirstOrDefault();
         if (user.VerificationKey == verificationKey)
+        private IActionResult GetLandingPage()
+        {
+            string Role = HttpContext.Session.GetString("_UserRole");
+            if (Role.Equals("admin"))
+            {
+                return View("../Admin/Index");
+            }else if (Role.Equals("lehrer"))
+            {
+                return View("../Lehrer/Index");
+            }else if (Role.Equals("schueler"))
+            {
+                return View("");
+            }else if (Role.Equals("lehrmeister"))
+            {
+                return View("");
+            }
+            return View();
+        }
+
+        public void sendMail()
         {
           Console.WriteLine("Verifizierung erfolgreich");
           user.VerificationStatus = 1;
