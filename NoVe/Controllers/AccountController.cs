@@ -30,6 +30,14 @@ namespace NoVe.Controllers
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.SetInt32("_UserID", -1);
+            HttpContext.Session.SetString("_UserRole", "");
+            TempData["UserID"] = null;
+            return View("../Home/Index");
+        }
+
         public IActionResult Register()
         {
             return View();
@@ -53,6 +61,7 @@ namespace NoVe.Controllers
                             {
                                 HttpContext.Session.SetInt32("_UserID", user.Id);
                                 HttpContext.Session.SetString("_UserRole", user.Role);
+                                TempData["UserID"] = user.Id;
                                 Console.WriteLine("Speichern auf der Session hat funktioniert: " + user.Id);
                             }
                             catch (Exception e)
