@@ -9,7 +9,6 @@ namespace NoVe.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int KompetenzbereichId { get; set; }
         public Kompetenzbereich Kompetenzbereich { get; set; }
         public List<NoteView> NoteView { get; set; }
     }
