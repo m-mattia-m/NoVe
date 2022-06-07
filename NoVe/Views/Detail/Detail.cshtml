@@ -1,22 +1,21 @@
 ﻿@model User
 
 @{
-    ViewData["Title"] = "Detail Schueler";
+    ViewData["Title"] = "Detail" + @Model.Role;
 }
 
-@*<p class="page-title">@Model.Vorname @Model.Nachname</p>
+<p class="page-title">@Model.Vorname @Model.Nachname</p>
 <p>Email Adresse: <a href="mailto:@Model.Email">@Model.Email</a></p>
 <p>Rolle: @Model.Role</p>
-@if (@Model.Klasse != null)
+@if (@Model.Role == "Lehrer" || @Model.Role == "Schueler")
 {
-    <p>Klasse: <a asp-action="KlassenDetails" asp-controller="Klasse" asp-route-id=@Model.Klasse.Id>@Model.Klasse.KlasseName</a></p>
+    <p>Klasse: <a asp-action="DetailKlasse" asp-controller="Detail" asp-route-id=@Model.Klasse.Id>@Model.Klasse.KlasseName</a></p>
 }
-@if (!(@Model.LehrmeisterEmail == "" || @Model.LehrmeisterEmail == null))
-{
-    <p>Lehrmeister: <a asp-action="Index" asp-controller="Detail" asp-route-id=@Model.LehrmeisterEmail</a>@Model.LehrmeisterEmail</p>
-}
-<p>Lehrbetrieb: @Model.Firma</p>
 @if (@Model.Role == "Schueler")
 {
+    <p>Lehrmeister: <a asp-action="IndexMail" asp-controller="Detail" asp-route-id=@Model.LehrmeisterEmail>@Model.LehrmeisterEmail</a></p>
+    <p>Klasse: <a asp-action="DetailKlasse" asp-controller="Detail" asp-route-id=@Model.Klasse.Id>@Model.Klasse.KlasseName</a></p>
+    <p>Lehrbetrieb: @Model.Firma</p>
+
     <a asp-action="Index" asp-controller="Noten" asp-route-id=@Model.Id><button class="btn btn-outline-primary">Zu den Noten</button></a>
-}*@
+}
