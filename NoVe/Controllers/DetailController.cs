@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using NoVe.Models;
 
 namespace NoVe.Controllers
 {
@@ -22,6 +19,11 @@ namespace NoVe.Controllers
         public IActionResult Index(int ID)
         {
             return View("Detail", _dbContext.Users.FirstOrDefault(u => u.Id == ID));
+        }
+
+        public IActionResult DetailKlasse(int ID)
+        {
+            return View("DetailKlasse", _dbContext.Klasses.FirstOrDefault(u => u.Id == ID));
         }
     }
 }
