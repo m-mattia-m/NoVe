@@ -49,6 +49,11 @@ namespace NoVe.Models
             return View(getAllUsers());
         }
 
+        public IActionResult BenutzerArchiv()
+        {
+          return View(getAllUsersArchiv());
+        }
+
         public IActionResult Domains()
         {
           return View(getAllDomains());
@@ -57,6 +62,11 @@ namespace NoVe.Models
         public IActionResult KlassenVerwalten()
         {
             return View(getAllKlassen());
+        }
+
+        public IActionResult KlassenArchiv()
+        {
+          return View(getAllKlassenAchive());
         }
 
         public IActionResult Berufe()
@@ -72,15 +82,31 @@ namespace NoVe.Models
         public IActionResult AddKlasse(string KlasseName, int AktuellesLehrjahr, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
           var newKlasse = new Klasse();
+          
 
           newKlasse.KlasseName = KlasseName;
-          newKlasse.Startdatum = EingabedatumStart;
+          newKlasse.Startdatum = EingabedatumStart; 
           newKlasse.EndDatum = EingabedatumEnde;
+          newKlasse.KlassenInviteCode = createKey();
 
           _dbContext.Klasses.Add(newKlasse);
           _dbContext.SaveChanges();
           return View("KlassenVerwalten", getAllKlassen());
-    }
+        }
+
+        public int createKey()
+        {
+          Random rnd = new Random();
+          int VerificationKey = rnd.Next(100000, 1000000);
+          int keys = _dbContext.Klasses.Where(k => k.KlassenInviteCode == VerificationKey).Count();
+          if (keys != 0)
+          {
+            return createKey();
+          } else
+          {
+            return VerificationKey;
+          }
+        }
 
         public IActionResult BerufEdit(int ID)
         {
@@ -109,6 +135,39 @@ namespace NoVe.Models
             HttpContext.Session.SetInt32("_UserEditID", ID);
             return View(getSpecificUser(ID));
         }
+
+        public IActionResult BenutzerArchive(int ID)
+        {
+          User user = _dbContext.Users.Where(b => b.Id == ID).First();
+          user.archived = true;
+          _dbContext.SaveChanges();
+          return View("AlleBenutzer", getAllUsers());
+        }
+
+        public IActionResult KlassenArchive(int ID)
+        {
+          Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
+          klasse.archived = true;
+          _dbContext.SaveChanges();
+          return View("KlassenVerwalten", getAllKlassen());
+        }
+
+
+        public IActionResult BenutzerWiederherstellen(int ID)
+        {
+          User user = _dbContext.Users.Where(b => b.Id == ID).First();
+          user.archived = false;
+          _dbContext.SaveChanges();
+          return View("BenutzerArchiv", getAllUsersArchiv());
+        }
+        public IActionResult KlasseWiederherstellen(int ID)
+        {
+          Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
+          klasse.archived = false;
+          _dbContext.SaveChanges();
+          return View("KlassenArchiv", getAllKlassenAchive());
+        }
+
 
         public IActionResult Kompetenzbereiche(int ID)
         {
@@ -203,7 +262,12 @@ namespace NoVe.Models
 
         private List<Klasse> getAllKlassen()
         {
-          return _dbContext.Klasses.ToList();
+          return _dbContext.Klasses.Where(k => k.archived == false).ToList();
+        }
+
+        private List<Klasse> getAllKlassenAchive()
+        {
+          return _dbContext.Klasses.Where(k => k.archived == true).ToList();
         }
 
         private List<Fach> getSpecificFach(int Id)
@@ -219,7 +283,14 @@ namespace NoVe.Models
         private List<User> getAllUsers()
         {
 
-            return _dbContext.Users.Where(u => u.AdminVerification == 1).ToList();
+            return _dbContext.Users.Where(u => u.AdminVerification == 1 && u.archived == false).ToList();
+
+        }
+
+        private List<User> getAllUsersArchiv()
+        {
+
+        return _dbContext.Users.Where(u => u.AdminVerification == 1 && u.archived == true).ToList();
 
         }
 
