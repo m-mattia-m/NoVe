@@ -69,7 +69,8 @@ namespace NoVe.Controllers
                                 Console.WriteLine("Fehler beim speichern auf der Session");
                             }
                             ViewBag.Message = string.Format("Du hast dich erfolgreich angemeldet");
-                            return View("~/Views/Account/Message.cshtml");
+                            return GetLandingPage();
+                            //return View("~/Views/Account/Message.cshtml");
                         }
                         else
                         {
@@ -249,6 +250,7 @@ namespace NoVe.Controllers
                     Console.WriteLine("Verifizierung erfolgreich");
                     user.VerificationStatus = 1;
                     _dbContext.SaveChanges();
+                    return GetLandingPage();
                 }
                 else
                 {
@@ -263,6 +265,25 @@ namespace NoVe.Controllers
 
             return View();
 
+        }
+
+        private IActionResult GetLandingPage()
+        {
+            string Role = HttpContext.Session.GetString("_UserRole");
+            if (Role.Equals("admin"))
+            {
+                return View("../Admin/Index");
+            }else if (Role.Equals("lehrer"))
+            {
+                return View("../Lehrer/Index");
+            }else if (Role.Equals("schueler"))
+            {
+                return View("");
+            }else if (Role.Equals("lehrmeister"))
+            {
+                return View("");
+            }
+            return View();
         }
 
         public void sendMail()
