@@ -86,7 +86,7 @@ namespace NoVe.Controllers
                 fachKompetenzbereich.InEditTime = InEditTime;
                 fachKompetenzbereich.Kompetenzbereich = kompetenzbereich;
                 fachKompetenzbereich.NoteView = GetNoteView(userId, kompetenzbereich.Id);
-                fachKompetenzbereich.NotenwertKompetenzbereich = calcKompetenzbereichNote(kompetenzbereich.Id);
+                fachKompetenzbereich.NotenwertKompetenzbereich = runden(calcKompetenzbereichNote(kompetenzbereich.Id), kompetenzbereich.Rundung);
 
                 fachKompetenzbereiche.Add(fachKompetenzbereich);
                 i++;
@@ -169,7 +169,7 @@ namespace NoVe.Controllers
             }
         }
 
-        public async Task<IActionResult> NotenBearbeiten(float notenwert)
+        public async Task<IActionResult> NotenBearbeiten(double notenwert)
         {
             int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
             Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
@@ -197,46 +197,54 @@ namespace NoVe.Controllers
             return RedirectToAction("SchuelerListe", "Lehrer");
         }
 
-        public float calcKompetenzbereichNote(int kompetenzbereichId)
+        public double calcKompetenzbereichNote(int kompetenzbereichId)
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
             List<Fach> faecher = _dbContext.Fachs.Where(f => f.KompetenzbereichId == kompetenzbereichId).ToList();
-            float kompetenzbereichSchnitt = 0;
+            double kompetenzbereichSchnitt = 0;
+            double gewichtungWoNochKeineNote = 0;
 
             foreach (Fach fach in faecher)
             {
-                float notenWert = (float)getNoteFromFach(fach.Id, userId);
-                float rundung = (float)fach.Rundung;
-                float gerundeteNote = runden(notenWert, rundung);
-                kompetenzbereichSchnitt = (float)(kompetenzbereichSchnitt + gerundeteNote * (40 / 100));
-                var asdf = "";
-            }
+                double notenWert = getNoteFromFach(fach.Id, userId);
 
+                if (notenWert == 0)
+                {
+                    gewichtungWoNochKeineNote = gewichtungWoNochKeineNote + fach.Gewichtung;
+                }
+                else
+                {
+                    double rundung = fach.Rundung;
+                    double gerundeteNote = runden(notenWert, rundung);
+                    kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + gerundeteNote * fach.Gewichtung / 100);
+                }
+            }
+            kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
             return kompetenzbereichSchnitt;
         }
 
-        public float getNoteFromFach(int fachId, int userId)
+        public double getNoteFromFach(int fachId, int userId)
         {
             Note note = _dbContext.Notes.Where(n => n.FachId == fachId).Where(n => n.UserId == userId).FirstOrDefault();
-            float notenwert = note.Notenwert;
+            double notenwert = note.Notenwert;
 
             return notenwert;
         }
 
-        public float runden(float note, float rundung)
+        public double runden(double note, double rundung)
         {
-            float gerundeteNote = 0;
-            if (rundung == 0.1F)
+            double gerundeteNote = 0;
+            if (rundung == 0.1)
             {
-                gerundeteNote = (float)Math.Round(note, 1);
+                gerundeteNote = Math.Round(note, 1);
             }
-            else if (rundung == 0.5F)
+            else if (rundung == 0.5)
             {
-                gerundeteNote = (float)Math.Round(Math.Round(note * 2, 0) / 2, 1);
+                gerundeteNote = Math.Round(Math.Round(note * 2, 0) / 2, 1);
             }
-            else if (rundung == 1F)
+            else if (rundung == 1)
             {
-                gerundeteNote = (float)Math.Round(note, 0);
+                gerundeteNote = Math.Round(note, 0);
             }
 
             return gerundeteNote;
