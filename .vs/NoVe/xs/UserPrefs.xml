@@ -1,38 +1,21 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-<<<<<<< Updated upstream
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AdminController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Admin/KlassenVerwalten.cshtml">
     <Files>
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="226" Column="41" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Admin/AlleBenutzer.cshtml">
-    <Files>
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="539" Column="76" />
-      <File FileName="NoVe/Views/Admin/AlleBenutzer.cshtml" Line="30" Column="41" />
->>>>>>> Stashed changes
+      <File FileName="NoVe/Controllers/AdminController.cs" Line="258" Column="66" />
+      <File FileName="NoVe/Views/Admin/KlassenVerwalten.cshtml" Line="13" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="AdminController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
-<<<<<<< Updated upstream
-                <Node name="Admin" expanded="True" />
-                <Node name="Detail" expanded="True" />
-                <Node name="Noten" expanded="True" />
-              </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="css" expanded="True" />
-=======
                 <Node name="Admin" expanded="True">
-                  <Node name="AlleBenutzer.cshtml" selected="True" />
+                  <Node name="KlassenVerwalten.cshtml" selected="True" />
                 </Node>
                 <Node name="Shared" expanded="True" />
->>>>>>> Stashed changes
               </Node>
             </Node>
           </Node>

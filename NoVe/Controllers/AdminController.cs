@@ -247,11 +247,17 @@ namespace NoVe.Models
 
         public IActionResult KlasseLoeschen(int ID)
         {
-            Klasse klasse = _dbContext.Klasses.FirstOrDefault(k => k.Id == ID);
-            _dbContext.Remove(klasse);
-            _dbContext.SaveChanges();
-
-            return View("KlassenVerwalten", getAllKlassen());
+            Klasse klasse = _dbContext.Klasses.Include(x => x.Users).FirstOrDefault(k => k.Id == ID);
+            if (klasse.Users.Count == 0)
+            {
+                _dbContext.Remove(klasse);
+                _dbContext.SaveChanges();
+                return View("KlassenVerwalten", getAllKlassen());
+            }
+            else {
+                ViewBag.Message = string.Format("Es hat noch Personen in der Klasse, diese zuerst entfernen oder die Klasse archivieren.");
+                return View("KlassenVerwalten", getAllKlassen());
+            }
         }
 
         public async Task<IActionResult> AblehnenAsync(int ID)
