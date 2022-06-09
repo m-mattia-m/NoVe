@@ -225,11 +225,13 @@ namespace NoVe.Controllers
             }
             else if (Role.Equals("schueler"))
             {
-                return View("");
+                //return View("../Noten/Index");
+                return RedirectToAction("Index", "Noten");
             }
-            else if (Role.Equals("lehrmeister"))
+            else if (Role.Equals("berufsbildner"))
             {
-                return View("");
+                //return View("../Berufsbildner/Index");
+                return RedirectToAction("Index", "Berufsbildner");
             }
             return View();
         }

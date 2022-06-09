@@ -1,22 +1,23 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/LehrerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Noten/Index.cshtml">
     <Files>
-      <File FileName="NoVe/Views/Noten/Index.cshtml" Line="20" Column="125" />
-      <File FileName="NoVe/Controllers/NotenController.cs" Line="180" Column="47" />
-      <File FileName="NoVe/Controllers/LehrerController.cs" Line="23" Column="1" />
-      <File FileName="NoVe/Views/Berufsbildner/Lernende.cshtml" Line="9" Column="26" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="234" Column="47" />
+      <File FileName="NoVe/Controllers/BerufsbildnerController.cs" Line="25" Column="48" />
+      <File FileName="NoVe/Views/Noten/Index.cshtml" Line="9" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="LehrerController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Berufsbildner" expanded="True" />
-                <Node name="Lehrer" expanded="True" />
+                <Node name="Noten" expanded="True">
+                  <Node name="Index.cshtml" selected="True" />
+                </Node>
+              </Node>
+              <Node name="wwwroot" expanded="True">
+                <Node name="css" expanded="True" />
               </Node>
             </Node>
           </Node>
