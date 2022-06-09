@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading.Tasks;
-using NoVe.Models;
 
 namespace NoVe.Controllers
 {
@@ -14,14 +12,19 @@ namespace NoVe.Controllers
             _dbContext = dbContext;
         }
 
-        public IActionResult Index(string Email)
+        public IActionResult IndexMail(string Email)
         {
-            return View("Detail", _dbContext.Users.FirstOrDefault(x => x.Email == Email));
+            return View("Detail", _dbContext.Users.Include(x => x.Klasse).FirstOrDefault(x => x.Email == Email));
         }
 
         public IActionResult Index(int ID)
         {
-            return View("Detail", _dbContext.Users.FirstOrDefault(u => u.Id == ID));
+            return View("Detail", _dbContext.Users.Include(x => x.Klasse).FirstOrDefault(u => u.Id == ID));
+        }
+
+        public IActionResult DetailKlasse(int ID)
+        {
+            return View("DetailKlasse", _dbContext.Klasses.Include(x => x.Users).FirstOrDefault(u => u.Id == ID));
         }
     }
 }

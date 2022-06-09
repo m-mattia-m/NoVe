@@ -2,11 +2,11 @@
 @inject DatabaseHelper helper
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Benutzer Archiv";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Liste aller Benutzer</h1>
+<h1>Liste aller archivierten Benutzer</h1>
 <table class="table accept-users">
     <thead>
         <tr>
@@ -26,16 +26,13 @@
                     <td>@user.Email</td>
                     <td>@user.Role</td>
                     <td>
-                        <span style="margin-right: 10px">@Html.ActionLink("Löschen", "benutzerloeschen", new { id = user.Id })</span>
-                        <span style="margin-right: 10px">@Html.ActionLink("Bearbeiten", "benutzerEdit", new { id = user.Id })</span>
-                        <span>@Html.ActionLink("Archivieren", "benutzerArchive", new { id = user.Id })</span>
+                        <span>@Html.ActionLink("Wiederherstellen", "benutzerWiederherstellen", new { id = user.Id })</span>
                     </td>
                 </tr>
             }
         }
     </tbody>
 </table>
-
 <div class="login-buttons" style="justify-content: center;">
-  <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="BenutzerArchiv" style="width: 30%;text-align: center;">Zum Benutzer Archiv</a>
+  <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="AlleBenutzer" style="width: 30%;text-align: center;">Zurück zur Benutzerliste</a>
 </div>

@@ -4,20 +4,23 @@
     ViewData["Title"] = "Detail Klasse " + Model.KlasseName;
 }
 
-@*<p class="page-title">@Model.KlasseName</p>
+<p class="page-title">@Model.KlasseName</p>
 <p>Einladungscode: @Model.KlassenInviteCode</p>
 <p>Start Periode: @Model.Startdatum</p>
 <p>Ende Periode: @Model.EndDatum</p>
-<P>Klassenlehrer: <a asp-controller="Detail" asp-action="Index" asp-route-id=@Model</P>
 
 <table>
     <tr>
         <th>Schüler</th>
     </tr>
-    @foreach (var schueler in Model.Users)
+    @if (Model.Users != null)
     {
-        <tr>
-            <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@schueler.Id>@schueler.Vorname @schueler.Nachname</a></td>
-        </tr>
+        @foreach (var schueler in Model.Users)
+        {
+            <tr>
+                <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@schueler.Id>@schueler.Vorname @schueler.Nachname</a></td>
+            </tr>
+        }
+
     }
-</table>*@
+</table>

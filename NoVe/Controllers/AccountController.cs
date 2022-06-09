@@ -35,9 +35,10 @@ namespace NoVe.Controllers
             return View();
         }
 
+
+
         public IActionResult setLogin(string Email, string Password)
         {
-
             try
             {
                 string passwordHash = hashPassword(Password);
@@ -46,26 +47,35 @@ namespace NoVe.Controllers
                 {
                     if (user.AdminVerification == 1)
                     {
-                        if (user.PasswordHash == passwordHash)
+                        if (user.archived == false)
                         {
-                            Console.WriteLine("Passwort stimmt überein");
-                            try
+                            if (user.PasswordHash == passwordHash)
                             {
-                                HttpContext.Session.SetInt32("_UserID", user.Id);
-                                HttpContext.Session.SetString("_UserRole", user.Role);
-                                Console.WriteLine("Speichern auf der Session hat funktioniert '_UserID': " + user.Id);
+                                Console.WriteLine("Passwort stimmt überein");
+                                try
+                                {
+                                    HttpContext.Session.SetInt32("_UserID", user.Id);
+                                    HttpContext.Session.SetString("_UserRole", user.Role);
+                                    TempData["UserID"] = user.Id;
+                                    Console.WriteLine("Speichern auf der Session hat funktioniert '_UserID': " + user.Id);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine("Fehler beim speichern auf der Session");
+                                }
+                                return GetLandingPage();
                             }
-                            catch (Exception e)
+                            else
                             {
-                                Console.WriteLine("Fehler beim speichern auf der Session");
+                                Console.WriteLine("Passwort ist falsch.");
+                                ViewBag.Message = string.Format("Dein Passwort ist Falsch");
+                                return View("~/Views/Account/Message.cshtml");
                             }
-                            ViewBag.Message = string.Format("Du hast dich erfolgreich angemeldet");
-                            return View("~/Views/Account/Message.cshtml");
                         }
                         else
                         {
-                            Console.WriteLine("Passwort ist falsch.");
-                            ViewBag.Message = string.Format("Dein Passwort ist Falsch");
+                            Console.WriteLine("Ist archiviert.");
+                            ViewBag.Message = string.Format("Du wurdest archiviert, melde dich beim Admin.");
                             return View("~/Views/Account/Message.cshtml");
                         }
                     }
@@ -101,13 +111,14 @@ namespace NoVe.Controllers
 
             Console.WriteLine("Berufsbildner: " + berufsbildner);
             if (berufsbildner != "on")
-            { 
+            {
                 Console.WriteLine("Email-Domain wird überprüft");
                 if (checkMail(Email) == true)
                 {
                     Console.WriteLine("Email entspricht der Domain");
                 }
-                else {
+                else
+                {
                     Console.WriteLine("Email hat eine ungültige Domain");
                     ViewBag.Message = string.Format("Deine Emaildomain ist nicht erlabut.");
                     return View("~/Views/Account/Register.cshtml");
@@ -182,7 +193,8 @@ namespace NoVe.Controllers
             var domains = _dbContext.Domains.ToList();
             foreach (Domains currentDomain in domains)
             {
-                if (currentDomain.AllowedDomains == domain) {
+                if (currentDomain.AllowedDomains == domain)
+                {
                     Console.WriteLine("Whole Domain: " + domain);
                     //Console.WriteLine("Subdomain: " + subdomain);
                     return true;
@@ -190,6 +202,36 @@ namespace NoVe.Controllers
             }
 
             return false;
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.SetInt32("_UserID", -1);
+            HttpContext.Session.SetString("_UserRole", "");
+            TempData["UserID"] = null;
+            return View("../Home/Index");
+        }
+
+        private IActionResult GetLandingPage()
+        {
+            string Role = HttpContext.Session.GetString("_UserRole");
+            if (Role.Equals("admin"))
+            {
+                return View("../Admin/Index");
+            }
+            else if (Role.Equals("lehrer"))
+            {
+                return View("../Lehrer/Index");
+            }
+            else if (Role.Equals("schueler"))
+            {
+                return View("");
+            }
+            else if (Role.Equals("lehrmeister"))
+            {
+                return View("");
+            }
+            return View();
         }
 
         public string checkMailDomain(string Email)
@@ -205,7 +247,8 @@ namespace NoVe.Controllers
                 string returnVal = domainParts[1] + "." + domainParts[2];
                 return returnVal;
             }
-            else if(domainParts.Length == 2) {
+            else if (domainParts.Length == 2)
+            {
                 string returnVal = domainParts[0] + "." + domainParts[1];
                 return returnVal;
             }
@@ -220,7 +263,8 @@ namespace NoVe.Controllers
 
             string[] domainParts = emailDomainString.Split('.');
 
-            if (domainParts.Length > 2) {
+            if (domainParts.Length > 2)
+            {
                 return domainParts[0];
             }
             return "";
