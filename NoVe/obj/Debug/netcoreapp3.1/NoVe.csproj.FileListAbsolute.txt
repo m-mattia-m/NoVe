@@ -262,7 +262,6 @@ C:/Users/wick/Source/Repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimeconfig.cache
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/NoVe.csproj.AssemblyReference.cache
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KlassenHinzufuegen.cshtml.g.cs
-<<<<<<< HEAD
 C:/Users/wick/source/repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Message.cshtml.g.cs
 C:/Users/wick/source/repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/AlleBenutzer.cshtml.g.cs
 C:/Users/wick/source/repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/benutzerEdit.cshtml.g.cs
@@ -383,9 +382,9 @@ C:/Users/simon/Source/Repos/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/BenutzerArchiv.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Domains.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KlassenArchiv.cshtml.g.cs
-=======
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Noten/Index.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Noten/NotenEdit.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Berufsbildner/Lernende.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Berufsbildner/Index.cshtml.g.cs
 >>>>>>> e1d46b3bc8bbc31eda5d7923107d73d5e8f6e953
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KlassenEdit.cshtml.g.cs
