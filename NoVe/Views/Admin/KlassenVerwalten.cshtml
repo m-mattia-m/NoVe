@@ -27,13 +27,15 @@
                     <td><a asp-controller="Detail" asp-action="DetailKlasse" asp-route-id=@klasse.Id>Details</a></td>
                     <td><a asp-controller="Admin" asp-action="KlassenEdit" asp-route-id=@klasse.Id>Bearbeiten</a></td>
                     <td>@Html.ActionLink("Archivieren", "KlassenArchive", new { id = klasse.Id })</td>
-                    <td>@Html.ActionLink("Löschen", "klasseloeschen", new { id = klasse.Id})</td>
+                    <td>@Html.ActionLink("Löschen", "klasseloeschen", new { id = klasse.Id })</td>
                 </tr>
             }
         }
     </tbody>
 </table>
 <div class="login-buttons">
-  <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenHinzufuegen" style="text-align: center;">Klasse hinzufügen</a>
-  <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenArchiv" style="text-align: center;">Zum Klassenarchiv</a>
+    <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenHinzufuegen" style="text-align: center;">Klasse hinzufügen</a>
+    <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenArchiv" style="text-align: center;">Zum Klassenarchiv</a>
 </div>
+<a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="ToIndexBack">Zurück</a>
+
