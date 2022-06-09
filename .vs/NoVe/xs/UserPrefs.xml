@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/LehrerController.cs">
+    <Files>
+      <File FileName="NoVe/Views/Noten/Index.cshtml" Line="20" Column="125" />
+      <File FileName="NoVe/Controllers/NotenController.cs" Line="180" Column="47" />
+      <File FileName="NoVe/Controllers/LehrerController.cs" Line="23" Column="1" />
+      <File FileName="NoVe/Views/Berufsbildner/Lernende.cshtml" Line="9" Column="26" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="NoVe" expanded="True">
+            <Node name="NoVe" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="LehrerController.cs" selected="True" />
+              </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Berufsbildner" expanded="True" />
+                <Node name="Lehrer" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.NoVe PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
