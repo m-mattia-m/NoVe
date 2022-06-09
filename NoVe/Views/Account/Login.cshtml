@@ -1,25 +1,30 @@
 @{
     ViewData["Title"] = "Login";
 }
-
+@if (ViewBag.Message != null)
+{
+    <p>@Html.Raw(ViewBag.Message)</p>
+}
 <div class="text-center">
     <h1 class="display-4">Login</h1>
     <div class="login-wrapper">
         <!-- Html.BeginForm(Method, Controller) -->
         @using (Html.BeginForm("setLogin", "Account"))
         {
-          <div class="login-form">
-            <label class="form-login-label" name="email">Email</label>
-            <input class="form-login" type="email" name="email" id="email" />
-            <label class="form-login-label" name="password">Password</label>
-            <input class="form-login" type="password" name="password" id="password" />
-            <div class="login-buttons">
-              <input class="login-submit" type="submit" name="submit" value="Einloggen" />
-              <a class="nav-link login-button login-submit" asp-area="" asp-controller="Account" asp-action="Register">Registrieren</a>
+            <div class="login-form">
+                <label class="form-login-label" name="email">Email</label>
+                <input class="form-login" type="email" name="email" id="email" />
+                <label class="form-login-label" name="password">Password</label>
+                <input class="form-login" type="password" name="password" id="password" />
+
+                <a class="nav-link login-button login-submit" asp-area="" asp-controller="Account" asp-action="PasswordForgotten">Passwort Vergessen</a>
+                <div class="login-buttons">
+                    <input class="login-submit" type="submit" name="submit" value="Einloggen" />
+                    <a class="nav-link login-button login-submit" asp-area="" asp-controller="Account" asp-action="Register">Registrieren</a>
+                </div>
+
             </div>
-            
-          </div>
-            
+
         }
     </div>
 </div>

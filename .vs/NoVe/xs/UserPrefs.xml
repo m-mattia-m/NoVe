@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Admin/KlassenVerwalten.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="258" Column="66" />
-      <File FileName="NoVe/Views/Admin/KlassenVerwalten.cshtml" Line="13" Column="2" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="303" Column="1" />
+      <File FileName="NoVe/Views/Account/SetNewPassword.cshtml" Line="16" Column="87" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,10 +12,6 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
-                <Node name="Admin" expanded="True">
-                  <Node name="KlassenVerwalten.cshtml" selected="True" />
-                </Node>
-                <Node name="Shared" expanded="True" />
               </Node>
             </Node>
           </Node>
