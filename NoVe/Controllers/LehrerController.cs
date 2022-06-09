@@ -56,10 +56,10 @@ namespace NoVe.Controllers
             //_dbContext.SaveChanges();
 
             //Set Student into Class - only for testing
-            Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
-            User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
-            user2.Klasse = klasse2;
-            _dbContext.SaveChanges();
+            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
+            //User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
+            //user2.Klasse = klasse2;
+            //_dbContext.SaveChanges();
 
             List<User> currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
             Klasse klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
