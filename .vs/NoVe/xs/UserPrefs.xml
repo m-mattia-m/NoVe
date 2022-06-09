@@ -1,24 +1,24 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AdminController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Account/profile.cshtml">
     <Files>
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="226" Column="41" />
+      <File FileName="NoVe/Views/Admin/benutzerEdit.cshtml" Line="26" Column="54" />
+      <File FileName="NoVe/Controllers/AdminController.cs" Line="538" Column="1" />
+      <File FileName="NoVe/Views/Account/profile.cshtml" Line="14" Column="1" />
+      <File FileName="NoVe/Controllers/LehrerController.cs" Line="65" Column="13" />
+      <File FileName="NoVe/Views/Admin/AlleBenutzer.cshtml" Line="13" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="AdminController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Account" expanded="True" />
+                <Node name="Account" expanded="True">
+                  <Node name="profile.cshtml" selected="True" />
+                </Node>
                 <Node name="Admin" expanded="True" />
-                <Node name="Detail" expanded="True" />
-                <Node name="Noten" expanded="True" />
-              </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="css" expanded="True" />
+                <Node name="Shared" expanded="True" />
               </Node>
             </Node>
           </Node>

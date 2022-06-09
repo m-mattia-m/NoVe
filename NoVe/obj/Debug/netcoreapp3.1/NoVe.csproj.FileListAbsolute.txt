@@ -388,3 +388,4 @@ C:/Users/simon/Source/Repos/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Berufsbildner/Index.cshtml.g.cs
 >>>>>>> e1d46b3bc8bbc31eda5d7923107d73d5e8f6e953
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KlassenEdit.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/profile.cshtml.g.cs

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace NoVe.Models
 {
@@ -301,9 +302,15 @@ namespace NoVe.Models
             return _dbContext.Fachs.Where(u => u.Id == Id).ToList();
         }
 
-        private List<User> getSpecificUser(int Id)
+        public List<User> getSpecificUser(int Id)
         {
-            return _dbContext.Users.Where(u => u.Id == Id).ToList();
+            List<User> users = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == Id).ToList();
+            if (users[0].Klasse == null) {
+                Klasse klasse = new Klasse();
+                klasse.KlassenInviteCode = 0;
+                users[0].Klasse = klasse;
+            }
+            return users;
         }
 
         private List<Klasse> getSpecificKlasse(int Id)
@@ -504,17 +511,32 @@ namespace NoVe.Models
             return View("Faecher", getFaecher(kompetenzbereichID));
         }
 
-        public async Task<IActionResult> UserBearbeiten(string vorname, string nachname, string email, string firma, string role)
+        public async Task<IActionResult> UserBearbeiten(string vorname, string nachname, string email, string firma, string role, int klassencode, string lehrmeisterEmail)
         {
-            int id = (int)HttpContext.Session.GetInt32("_UserEditID");
-            User user = _dbContext.Users.FirstOrDefault(b => b.Id == id);
+            int editUserId = (int)HttpContext.Session.GetInt32("_UserEditID");
+            User user = _dbContext.Users.FirstOrDefault(b => b.Id == editUserId);
             user.Vorname = vorname;
             user.Nachname = nachname;
             user.Email = email;
             user.Firma = firma;
             user.Role = role;
+            user.LehrmeisterEmail = lehrmeisterEmail;
+            if (klassencode != 0)
+            {
+                int KlassenCount = _dbContext.Klasses.Where(k => k.KlassenInviteCode == klassencode).Count();
+                if (KlassenCount != 0)
+                {
+                    Klasse Klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.KlassenInviteCode == klassencode).FirstOrDefault();
+                    user.Klasse = Klasse;
+                }
+                else {
+                    ViewBag.Message = string.Format("Keine Klasse mit diesem Einladungscode gefunden.");
+                    return View("benutzerEdit", getSpecificUser(editUserId));
+                }
+            }
             _dbContext.SaveChanges();
 
+            ViewBag.Message = string.Format("Alles erfolgreich gespeichert.");
             return View("AlleBenutzer", getAllUsers());
         }
     }

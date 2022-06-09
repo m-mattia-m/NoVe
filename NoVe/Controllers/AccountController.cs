@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NoVe.Controllers
 {
@@ -345,6 +346,46 @@ namespace NoVe.Controllers
             SHA256Managed sHA256ManagedString = new SHA256Managed();
             byte[] hash = sHA256ManagedString.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
+        }
+
+        public IActionResult profile()
+        {
+            int userId = (int)HttpContext.Session.GetInt32("_UserID");
+            return View(getSpecificUser(userId));
+        }
+
+        public List<User> getSpecificUser(int Id)
+        {
+            return _dbContext.Users.Where(u => u.Id == Id).ToList();
+        }
+
+        public async Task<IActionResult> ProfilSpeichern(string vorname, string nachname, string email, string firma, string lehrmeisterEmail, string passwort, string passwortCheck)
+        {
+            int userId = (int)HttpContext.Session.GetInt32("_UserID");
+            User user = _dbContext.Users.FirstOrDefault(b => b.Id == userId);
+            user.Vorname = vorname;
+            user.Nachname = nachname;
+            //user.Email = email;
+            user.Firma = firma;
+            user.LehrmeisterEmail = lehrmeisterEmail;
+
+            if (passwort != null && passwortCheck != null)
+            {
+                if (passwort == passwortCheck)
+                {
+                    string passwordhash = hashPassword(passwort);
+                    user.PasswordHash = passwordhash;
+                }
+                else {
+                    ViewBag.Message = string.Format("Passwort und Passwort-Bestätigen ist unterschiedlich");
+                    return View("profile", getSpecificUser(userId));
+                }
+            }
+
+            _dbContext.SaveChanges();
+
+            ViewBag.Message = string.Format("Angaben wurden gespeichert");
+            return View("profile", getSpecificUser(userId));
         }
     }
 }
