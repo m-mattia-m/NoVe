@@ -7,74 +7,83 @@
 }
 
 <h1>Benutzer bearbeiten</h1>
-
+@if (ViewBag.Message != null)
+{
+    <p>@Html.Raw(ViewBag.Message)</p>
+}
 <div class="login-wrapper text-center">
-  @using (Html.BeginForm("UserBearbeiten", "Admin"))
-  {
-      <div class="login-form">
-        @if (@Model.Count() != 0)
-        {
-            @foreach (var benutzer in Model)
+    @using (Html.BeginForm("UserBearbeiten", "Admin"))
+    {
+        <div class="login-form">
+            @if (@Model.Count() != 0)
             {
-                <label class="form-login-label" name="vorname">Vorname</label>
-                <input class="form-login" type="text" name="vorname" id="vorname" value="@benutzer.Vorname" />
+                @foreach (var benutzer in Model)
+                {
+                    <label class="form-login-label" name="vorname">Vorname</label>
+                    <input class="form-login" type="text" name="vorname" id="vorname" value="@benutzer.Vorname" />
 
-                <label class="form-login-label" name="nachname">Nachname</label>
-                <input class="form-login" type="text" name="nachname" id="nachname" value="@benutzer.Nachname" />
+                    <label class="form-login-label" name="nachname">Nachname</label>
+                    <input class="form-login" type="text" name="nachname" id="nachname" value="@benutzer.Nachname" />
 
-                <label class="form-login-label" name="email">E-Mail</label>
-                <input class="form-login" type="email" name="email" id="email" value="@benutzer.Email" />
+                    <label class="form-login-label" name="email">E-Mail</label>
+                    <input class="form-login" type="email" name="email" id="email" value="@benutzer.Email" />
 
-                <label class="form-login-label" name="firma">Firma</label>
-                <input class="form-login" type="text" name="firma" id="firma" value="@benutzer.Firma" />
+                    <label class="form-login-label" name="firma">Firma</label>
+                    <input class="form-login" type="text" name="firma" id="firma" value="@benutzer.Firma" />
 
-                <label class="form-login-label" name="role">Rolle</label>
-                @*<input class="form-login" type="text" name="role" id="role" value="@benutzer.Role" />*@
-                <select class="form-login" name="role" id="role">
-                    @if (benutzer.Role == "schueler")
-                    {
-                        <option selected value="schueler">Schüler</option>
-                        <option value="lehrer">Lehrer</option>
-                        <option value="berufsbildner">Berufsbildner</option>
-                        <option value="admin">Administrator</option>
-                    }
-                    else if (benutzer.Role == "lehrer")
-                    {
-                        <option value="schueler">Schüler</option>
-                        <option selected value="lehrer">Lehrer</option>
-                        <option value="berufsbildner">Berufsbildner</option>
-                        <option value="admin">Administrator</option>
-                    }
-                    else if (benutzer.Role == "berufsbildner")
-                    {
-                        <option value="schueler">Schüler</option>
-                        <option value="lehrer">Lehrer</option>
-                        <option selected value="berufsbildner">Berufsbildner</option>
-                        <option value="admin">Administrator</option>
-                    }
-                    else if (benutzer.Role == "admin")
-                    {
-                        <option value="schueler">Schüler</option>
-                        <option value="lehrer">Lehrer</option>
-                        <option value="berufsbildner">Berufsbildner</option>
-                        <option selected value="admin">Administrator</option>
-                    }
-                    else
-                    {
-                        <option selected disabled value="">Wähle eine Rolle aus</option>
-                        <option value="schueler">Schüler</option>
-                        <option value="lehrer">Lehrer</option>
-                        <option value="berufsbildner">Berufsbildner</option>
-                        <option value="admin">Administrator</option>
-                    }
-                </select>
+                    <label class="form-login-label" name="role">Rolle</label>
+                    @*<input class="form-login" type="text" name="role" id="role" value="@benutzer.Role" />*@
+                    <select class="form-login" name="role" id="role">
+                        @if (benutzer.Role == "schueler")
+                        {
+                            <option selected value="schueler">Schüler</option>
+                            <option value="lehrer">Lehrer</option>
+                            <option value="berufsbildner">Berufsbildner</option>
+                            <option value="admin">Administrator</option>
+                        }
+                        else if (benutzer.Role == "lehrer")
+                        {
+                            <option value="schueler">Schüler</option>
+                            <option selected value="lehrer">Lehrer</option>
+                            <option value="berufsbildner">Berufsbildner</option>
+                            <option value="admin">Administrator</option>
+                        }
+                        else if (benutzer.Role == "berufsbildner")
+                        {
+                            <option value="schueler">Schüler</option>
+                            <option value="lehrer">Lehrer</option>
+                            <option selected value="berufsbildner">Berufsbildner</option>
+                            <option value="admin">Administrator</option>
+                        }
+                        else if (benutzer.Role == "admin")
+                        {
+                            <option value="schueler">Schüler</option>
+                            <option value="lehrer">Lehrer</option>
+                            <option value="berufsbildner">Berufsbildner</option>
+                            <option selected value="admin">Administrator</option>
+                        }
+                        else
+                        {
+                            <option selected disabled value="">Wähle eine Rolle aus</option>
+                            <option value="schueler">Schüler</option>
+                            <option value="lehrer">Lehrer</option>
+                            <option value="berufsbildner">Berufsbildner</option>
+                            <option value="admin">Administrator</option>
+                        }
+                    </select>
 
+                    <label class="form-login-label" name="klassencode">Klasse</label>
+                    <input class="form-login" type="number" name="klassencode" id="klassencode" value="@benutzer.Klasse.KlassenInviteCode" />
+
+                    <label class="form-login-label" name="lehrmeisterEmail">Lehrmeister Email</label>
+                    <input class="form-login" type="email" name="lehrmeisterEmail" id="lehrmeisterEmail" value="@benutzer.LehrmeisterEmail" />
+
+                }
+                <div class="login-buttons">
+                    <input class="login-submit" type="submit" name="submit" value="Speichern" />
+                    <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="UserBack">Zurück</a>
+                </div>
             }
-            <div class="login-buttons">
-              <input class="login-submit" type="submit" name="submit" value="Speichern" />
-              <a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="UserBack">Zurück</a>
-            </div>
-        }
-      </div>
-  }
+        </div>
+    }
 </div>
