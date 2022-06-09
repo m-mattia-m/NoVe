@@ -2,8 +2,9 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/LehrerController.cs">
     <Files>
       <File FileName="NoVe/Views/Noten/Index.cshtml" Line="20" Column="125" />
-      <File FileName="NoVe/Controllers/NotenController.cs" Line="185" Column="49" />
-      <File FileName="NoVe/Controllers/LehrerController.cs" Line="28" Column="43" />
+      <File FileName="NoVe/Controllers/NotenController.cs" Line="180" Column="47" />
+      <File FileName="NoVe/Controllers/LehrerController.cs" Line="23" Column="1" />
+      <File FileName="NoVe/Views/Berufsbildner/Lernende.cshtml" Line="9" Column="26" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,10 +14,9 @@
               <Node name="Controllers" expanded="True">
                 <Node name="LehrerController.cs" selected="True" />
               </Node>
-              <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
+                <Node name="Berufsbildner" expanded="True" />
                 <Node name="Lehrer" expanded="True" />
-                <Node name="Noten" expanded="True" />
               </Node>
             </Node>
           </Node>

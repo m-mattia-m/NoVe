@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Liste aller Schüler</h1>
+<h1>Liste aller Lernenden</h1>
 <table class="table accept-users">
     <thead>
         <tr>
@@ -22,7 +22,6 @@
                 <td>@user.Vorname @user.Nachname</td>
                 <td>@user.Email</td>
                 <td>
-                    @Html.ActionLink("Löschen", "schuelerLoeschen", new { id = user.Id })
                     @Html.ActionLink("Noten Einsehen", "notenEinsehen", new { id = user.Id })
                 </td>
             </tr>

@@ -12,6 +12,7 @@
     <None Remove="System.Text.RegularExpressions" />
     <None Remove="Views\Lehrer\" />
     <None Remove="Views\Noten\" />
+    <None Remove="Views\Berufsbildner\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.25" />
@@ -27,5 +28,6 @@
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Lehrer\" />
     <Folder Include="Views\Noten\" />
+    <Folder Include="Views\Berufsbildner\" />
   </ItemGroup>
 </Project>
