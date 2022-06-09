@@ -160,6 +160,12 @@ namespace NoVe.Models
 
         public IActionResult BenutzerArchive(int ID)
         {
+          int userid = (int)HttpContext.Session.GetInt32("_UserID");
+            if (userid == ID) {
+                ViewBag.Message = string.Format("Sie können sich selbst nicht archivieren");
+                return View("AlleBenutzer", getAllUsers());
+            }
+
           User user = _dbContext.Users.Where(b => b.Id == ID).First();
           user.archived = true;
           _dbContext.SaveChanges();
