@@ -50,26 +50,53 @@ namespace NoVe.Controllers
                     {
                         if (user.archived == false)
                         {
-                            if (user.PasswordHash == passwordHash)
+                            DateTime dateTime = DateTime.Now;
+                            DateTime dateTimeCheck = user.LoginFailedFrom.AddMinutes(5);
+                            if (dateTime > dateTimeCheck || (dateTime > dateTimeCheck && user.LoginFailedCount < 4))
                             {
-                                Console.WriteLine("Passwort stimmt überein");
-                                try
+                                if (user.PasswordHash == passwordHash)
                                 {
-                                    HttpContext.Session.SetInt32("_UserID", user.Id);
-                                    HttpContext.Session.SetString("_UserRole", user.Role);
-                                    TempData["UserID"] = user.Id;
-                                    Console.WriteLine("Speichern auf der Session hat funktioniert '_UserID': " + user.Id);
+                                    Console.WriteLine("Passwort stimmt überein");
+                                    try
+                                    {
+                                        HttpContext.Session.SetInt32("_UserID", user.Id);
+                                        HttpContext.Session.SetString("_UserRole", user.Role);
+                                        TempData["UserID"] = user.Id;
+                                        user.LoginFailedCount = 0;
+                                        _dbContext.SaveChanges();
+                                        Console.WriteLine("Speichern auf der Session hat funktioniert '_UserID': " + user.Id);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine("Fehler beim speichern auf der Session");
+                                    }
+                                    return GetLandingPage();
                                 }
-                                catch (Exception e)
+                                else
                                 {
-                                    Console.WriteLine("Fehler beim speichern auf der Session");
+                                    dateTime = DateTime.Now;
+                                    dateTimeCheck = user.LoginFailedFrom.AddMinutes(5);
+                                    if (user.LoginFailedCount == 3 && dateTime > dateTimeCheck)
+                                    {
+                                        user.LoginFailedFrom = dateTime;
+                                    }
+                                    user.LoginFailedCount = user.LoginFailedCount + 1;
+                                    _dbContext.SaveChanges();
+                                    Console.WriteLine("Passwort ist falsch.");
+                                    if (user.LoginFailedCount >= 3)
+                                    {
+                                        ViewBag.Message = string.Format("Sie haben das Passwort zu viel Mal falsch eingegeben, versuchen Sie es in 5 Minuten nochmals.");
+                                    }
+                                    else
+                                    {
+                                        ViewBag.Message = string.Format("Dein Passwort ist Falsch");
+                                    }
+                                    return View("~/Views/Account/Message.cshtml");
                                 }
-                                return GetLandingPage();
                             }
                             else
                             {
-                                Console.WriteLine("Passwort ist falsch.");
-                                ViewBag.Message = string.Format("Dein Passwort ist Falsch");
+                                ViewBag.Message = string.Format("Sie haben sich zu viel mal falsch eingeloggt, versuchen sie es in 5 Minuten nochmals.");
                                 return View("~/Views/Account/Message.cshtml");
                             }
                         }
@@ -145,14 +172,16 @@ namespace NoVe.Controllers
                     newUser.Nachname = Nachname;
                     newUser.Email = Email;
                     // prueft ob eine Klasse zugewiesen werden kann.
-                    if (klasseCode != 0) {
+                    if (klasseCode != 0)
+                    {
                         var klasseCount = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).Count();
                         if (klasseCount != 0)
                         {
                             Klasse klasse = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).FirstOrDefault();
                             newUser.Klasse = klasse;
                         }
-                        else {
+                        else
+                        {
                             ViewBag.Message = string.Format("Klasse mit diesem Invite-Code ist nicht vorhanden: " + klasseCode);
                             return View("~/Views/Account/Register.cshtml");
                         }
@@ -376,7 +405,8 @@ namespace NoVe.Controllers
                     string passwordhash = hashPassword(passwort);
                     user.PasswordHash = passwordhash;
                 }
-                else {
+                else
+                {
                     ViewBag.Message = string.Format("Passwort und Passwort-Bestätigen ist unterschiedlich");
                     return View("profile", getSpecificUser(userId));
                 }
@@ -388,7 +418,8 @@ namespace NoVe.Controllers
             return View("profile", getSpecificUser(userId));
         }
 
-        public IActionResult PasswordForgotten() {
+        public IActionResult PasswordForgotten()
+        {
             return View();
         }
 
@@ -416,8 +447,10 @@ namespace NoVe.Controllers
             dateTime = dateTime.AddHours(1);
 
             User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
-            if (user.PasswordForgottenValidFrom < dateTime) {
-                if (user.PasswordForgottenVerifyKey == verifyCode) {
+            if (user.PasswordForgottenValidFrom < dateTime)
+            {
+                if (user.PasswordForgottenVerifyKey == verifyCode)
+                {
                     return View("~/Views/Account/SetNewPassword.cshtml");
                 }
             }
@@ -426,7 +459,8 @@ namespace NoVe.Controllers
             return View("~/Views/Account/Message.cshtml");
         }
 
-        public IActionResult SetNewPassword(string passwort, string passwortCheck) {
+        public IActionResult SetNewPassword(string passwort, string passwortCheck)
+        {
             string email = HttpContext.Session.GetString("_VerifyEmail");
             User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
 
@@ -446,7 +480,8 @@ namespace NoVe.Controllers
                     return View("SetNewPassword");
                 }
             }
-            else {
+            else
+            {
                 ViewBag.Message = string.Format("Bitte füllen Sie beide Passwortfelder aus.");
                 return View("SetNewPassword");
             }

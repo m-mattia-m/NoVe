@@ -18,5 +18,7 @@ namespace NoVe.Models
     public Boolean archived { get; set; }
     public int PasswordForgottenVerifyKey { get; set; }
     public DateTime PasswordForgottenValidFrom { get; set; }
+    public int LoginFailedCount { get; set; }
+    public DateTime LoginFailedFrom { get; set; }
     }
 }
