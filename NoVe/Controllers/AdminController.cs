@@ -235,7 +235,6 @@ namespace NoVe.Models
 
         public IActionResult KlasseLoeschen(int ID)
         {
-
             Klasse klasse = _dbContext.Klasses.FirstOrDefault(k => k.Id == ID);
             _dbContext.Remove(klasse);
             _dbContext.SaveChanges();

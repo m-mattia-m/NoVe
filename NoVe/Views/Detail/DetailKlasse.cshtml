@@ -12,6 +12,7 @@
 <table>
     <tr>
         <th>Schüler</th>
+        <th>Rolle</th>
     </tr>
     @if (Model.Users != null)
     {
@@ -19,6 +20,7 @@
         {
             <tr>
                 <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@schueler.Id>@schueler.Vorname @schueler.Nachname</a></td>
+                <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@schueler.Id>@schueler.Role</a></td>
             </tr>
         }
 
