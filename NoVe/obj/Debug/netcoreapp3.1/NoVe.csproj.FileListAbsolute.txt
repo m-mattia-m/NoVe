@@ -228,7 +228,6 @@ C:/Users/wick/Source/Repos/NoVe1/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Message.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Register.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/RegisterCheck.cshtml.g.cs
-/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/Verify.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/AlleBenutzer.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/BenutzerBestaetigen.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/benutzerEdit.cshtml.g.cs
@@ -389,3 +388,6 @@ C:/Users/simon/Source/Repos/NoVe/NoVe/obj/Debug/netcoreapp3.1/NoVe.genruntimecon
 >>>>>>> e1d46b3bc8bbc31eda5d7923107d73d5e8f6e953
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Admin/KlassenEdit.cshtml.g.cs
 /Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/profile.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/PasswordForgotten.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/PasswordForgottenVerify.cshtml.g.cs
+/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/obj/Debug/netcoreapp3.1/Razor/Views/Account/SetNewPassword.cshtml.g.cs

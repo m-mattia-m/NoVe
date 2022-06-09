@@ -180,7 +180,7 @@ namespace NoVe.Controllers
                     HttpContext.Session.SetString("_RegisterEmail", Email);
 
                     Console.Write("newUser: ");
-                    Console.WriteLine("VerificationKey: " + VerificationKey);
+                    Console.WriteLine("Email -> VerificationKey: " + VerificationKey);
 
                     //sendMail();
                 }
@@ -301,8 +301,8 @@ namespace NoVe.Controllers
                 Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
             }
 
-            return View();
-
+            ViewBag.Message = string.Format("Sie wurden erfolgreich verifiziert, aktuell muss Sie noch ein Administrator freischalten.");
+            return View("Login");
         }
 
         public void sendMail()
@@ -386,6 +386,70 @@ namespace NoVe.Controllers
 
             ViewBag.Message = string.Format("Angaben wurden gespeichert");
             return View("profile", getSpecificUser(userId));
+        }
+
+        public IActionResult PasswordForgotten() {
+            return View();
+        }
+
+        public IActionResult PasswordForgottenVerify(string email)
+        {
+            Random rnd = new Random();
+            int VerificationKey = rnd.Next(100000, 1000000);
+
+            HttpContext.Session.SetString("_VerifyEmail", email);
+
+            User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
+            user.PasswordForgottenVerifyKey = VerificationKey;
+            user.PasswordForgottenValidFrom = DateTime.Now;
+            _dbContext.SaveChanges();
+
+            Console.WriteLine("Email -> Passwort-Zurücksetz-Code: " + VerificationKey);
+            ViewBag.Message = string.Format("Sie haben eine Stunde Zeit um ihr Passwort zurückzusetzen, danach müssen Sie einen neuen Code anfordern.");
+            return View("~/Views/Account/PasswordForgottenVerify.cshtml");
+        }
+
+        public IActionResult PasswordForgottenCheckVerifyKey(int verifyCode)
+        {
+            string email = HttpContext.Session.GetString("_VerifyEmail");
+            DateTime dateTime = DateTime.Now;
+            dateTime = dateTime.AddHours(1);
+
+            User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
+            if (user.PasswordForgottenValidFrom < dateTime) {
+                if (user.PasswordForgottenVerifyKey == verifyCode) {
+                    return View("~/Views/Account/SetNewPassword.cshtml");
+                }
+            }
+
+            ViewBag.Message = string.Format("Der Verifizierungs-Code ist Falsch.");
+            return View("~/Views/Account/Message.cshtml");
+        }
+
+        public IActionResult SetNewPassword(string passwort, string passwortCheck) {
+            string email = HttpContext.Session.GetString("_VerifyEmail");
+            User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
+
+            if (passwort != null && passwortCheck != null)
+            {
+                if (passwort == passwortCheck)
+                {
+                    string passwordhash = hashPassword(passwort);
+                    user.PasswordHash = passwordhash;
+                    _dbContext.SaveChanges();
+                    ViewBag.Message = string.Format("Passwort wurde erfolgreich gespeichert.");
+                    return View("Login");
+                }
+                else
+                {
+                    ViewBag.Message = string.Format("Passwort und Passwort-Bestätigen ist unterschiedlich");
+                    return View("SetNewPassword");
+                }
+            }
+            else {
+                ViewBag.Message = string.Format("Bitte füllen Sie beide Passwortfelder aus.");
+                return View("SetNewPassword");
+            }
         }
     }
 }

@@ -16,5 +16,7 @@ namespace NoVe.Models
     public string LehrmeisterEmail { get; set; }
     public string Firma { get; set; }
     public Boolean archived { get; set; }
-  }
+    public int PasswordForgottenVerifyKey { get; set; }
+    public DateTime PasswordForgottenValidFrom { get; set; }
+    }
 }
