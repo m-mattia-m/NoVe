@@ -19,8 +19,26 @@ namespace NoVe.Controllers
 
         public IActionResult Index()
         {
-            Console.WriteLine("UserID: " + (int)HttpContext.Session.GetInt32("_UserID"));
-            return View(listAllFaecherAndKompetenzbereiche());
+            string userRole;
+
+            try
+            {
+                userRole = HttpContext.Session.GetString("_UserRole");
+                Console.WriteLine("SessionRole: " + userRole);
+                if (userRole == "schueler" || userRole == "berufsbildner" || userRole == "lehrer" || userRole == "admin")
+                {
+                    Console.WriteLine("UserID: " + (int)HttpContext.Session.GetInt32("_UserID"));
+                    return View(listAllFaecherAndKompetenzbereiche());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Fehler beim auslesen aus der Session");
+            }
+
+            ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+            return View("~/Views/Account/Message.cshtml");
+            //return View("~/Views/Home/Index.cshtml");
         }
 
         private List<FachKompetenzbereich> listAllFaecherAndKompetenzbereiche()
@@ -29,6 +47,18 @@ namespace NoVe.Controllers
             User user = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).FirstOrDefault();
             List<Kompetenzbereich> kompetenzbereiche = _dbContext.Kompetenzbereichs.Where(k => k.BerufId == user.Klasse.BerufId).ToList();
             List<FachKompetenzbereich> fachKompetenzbereiche = new List<FachKompetenzbereich>();
+            Klasse klasse = _dbContext.Klasses.Where(k => k.Id == user.Klasse.Id).FirstOrDefault();
+
+            DateTime localDate = DateTime.Now;
+            int InEditTime = 0;
+
+            if (klasse.Startdatum < localDate && klasse.EndDatum > localDate)
+            {
+                InEditTime = 1;
+            }
+            else {
+                InEditTime = 0;
+            }
 
 
             int i = 0;
@@ -36,6 +66,10 @@ namespace NoVe.Controllers
                 FachKompetenzbereich fachKompetenzbereich = new FachKompetenzbereich();
                 fachKompetenzbereich.Id = i;
                 fachKompetenzbereich.UserId = userId;
+                fachKompetenzbereich.UserRole = HttpContext.Session.GetString("_UserRole");
+                fachKompetenzbereich.Startdatum = klasse.Startdatum;
+                fachKompetenzbereich.EndDatum = klasse.EndDatum;
+                fachKompetenzbereich.InEditTime = InEditTime;
                 fachKompetenzbereich.Kompetenzbereich = kompetenzbereich;
                 fachKompetenzbereich.NoteView = GetNoteView(userId, kompetenzbereich.Id);
 
@@ -121,48 +155,8 @@ namespace NoVe.Controllers
             int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
             Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
             note.Notenwert = notenwert;
+            note.StudentAlreadyChanged = 1;
             _dbContext.SaveChanges();
-
-
-            //int FachId = (int)HttpContext.Session.GetInt32("_FachID");
-            //int KompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichId");
-            //int userId = (int)HttpContext.Session.GetInt32("_UserID");
-
-            // if NotenId -1 -> es existiert noch keine Note
-            //if (NoteId == -1)
-            //{
-            //    Note note = new Note();
-            //    note.Notenwert = notenwert;
-            //    note.UserId = userId;
-            //    if (HttpContext.Session.GetString("_UserRole") == "schueler")
-            //    {
-            //        note.StudentAlreadyChanged = 1;
-            //    }
-            //    else
-            //    {
-            //        note.StudentAlreadyChanged = 0;
-            //    }
-            //    _dbContext.Notes.Add(note);
-            //    _dbContext.SaveChanges();
-            //}
-            //else {
-            //    Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
-            //    note.Notenwert = notenwert;
-            //    note.FachId = FachId;
-            //    note.FachbereichId = KompetenzbereichId;
-            //    note.UserId = userId;
-            //    if ("schueler" == HttpContext.Session.GetString("_UserRole"))
-            //    {
-            //        note.StudentAlreadyChanged = 1;
-            //    }
-            //    else
-            //    {
-            //        note.StudentAlreadyChanged = 0;
-            //    }
-            //    _dbContext.Notes.Add(note);
-            //    _dbContext.SaveChanges();
-            //}
-
 
             return View("Index", listAllFaecherAndKompetenzbereiche());
         }

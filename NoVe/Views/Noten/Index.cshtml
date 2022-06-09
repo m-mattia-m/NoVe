@@ -7,31 +7,6 @@
 }
 
 <h1>Noten</h1>
-@*<table class="table accept-users">
-    <thead>
-        <tr>
-            <td>Fach</td>
-            <td>Note</td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Count() != 0)
-        {
-            @foreach (var view in Model)
-            {
-                <tr>
-                    <td>@view.Fachname</td>
-                    <td>@view.Notenwert</td>
-                    <td>
-                        @Html.ActionLink("Bearbeiten", "benutzerEdit", new { id = view.Id })
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>*@
-
 @if (Model.Count() != 0)
 {
     @foreach (var kompetenzbereich in Model)
@@ -54,7 +29,10 @@
                             <td>@fach.Fachname</td>
                             <td>@fach.Notenwert</td>
                             <td>
-                                @Html.ActionLink("Bearbeiten", "NotenEdit", new { notenId = fach.Noteid, fachId = fach.FachId, kompetenzbereichId = kompetenzbereich.Kompetenzbereich.Id }) @* new { notenId = fach.Noteid, fachId = fach.Id, kompetenzbereichId = kompetenzbereich.Id} *@
+                                @if ((kompetenzbereich.UserRole == "lehrer") || (kompetenzbereich.UserRole == "schueler" && fach.StudentAlreadyChanged == 0 && kompetenzbereich.InEditTime == 1))
+                                {
+                                    @Html.ActionLink("Bearbeiten", "NotenEdit", new { notenId = fach.Noteid, fachId = fach.FachId, kompetenzbereichId = kompetenzbereich.Kompetenzbereich.Id }) 
+                                }
                             </td>
                         </tr>
                     }

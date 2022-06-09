@@ -9,6 +9,10 @@ namespace NoVe.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public string UserRole { get; set; }
+        public DateTime Startdatum { get; set; }
+        public DateTime EndDatum { get; set; }
+        public int InEditTime { get; set; }
         public Kompetenzbereich Kompetenzbereich { get; set; }
         public List<NoteView> NoteView { get; set; }
     }
