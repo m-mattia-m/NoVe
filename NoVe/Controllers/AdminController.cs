@@ -301,7 +301,7 @@ namespace NoVe.Models
             return _dbContext.Fachs.Where(u => u.Id == Id).ToList();
         }
 
-        private List<User> getSpecificUser(int Id)
+        public List<User> getSpecificUser(int Id)
         {
             return _dbContext.Users.Where(u => u.Id == Id).ToList();
         }
