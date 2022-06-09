@@ -50,7 +50,8 @@ namespace NoVe.Controllers
             {
                 userId = (int)HttpContext.Session.GetInt32("_StudentID");
             }
-            else {
+            else
+            {
                 userId = (int)HttpContext.Session.GetInt32("_UserID");
             }
 
@@ -66,13 +67,15 @@ namespace NoVe.Controllers
             {
                 InEditTime = 1;
             }
-            else {
+            else
+            {
                 InEditTime = 0;
             }
 
 
             int i = 0;
-            foreach (Kompetenzbereich kompetenzbereich in kompetenzbereiche) {
+            foreach (Kompetenzbereich kompetenzbereich in kompetenzbereiche)
+            {
                 FachKompetenzbereich fachKompetenzbereich = new FachKompetenzbereich();
                 fachKompetenzbereich.Id = i;
                 fachKompetenzbereich.UserId = userId;
@@ -83,6 +86,7 @@ namespace NoVe.Controllers
                 fachKompetenzbereich.InEditTime = InEditTime;
                 fachKompetenzbereich.Kompetenzbereich = kompetenzbereich;
                 fachKompetenzbereich.NoteView = GetNoteView(userId, kompetenzbereich.Id);
+                fachKompetenzbereich.NotenwertKompetenzbereich = calcKompetenzbereichNote(kompetenzbereich.Id);
 
                 fachKompetenzbereiche.Add(fachKompetenzbereich);
                 i++;
@@ -98,8 +102,10 @@ namespace NoVe.Controllers
             List<NoteView> notenViews = new List<NoteView>();
 
             int i = 0;
-            if (faecher.Count() != 0) {
-                foreach (Fach fach in faecher) {
+            if (faecher.Count() != 0)
+            {
+                foreach (Fach fach in faecher)
+                {
                     NoteView noteView = new NoteView();
                     noteView.Id = i;
                     noteView.UserId = userId;
@@ -116,7 +122,8 @@ namespace NoVe.Controllers
                         noteView.Semester = currentNote.Semester;
                         noteView.StudentAlreadyChanged = currentNote.StudentAlreadyChanged;
                     }
-                    else {
+                    else
+                    {
                         noteView.Noteid = -1;
                         noteView.Notenwert = 0;
                         noteView.Semester = -1;
@@ -146,7 +153,8 @@ namespace NoVe.Controllers
                 HttpContext.Session.SetInt32("_KompetenzbereichId", KompetenzbereichId);
                 return _dbContext.Notes.Where(n => n.Id == Id).ToList();
             }
-            else {
+            else
+            {
                 Note note = new Note();
                 note.FachbereichId = KompetenzbereichId;
                 note.FachId = FachId;
@@ -187,6 +195,51 @@ namespace NoVe.Controllers
         {
             //return View("SchuelerListe", SchuelerListe());
             return RedirectToAction("SchuelerListe", "Lehrer");
+        }
+
+        public float calcKompetenzbereichNote(int kompetenzbereichId)
+        {
+            int userId = (int)HttpContext.Session.GetInt32("_UserID");
+            List<Fach> faecher = _dbContext.Fachs.Where(f => f.KompetenzbereichId == kompetenzbereichId).ToList();
+            float kompetenzbereichSchnitt = 0;
+
+            foreach (Fach fach in faecher)
+            {
+                float notenWert = (float)getNoteFromFach(fach.Id, userId);
+                float rundung = (float)fach.Rundung;
+                float gerundeteNote = runden(notenWert, rundung);
+                kompetenzbereichSchnitt = (float)(kompetenzbereichSchnitt + gerundeteNote * (40 / 100));
+                var asdf = "";
+            }
+
+            return kompetenzbereichSchnitt;
+        }
+
+        public float getNoteFromFach(int fachId, int userId)
+        {
+            Note note = _dbContext.Notes.Where(n => n.FachId == fachId).Where(n => n.UserId == userId).FirstOrDefault();
+            float notenwert = note.Notenwert;
+
+            return notenwert;
+        }
+
+        public float runden(float note, float rundung)
+        {
+            float gerundeteNote = 0;
+            if (rundung == 0.1F)
+            {
+                gerundeteNote = (float)Math.Round(note, 1);
+            }
+            else if (rundung == 0.5F)
+            {
+                gerundeteNote = (float)Math.Round(Math.Round(note * 2, 0) / 2, 1);
+            }
+            else if (rundung == 1F)
+            {
+                gerundeteNote = (float)Math.Round(note, 0);
+            }
+
+            return gerundeteNote;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace NoVe.Models
         public string Fachname { get; set; }
         public float Noteid { get; set; }
         public float Notenwert { get; set; }
+        public int Gewichtung { get; set; }
+        public float Rundung { get; set; }
         public int Semester { get; set; }
         public int StudentAlreadyChanged { get; set; }
     }
