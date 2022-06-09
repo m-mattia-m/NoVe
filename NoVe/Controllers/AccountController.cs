@@ -118,7 +118,7 @@ namespace NoVe.Controllers
                 {
                     Console.WriteLine("Du hast deinen Account noch nicht verifiziert");
                     ViewBag.Message = string.Format("Du hast deinen Account noch nicht verifiziert");
-                    return View("~/Views/Account/Message.cshtml");
+                    return View("VerifyEmailLater", VerifyEmailLater());
                 }
             }
             catch (Exception e)
@@ -322,6 +322,8 @@ namespace NoVe.Controllers
                 else
                 {
                     Console.WriteLine("Verifizierung ist fehlgeschlagen.");
+                    ViewBag.Message = string.Format("Ungültiger Verifizierungscode, versuchen Sie es erneut.");
+                    return View("Login");
                 }
 
             }
@@ -485,6 +487,26 @@ namespace NoVe.Controllers
                 ViewBag.Message = string.Format("Bitte füllen Sie beide Passwortfelder aus.");
                 return View("SetNewPassword");
             }
+        }
+
+        public IActionResult VerifyEmailLater()
+        {
+            return View("~/Views/Account/VerifyEmailLaater.cshtml");
+        }
+
+        public IActionResult VerifyEmailLaterRegenreate(string email)
+        {
+            HttpContext.Session.SetString("_RegisterEmail", email);
+            Random rnd = new Random();
+            int VerificationKey = rnd.Next(100000, 1000000);
+
+            User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
+            user.VerificationKey = VerificationKey;
+            _dbContext.SaveChanges();
+
+            Console.WriteLine("Email -> VerificationKeyLater: " + VerificationKey);
+
+            return View("~/Views/Account/RegisterCheck.cshtml");
         }
     }
 }
