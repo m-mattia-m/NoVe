@@ -134,50 +134,52 @@ namespace NoVe.Controllers
             {
                 if (Password == PasswordCheck)
                 {
-                    var klasseCount = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).Count();
-                    if (klasseCount != 0)
-                    {
-                        Klasse klasse = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).FirstOrDefault();
+                    Console.WriteLine("Passwörter stimmen überein");
+                    Random rnd = new Random();
+                    int VerificationKey = rnd.Next(100000, 1000000);
 
-                        Console.WriteLine("Passwörter stimmen überein");
-                        Random rnd = new Random();
-                        int VerificationKey = rnd.Next(100000, 1000000);
+                    var newUser = new User();
 
-                        var newUser = new User();
-
-                        newUser.Vorname = Vorname;
-                        newUser.Nachname = Nachname;
-                        newUser.Email = Email;
-                        newUser.Klasse = klasse;
-                        newUser.PasswordHash = hashPassword(Password);
-                        newUser.VerificationKey = VerificationKey;
-                        newUser.VerificationStatus = 0;
-                        if (berufsbildner == "on") // true
+                    newUser.Vorname = Vorname;
+                    newUser.Nachname = Nachname;
+                    newUser.Email = Email;
+                    // prueft ob eine Klasse zugewiesen werden kann.
+                    if (klasseCode != 0) {
+                        var klasseCount = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).Count();
+                        if (klasseCount != 0)
                         {
-                            newUser.Role = "berufsbildner";
+                            Klasse klasse = _dbContext.Klasses.Where(b => b.KlassenInviteCode == klasseCode).FirstOrDefault();
+                            newUser.Klasse = klasse;
                         }
-
-                        if (checkMailSubdomain(Email) == "edu")
-                        {
-                            newUser.Role = "schueler";
+                        else {
+                            ViewBag.Message = string.Format("Klasse mit diesem Invite-Code ist nicht vorhanden: " + klasseCode);
+                            return View("~/Views/Account/Register.cshtml");
                         }
-
-                        _dbContext.Users.Add(newUser);
-                        _dbContext.SaveChanges();
-
-                        HttpContext.Session.SetString("_RegisterEmail", Email);
-
-                        Console.Write("newUser: ");
-                        Console.WriteLine(newUser.ToString());
-
-                        Console.WriteLine("VerificationKey: " + VerificationKey);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Die Ausgewählte Klasse existiert noch nicht.");
                     }
 
+                    newUser.PasswordHash = hashPassword(Password);
+                    newUser.VerificationKey = VerificationKey;
+                    newUser.VerificationStatus = 0;
+                    if (berufsbildner == "on") // true
+                    {
+                        newUser.Role = "berufsbildner";
+                    }
+                    if (berufsbildner != "on" && klasseCode == 0) // true
+                    {
+                        newUser.Role = "lehrer";
+                    }
+                    if (checkMailSubdomain(Email) == "edu" || klasseCode != 0)
+                    {
+                        newUser.Role = "schueler";
+                    }
 
+                    _dbContext.Users.Add(newUser);
+                    _dbContext.SaveChanges();
+
+                    HttpContext.Session.SetString("_RegisterEmail", Email);
+
+                    Console.Write("newUser: ");
+                    Console.WriteLine("VerificationKey: " + VerificationKey);
 
                     //sendMail();
                 }

@@ -223,6 +223,11 @@ namespace NoVe.Models
             return View("AlleBenutzer", getAllUsers());
         }
 
+        public IActionResult ToIndexBack()
+        {
+            return View("Index", getUnconfirmedUsers());
+        }
+
         public IActionResult Bestaetigen(int ID)
         {
 
@@ -230,7 +235,7 @@ namespace NoVe.Models
             user.AdminVerification = 1;
             _dbContext.SaveChanges();
 
-            return View("Index", getUnconfirmedUsers());
+            return View("BenutzerBestaetigen", getUnconfirmedUsers());
         }
 
         public IActionResult KlasseLoeschen(int ID)
@@ -248,7 +253,7 @@ namespace NoVe.Models
             _dbContext.Users.Remove(user);
             _dbContext.SaveChanges();
 
-            return View("Index", getUnconfirmedUsers());
+            return View("BenutzerBestaetigen", getUnconfirmedUsers());
         }
 
         public async Task<IActionResult> BenutzerLoeschen(int ID)

@@ -15,28 +15,31 @@
         </tr>
     </thead>
     <tbody>
-        @if(@Model.Count() != 0) { 
-        @foreach (var beruf in Model)
+        @if (@Model.Count() != 0)
         {
-            <tr>
-                <td style="width: 70%;">@beruf.Name</td>
-                <td>
-                    <span style="margin-right: 10px;">@Html.ActionLink("Löschen", "BerufLoeschen", new { id = beruf.Id })</span>
-                    <span style="margin-right: 10px;">@Html.ActionLink("Bearbeiten", "BerufEdit", new { id = beruf.Id })</span>
-                    <span>@Html.ActionLink("Öffnen", "Kompetenzbereiche", new { id = beruf.Id })</span>
-                </td>
-            </tr>
-        }
+            @foreach (var beruf in Model)
+            {
+                <tr>
+                    <td style="width: 70%;">@beruf.Name</td>
+                    <td>
+                        <span style="margin-right: 10px;">@Html.ActionLink("Löschen", "BerufLoeschen", new { id = beruf.Id })</span>
+                        <span style="margin-right: 10px;">@Html.ActionLink("Bearbeiten", "BerufEdit", new { id = beruf.Id })</span>
+                        <span>@Html.ActionLink("Öffnen", "Kompetenzbereiche", new { id = beruf.Id })</span>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
 <div class="create-beruf">
-  @using (Html.BeginForm("SafeBerufe", "Admin"))
-{
-  <h1>Beruf erstellen</h1>
-    <label class="form-login-label" name="name">Name</label>
-    <input class="form-login" type="text" name="name" id="name" />
-    <input class="login-submit" type="submit" name="submit" value="Speichern" />
-}
+    @using (Html.BeginForm("SafeBerufe", "Admin"))
+    {
+        <h1>Beruf erstellen</h1>
+        <label class="form-login-label" name="name">Name</label>
+        <input class="form-login" type="text" name="name" id="name" />
+        <input class="login-submit" type="submit" name="submit" value="Speichern" />
+    }
 
 </div>
+<a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="ToIndexBack">Zurück</a>
+

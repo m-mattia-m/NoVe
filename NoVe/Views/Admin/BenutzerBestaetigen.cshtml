@@ -28,10 +28,12 @@
                     <td>@user.Email</td>
                     <td>@user.Role</td>
                     <td><a asp-controller="Detail" asp-action="Index" asp-route-id=@user.Id>Details</a></td>
-                    <td>@Html.ActionLink("Bestätigen", "bestaetigen", new { id = user.Id})</td>
-                    <td>@Html.ActionLink("Ablehnen", "ablehnen", new { id = user.Id})</td>
+                    <td>@Html.ActionLink("Bestätigen", "bestaetigen", new { id = user.Id })</td>
+                    <td>@Html.ActionLink("Ablehnen", "ablehnen", new { id = user.Id })</td>
                 </tr>
             }
         }
     </tbody>
 </table>
+<a class="nav-link login-button login-submit" asp-area="" asp-controller="Admin" asp-action="ToIndexBack">Zurück</a>
+

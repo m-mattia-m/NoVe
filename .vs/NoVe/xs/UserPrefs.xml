@@ -1,8 +1,7 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AdminController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AdminController.cs" Line="246" Column="10" />
-      <File FileName="NoVe/Views/Admin/KlassenVerwalten.cshtml" Line="30" Column="68" />
+      <File FileName="NoVe/Controllers/AdminController.cs" Line="226" Column="41" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,6 +12,7 @@
                 <Node name="AdminController.cs" selected="True" />
               </Node>
               <Node name="Views" expanded="True">
+                <Node name="Account" expanded="True" />
                 <Node name="Admin" expanded="True" />
                 <Node name="Detail" expanded="True" />
                 <Node name="Noten" expanded="True" />
@@ -30,11 +30,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.NoVe PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/AdminController.cs" relfile="NoVe/Controllers/AdminController.cs" line="238" column="1" />
-      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/AdminController.cs" relfile="NoVe/Controllers/AdminController.cs" line="239" column="1" />
-      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/AdminController.cs" relfile="NoVe/Controllers/AdminController.cs" line="240" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
