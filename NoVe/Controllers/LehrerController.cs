@@ -129,6 +129,17 @@ namespace NoVe.Controllers
             return View("SchuelerListe", getUsersFromClass());
         }
 
+        public IActionResult notenEinsehen(int ID)
+        {
+            HttpContext.Session.SetInt32("_StudentID", ID);
+            int studentID = (int)HttpContext.Session.GetInt32("_StudentID");
+            Console.WriteLine("Noten einsehen von: " + studentID);
+
+            //return View("~/Views/Noten/Index.cshtml");
+            return RedirectToAction("Index", "Noten");
+            //return View("Noten", );
+        }
+
 
     }
 }

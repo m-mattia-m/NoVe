@@ -10,6 +10,7 @@ namespace NoVe.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public string UserRole { get; set; }
+        public string UserName { get; set; }
         public DateTime Startdatum { get; set; }
         public DateTime EndDatum { get; set; }
         public int InEditTime { get; set; }

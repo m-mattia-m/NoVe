@@ -23,6 +23,7 @@
                 <td>@user.Email</td>
                 <td>
                     @Html.ActionLink("Löschen", "schuelerLoeschen", new { id = user.Id })
+                    @Html.ActionLink("Noten Einsehen", "notenEinsehen", new { id = user.Id })
                 </td>
             </tr>
         }

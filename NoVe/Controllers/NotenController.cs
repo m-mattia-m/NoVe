@@ -43,7 +43,17 @@ namespace NoVe.Controllers
 
         private List<FachKompetenzbereich> listAllFaecherAndKompetenzbereiche()
         {
-            int userId = (int)HttpContext.Session.GetInt32("_UserID");
+            string userRole = HttpContext.Session.GetString("_UserRole");
+            Console.WriteLine("SessionRole: " + userRole);
+            int userId = -1;
+            if (userRole == "lehrer" || userRole == "berufsbildner")
+            {
+                userId = (int)HttpContext.Session.GetInt32("_StudentID");
+            }
+            else {
+                userId = (int)HttpContext.Session.GetInt32("_UserID");
+            }
+
             User user = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).FirstOrDefault();
             List<Kompetenzbereich> kompetenzbereiche = _dbContext.Kompetenzbereichs.Where(k => k.BerufId == user.Klasse.BerufId).ToList();
             List<FachKompetenzbereich> fachKompetenzbereiche = new List<FachKompetenzbereich>();
@@ -67,6 +77,7 @@ namespace NoVe.Controllers
                 fachKompetenzbereich.Id = i;
                 fachKompetenzbereich.UserId = userId;
                 fachKompetenzbereich.UserRole = HttpContext.Session.GetString("_UserRole");
+                fachKompetenzbereich.UserName = user.Vorname + " " + user.Nachname;
                 fachKompetenzbereich.Startdatum = klasse.Startdatum;
                 fachKompetenzbereich.EndDatum = klasse.EndDatum;
                 fachKompetenzbereich.InEditTime = InEditTime;
@@ -159,6 +170,23 @@ namespace NoVe.Controllers
             _dbContext.SaveChanges();
 
             return View("Index", listAllFaecherAndKompetenzbereiche());
+        }
+
+        public IActionResult NotenEditBack()
+        {
+            return View("Noten", listAllFaecherAndKompetenzbereiche());
+        }
+
+        public IActionResult NotenToKlasseBack()
+        {
+            //return View("Noten", listAllFaecherAndKompetenzbereiche());
+            return RedirectToAction("SchuelerListe", "Lehrer");
+        }
+
+        public IActionResult NotenToLernendeBack()
+        {
+            //return View("SchuelerListe", SchuelerListe());
+            return RedirectToAction("SchuelerListe", "Lehrer");
         }
     }
 }
