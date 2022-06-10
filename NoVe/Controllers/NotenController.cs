@@ -65,15 +65,17 @@ namespace NoVe.Controllers
             DateTime localDate = DateTime.Now;
             int InEditTime = 0;
 
-            if (klasse.Startdatum < localDate && klasse.EndDatum > localDate)
+            if (userRole == "schueler")
             {
-                InEditTime = 1;
+                if (klasse.Startdatum < localDate && klasse.EndDatum > localDate)
+                {
+                    InEditTime = 1;
+                }
+                else
+                {
+                    InEditTime = 0;
+                }
             }
-            else
-            {
-                InEditTime = 0;
-            }
-
 
             int i = 0;
             foreach (Kompetenzbereich kompetenzbereich in kompetenzbereiche)
@@ -104,7 +106,7 @@ namespace NoVe.Controllers
 
                 i++;
             }
-            //Gesamtnote = (double)(Gesamtnote + Gesamtnote * GewichtungWoNochKeineNote / 100);
+
             int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
             double GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
             ViewBag.Message = string.Format(GesamtnoteZusammen.ToString());
@@ -247,7 +249,7 @@ namespace NoVe.Controllers
             return notenwert;
         }
 
-        public double runden(double note, double rundung)
+        public static double runden(double note, double rundung)
         {
             double gerundeteNote = 0;
             if (rundung == 0.1)
