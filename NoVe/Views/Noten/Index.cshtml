@@ -10,7 +10,13 @@
 {
     @foreach (var kompetenzbereich in Model)
     {
-        <h1>Noten von <br /> @kompetenzbereich.UserName</h1>
+        <h1>
+            Noten von @kompetenzbereich.UserName: @if (ViewBag.Message != null)
+            {
+                @Html.Raw(ViewBag.Message)
+            }
+
+        </h1>
         @if (kompetenzbereich.UserRole == "lehrer")
         {
             <a class="nav-link login-button login-submit" asp-area="" asp-controller="Noten" asp-action="NotenToKlasseBack">Zurück zur Klasse</a>

@@ -17,6 +17,5 @@ namespace NoVe.Models
         public Kompetenzbereich Kompetenzbereich { get; set; }
         public List<NoteView> NoteView { get; set; }
         public double NotenwertKompetenzbereich { get; set; }
-        public double NotenwertGesamt { get; set; }
     }
 }

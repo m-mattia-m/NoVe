@@ -59,6 +59,8 @@ namespace NoVe.Controllers
             List<Kompetenzbereich> kompetenzbereiche = _dbContext.Kompetenzbereichs.Where(k => k.BerufId == user.Klasse.BerufId).ToList();
             List<FachKompetenzbereich> fachKompetenzbereiche = new List<FachKompetenzbereich>();
             Klasse klasse = _dbContext.Klasses.Where(k => k.Id == user.Klasse.Id).FirstOrDefault();
+            double Gesamtnote = 0;
+            double GewichtungWoNochKeineNote = 0;
 
             DateTime localDate = DateTime.Now;
             int InEditTime = 0;
@@ -89,9 +91,23 @@ namespace NoVe.Controllers
                 fachKompetenzbereich.NotenwertKompetenzbereich = runden(calcKompetenzbereichNote(kompetenzbereich.Id), kompetenzbereich.Rundung);
 
                 fachKompetenzbereiche.Add(fachKompetenzbereich);
+
+                // Hier wird die Gesammtnote aller Kompetenzbereiche berechnet
+                if (fachKompetenzbereich.NotenwertKompetenzbereich == 0)
+                {
+                    GewichtungWoNochKeineNote = GewichtungWoNochKeineNote + kompetenzbereich.Gewichtung;
+                }
+                else
+                {
+                    Gesamtnote = (double)(Gesamtnote + fachKompetenzbereich.NotenwertKompetenzbereich * kompetenzbereich.Gewichtung / 100);
+                }
+
                 i++;
             }
-
+            //Gesamtnote = (double)(Gesamtnote + Gesamtnote * GewichtungWoNochKeineNote / 100);
+            int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
+            double GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            ViewBag.Message = string.Format(GesamtnoteZusammen.ToString());
             return fachKompetenzbereiche;
         }
 
