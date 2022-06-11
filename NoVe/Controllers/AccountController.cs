@@ -347,7 +347,15 @@ namespace NoVe.Controllers
         public IActionResult profile()
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
-            return View(getSpecificUser(userId));
+            if (userId != 0)
+            {
+                return View(getSpecificUser(userId));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Sie müssen angemeldet sein, um das Profil zu öffnen.");
+                return View("~/Views/Account/Message.cshtml");
+            }
         }
 
         public List<User> getSpecificUser(int Id)
