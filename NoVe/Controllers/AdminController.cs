@@ -855,7 +855,7 @@ namespace NoVe.Models
             }
         }
 
-        public async Task<IActionResult> UserBearbeiten(string vorname, string nachname, string email, string firma, string role, int klassencode, string lehrmeisterEmail)
+        public async Task<IActionResult> UserBearbeiten(string vorname, string nachname, string email, string firma, string role, int klassencode, string lehrmeisterEmail, string isAdmin)
         {
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
@@ -880,6 +880,14 @@ namespace NoVe.Models
                         ViewBag.Message = string.Format("Keine Klasse mit diesem Einladungscode gefunden.");
                         return View("benutzerEdit", getSpecificUser(editUserId));
                     }
+                }
+                if (isAdmin == "on")
+                {
+                    user.isAdmin = true;
+                }
+                else
+                {
+                    user.isAdmin = false;
                 }
                 _dbContext.SaveChanges();
 

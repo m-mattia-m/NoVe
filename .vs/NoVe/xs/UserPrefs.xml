@@ -1,16 +1,20 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
+    <Files>
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="73" Column="47" />
+      <File FileName="NoVe/Views/Admin/benutzerEdit.cshtml" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="AccountController.cs" selected="True" />
+              </Node>
               <Node name="Views" expanded="True">
                 <Node name="Admin" expanded="True" />
-                <Node name="Lehrer" expanded="True">
-                  <Node name="SchuelerListe.cshtml" selected="True" />
-                </Node>
+                <Node name="Shared" expanded="True" />
               </Node>
             </Node>
           </Node>
