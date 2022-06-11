@@ -52,12 +52,12 @@ namespace NoVe.Models
 
         public IActionResult BenutzerArchiv()
         {
-          return View(getAllUsersArchiv());
+            return View(getAllUsersArchiv());
         }
 
         public IActionResult Domains()
         {
-          return View(getAllDomains());
+            return View(getAllDomains());
         }
 
         public IActionResult KlassenVerwalten()
@@ -67,13 +67,13 @@ namespace NoVe.Models
 
         public IActionResult klassenEdit(int ID)
         {
-          HttpContext.Session.SetInt32("_KlassenID", ID);
-          return View(getSpecificKlasse(ID));
+            HttpContext.Session.SetInt32("_KlassenID", ID);
+            return View(getSpecificKlasse(ID));
         }
 
         public IActionResult KlassenArchiv()
         {
-          return View(getAllKlassenAchive());
+            return View(getAllKlassenAchive());
         }
 
         public IActionResult Berufe()
@@ -83,52 +83,53 @@ namespace NoVe.Models
 
         public IActionResult KlassenHinzufuegen()
         {
-          return View();
+            return View();
         }
 
         public IActionResult AddKlasse(string KlasseName, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
-          var newKlasse = new Klasse();
-          
+            var newKlasse = new Klasse();
 
-          newKlasse.KlasseName = KlasseName;
-          newKlasse.Startdatum = EingabedatumStart; 
-          newKlasse.EndDatum = EingabedatumEnde;
-          newKlasse.KlassenInviteCode = createKey();
 
-          _dbContext.Klasses.Add(newKlasse);
-          _dbContext.SaveChanges();
-          return View("KlassenVerwalten", getAllKlassen());
+            newKlasse.KlasseName = KlasseName;
+            newKlasse.Startdatum = EingabedatumStart;
+            newKlasse.EndDatum = EingabedatumEnde;
+            newKlasse.KlassenInviteCode = createKey();
+
+            _dbContext.Klasses.Add(newKlasse);
+            _dbContext.SaveChanges();
+            return View("KlassenVerwalten", getAllKlassen());
         }
 
         public IActionResult EditKlasse(string KlasseName, string EingabedatumStart, string EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
-          int Id = (int)HttpContext.Session.GetInt32("_KlassenID");
-          var editKlasse = _dbContext.Klasses.Where(x => x.Id == Id).FirstOrDefault();
+            int Id = (int)HttpContext.Session.GetInt32("_KlassenID");
+            var editKlasse = _dbContext.Klasses.Where(x => x.Id == Id).FirstOrDefault();
 
-          var EingabedatumStartDate = DateTime.Parse(EingabedatumStart);
-          var EingabedatumEndeDate = DateTime.Parse(EingabedatumEnde);
+            var EingabedatumStartDate = DateTime.Parse(EingabedatumStart);
+            var EingabedatumEndeDate = DateTime.Parse(EingabedatumEnde);
 
-          editKlasse.KlasseName = KlasseName;
-          editKlasse.Startdatum = EingabedatumStartDate;
-          editKlasse.EndDatum = EingabedatumEndeDate;
+            editKlasse.KlasseName = KlasseName;
+            editKlasse.Startdatum = EingabedatumStartDate;
+            editKlasse.EndDatum = EingabedatumEndeDate;
 
-          _dbContext.SaveChanges();
-          return View("KlassenVerwalten", getAllKlassen());
+            _dbContext.SaveChanges();
+            return View("KlassenVerwalten", getAllKlassen());
         }
-        
+
         public int createKey()
         {
-          Random rnd = new Random();
-          int VerificationKey = rnd.Next(100000, 1000000);
-          int keys = _dbContext.Klasses.Where(k => k.KlassenInviteCode == VerificationKey).Count();
-          if (keys != 0)
-          {
-            return createKey();
-          } else
-          {
-            return VerificationKey;
-          }
+            Random rnd = new Random();
+            int VerificationKey = rnd.Next(100000, 1000000);
+            int keys = _dbContext.Klasses.Where(k => k.KlassenInviteCode == VerificationKey).Count();
+            if (keys != 0)
+            {
+                return createKey();
+            }
+            else
+            {
+                return VerificationKey;
+            }
         }
 
         public IActionResult BerufEdit(int ID)
@@ -161,40 +162,41 @@ namespace NoVe.Models
 
         public IActionResult BenutzerArchive(int ID)
         {
-          int userid = (int)HttpContext.Session.GetInt32("_UserID");
-            if (userid == ID) {
+            int userid = (int)HttpContext.Session.GetInt32("_UserID");
+            if (userid == ID)
+            {
                 ViewBag.Message = string.Format("Sie können sich selbst nicht archivieren");
                 return View("AlleBenutzer", getAllUsers());
             }
 
-          User user = _dbContext.Users.Where(b => b.Id == ID).First();
-          user.archived = true;
-          _dbContext.SaveChanges();
-          return View("AlleBenutzer", getAllUsers());
+            User user = _dbContext.Users.Where(b => b.Id == ID).First();
+            user.archived = true;
+            _dbContext.SaveChanges();
+            return View("AlleBenutzer", getAllUsers());
         }
 
         public IActionResult KlassenArchive(int ID)
         {
-          Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
-          klasse.archived = true;
-          _dbContext.SaveChanges();
-          return View("KlassenVerwalten", getAllKlassen());
+            Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
+            klasse.archived = true;
+            _dbContext.SaveChanges();
+            return View("KlassenVerwalten", getAllKlassen());
         }
 
 
         public IActionResult BenutzerWiederherstellen(int ID)
         {
-          User user = _dbContext.Users.Where(b => b.Id == ID).First();
-          user.archived = false;
-          _dbContext.SaveChanges();
-          return View("BenutzerArchiv", getAllUsersArchiv());
+            User user = _dbContext.Users.Where(b => b.Id == ID).First();
+            user.archived = false;
+            _dbContext.SaveChanges();
+            return View("BenutzerArchiv", getAllUsersArchiv());
         }
         public IActionResult KlasseWiederherstellen(int ID)
         {
-          Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
-          klasse.archived = false;
-          _dbContext.SaveChanges();
-          return View("KlassenArchiv", getAllKlassenAchive());
+            Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
+            klasse.archived = false;
+            _dbContext.SaveChanges();
+            return View("KlassenArchiv", getAllKlassenAchive());
         }
 
 
@@ -254,7 +256,8 @@ namespace NoVe.Models
                 _dbContext.SaveChanges();
                 return View("KlassenVerwalten", getAllKlassen());
             }
-            else {
+            else
+            {
                 ViewBag.Message = string.Format("Es hat noch Personen in der Klasse, diese zuerst entfernen oder die Klasse archivieren.");
                 return View("KlassenVerwalten", getAllKlassen());
             }
@@ -280,11 +283,11 @@ namespace NoVe.Models
 
         public async Task<IActionResult> DomainLoeschen(int ID)
         {
-          Domains domain = _dbContext.Domains.FirstOrDefault(d => d.Id == ID);
-          _dbContext.Domains.Remove(domain);
-          _dbContext.SaveChanges();
+            Domains domain = _dbContext.Domains.FirstOrDefault(d => d.Id == ID);
+            _dbContext.Domains.Remove(domain);
+            _dbContext.SaveChanges();
 
-          return View("Domains", getAllDomains());
+            return View("Domains", getAllDomains());
         }
 
         private List<User> getUnconfirmedUsers()
@@ -301,12 +304,12 @@ namespace NoVe.Models
 
         private List<Klasse> getAllKlassen()
         {
-          return _dbContext.Klasses.Where(k => k.archived == false).ToList();
+            return _dbContext.Klasses.Where(k => k.archived == false).ToList();
         }
 
         private List<Klasse> getAllKlassenAchive()
         {
-          return _dbContext.Klasses.Where(k => k.archived == true).ToList();
+            return _dbContext.Klasses.Where(k => k.archived == true).ToList();
         }
 
         private List<Fach> getSpecificFach(int Id)
@@ -317,7 +320,8 @@ namespace NoVe.Models
         public List<User> getSpecificUser(int Id)
         {
             List<User> users = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == Id).ToList();
-            if (users[0].Klasse == null) {
+            if (users[0].Klasse == null)
+            {
                 Klasse klasse = new Klasse();
                 klasse.KlassenInviteCode = 0;
                 users[0].Klasse = klasse;
@@ -327,7 +331,7 @@ namespace NoVe.Models
 
         private List<Klasse> getSpecificKlasse(int Id)
         {
-          return _dbContext.Klasses.Where(k => k.Id == Id).ToList(); ;
+            return _dbContext.Klasses.Where(k => k.Id == Id).ToList(); ;
         }
 
         private List<User> getAllUsers()
@@ -340,14 +344,14 @@ namespace NoVe.Models
         private List<User> getAllUsersArchiv()
         {
 
-        return _dbContext.Users.Where(u => u.AdminVerification == 1 && u.archived == true).ToList();
+            return _dbContext.Users.Where(u => u.AdminVerification == 1 && u.archived == true).ToList();
 
         }
 
         private List<Domains> getAllDomains()
         {
 
-          return _dbContext.Domains.ToList();
+            return _dbContext.Domains.ToList();
 
         }
 
@@ -366,13 +370,15 @@ namespace NoVe.Models
             return _dbContext.Fachs.Where(k => k.KompetenzbereichId == id).ToList();
         }
 
-        public IActionResult SafeBerufe(string name) {
+        public IActionResult SafeBerufe(string name)
+        {
             var berufSameNameCount = _dbContext.Berufs.Where(b => b.Name == name).Count();
 
             Console.WriteLine("Anzahl der Berufe: " + berufSameNameCount);
             Console.WriteLine("neuer Berufs-Name:" + name);
 
-            if (berufSameNameCount < 1) {
+            if (berufSameNameCount < 1)
+            {
                 Beruf beruf = new Beruf();
                 beruf.Name = name;
 
@@ -388,24 +394,24 @@ namespace NoVe.Models
 
         public IActionResult SafeDomain(string name)
         {
-          var domainCount = _dbContext.Domains.Where(b => b.AllowedDomains == name).Count();
+            var domainCount = _dbContext.Domains.Where(b => b.AllowedDomains == name).Count();
 
-          Console.WriteLine("Anzahl der Domains: " + domainCount);
-          Console.WriteLine("neuer Domain-Name:" + name);
+            Console.WriteLine("Anzahl der Domains: " + domainCount);
+            Console.WriteLine("neuer Domain-Name:" + name);
 
-          if (domainCount < 1)
-          {
-            Domains domain = new Domains();
-            domain.AllowedDomains = name;
+            if (domainCount < 1)
+            {
+                Domains domain = new Domains();
+                domain.AllowedDomains = name;
 
-            Console.WriteLine("neuer Berufs-Name:" + domain.AllowedDomains);
+                Console.WriteLine("neuer Berufs-Name:" + domain.AllowedDomains);
 
-            _dbContext.Domains.Add(domain);
-            _dbContext.SaveChanges();
-            return View("Domains", getAllDomains());
-          }
-          ViewBag.Message = string.Format("Es existiert schon eine Domain mit diesem Namen.");
-          return View("~/Views/Admin/message.cshtml");
+                _dbContext.Domains.Add(domain);
+                _dbContext.SaveChanges();
+                return View("Domains", getAllDomains());
+            }
+            ViewBag.Message = string.Format("Es existiert schon eine Domain mit diesem Namen.");
+            return View("~/Views/Admin/message.cshtml");
         }
 
         public async Task<IActionResult> BerufLoeschen(int ID)
@@ -462,7 +468,7 @@ namespace NoVe.Models
 
         public async Task<IActionResult> KompetenzbereichBearbeiten(string name, int gewichtung, double rundung)
         {
-            
+
             int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
             int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
 
@@ -541,7 +547,8 @@ namespace NoVe.Models
                     Klasse Klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.KlassenInviteCode == klassencode).FirstOrDefault();
                     user.Klasse = Klasse;
                 }
-                else {
+                else
+                {
                     ViewBag.Message = string.Format("Keine Klasse mit diesem Einladungscode gefunden.");
                     return View("benutzerEdit", getSpecificUser(editUserId));
                 }
@@ -550,6 +557,12 @@ namespace NoVe.Models
 
             ViewBag.Message = string.Format("Alles erfolgreich gespeichert.");
             return View("AlleBenutzer", getAllUsers());
+        }
+
+        public IActionResult ToKompetenzbereichBack()
+        {
+            int id = (int)HttpContext.Session.GetInt32("_BerufID");
+            return View("Kompetenzbereiche", getKompetenzbereiche(id));
         }
     }
 }
