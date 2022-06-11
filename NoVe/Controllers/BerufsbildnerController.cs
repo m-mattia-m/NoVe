@@ -70,7 +70,6 @@ namespace NoVe.Controllers
             return lerndeneListWithMarks;
         }
 
-
         public double GesamtNote(int userId)
         {
 
@@ -97,7 +96,11 @@ namespace NoVe.Controllers
             }
 
             int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
-            double GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            double GesamtnoteZusammen = 0;
+            if (GewichtungDieBenotetWurde != 0)
+            {
+                GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            }
             return GesamtnoteZusammen;
         }
 
@@ -134,7 +137,12 @@ namespace NoVe.Controllers
         public double getNoteFromFach(int fachId, int userId)
         {
             Note note = _dbContext.Notes.Where(n => n.FachId == fachId).Where(n => n.UserId == userId).FirstOrDefault();
-            double notenwert = note.Notenwert;
+
+            double notenwert = 0;
+            if (note != null)
+            {
+                notenwert = note.Notenwert;
+            }
 
             return notenwert;
         }

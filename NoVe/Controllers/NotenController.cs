@@ -21,20 +21,20 @@ namespace NoVe.Controllers
         {
             string userRole;
 
-            try
+            //try
+            //{
+            userRole = HttpContext.Session.GetString("_UserRole");
+            Console.WriteLine("SessionRole: " + userRole);
+            if (userRole == "schueler" || userRole == "berufsbildner" || userRole == "lehrer" || userRole == "admin")
             {
-                userRole = HttpContext.Session.GetString("_UserRole");
-                Console.WriteLine("SessionRole: " + userRole);
-                if (userRole == "schueler" || userRole == "berufsbildner" || userRole == "lehrer" || userRole == "admin")
-                {
-                    Console.WriteLine("UserID: " + (int)HttpContext.Session.GetInt32("_UserID"));
-                    return View(listAllFaecherAndKompetenzbereiche());
-                }
+                Console.WriteLine("UserID: " + (int)HttpContext.Session.GetInt32("_UserID"));
+                return View(listAllFaecherAndKompetenzbereiche());
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Fehler beim auslesen aus der Session");
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Fehler beim auslesen aus der Session");
+            //}
 
             ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
             return View("~/Views/Account/Message.cshtml");
@@ -108,7 +108,11 @@ namespace NoVe.Controllers
             }
 
             int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
-            double GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            double GesamtnoteZusammen = 0;
+            if (GewichtungDieBenotetWurde != 0)
+            {
+                GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            }
             ViewBag.Message = string.Format(GesamtnoteZusammen.ToString());
             return fachKompetenzbereiche;
         }
@@ -217,7 +221,17 @@ namespace NoVe.Controllers
 
         public double calcKompetenzbereichNote(int kompetenzbereichId)
         {
-            int userId = (int)HttpContext.Session.GetInt32("_UserID");
+            int userId = -1;
+            string userRole = HttpContext.Session.GetString("_UserRole");
+            if (userRole == "berufsbildner" || userRole == "lehrer")
+            {
+                userId = (int)HttpContext.Session.GetInt32("_StudentID");
+            }
+            else
+            {
+                userId = (int)HttpContext.Session.GetInt32("_UserID");
+            }
+
             List<Fach> faecher = _dbContext.Fachs.Where(f => f.KompetenzbereichId == kompetenzbereichId).ToList();
             double kompetenzbereichSchnitt = 0;
             double gewichtungWoNochKeineNote = 0;
@@ -236,6 +250,7 @@ namespace NoVe.Controllers
                     double gerundeteNote = runden(notenWert, rundung);
                     kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + gerundeteNote * fach.Gewichtung / 100);
                 }
+                var asdf = "";
             }
             kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
             return kompetenzbereichSchnitt;
@@ -244,8 +259,11 @@ namespace NoVe.Controllers
         public double getNoteFromFach(int fachId, int userId)
         {
             Note note = _dbContext.Notes.Where(n => n.FachId == fachId).Where(n => n.UserId == userId).FirstOrDefault();
-            double notenwert = note.Notenwert;
-
+            double notenwert = 0;
+            if (note != null)
+            {
+                notenwert = note.Notenwert;
+            }
             return notenwert;
         }
 

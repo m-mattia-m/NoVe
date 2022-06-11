@@ -22,7 +22,14 @@
             <tr>
                 <td>@user.Vorname @user.Nachname</td>
                 <td>@user.Email</td>
-                <td>@user.NotenWert</td>
+                <td>
+                    @if (@user.NotenWert == 0)
+                    {
+                        <span>noch keine Noten</span>
+                    }
+                    else
+                    {@user.NotenWert}
+                </td>
                 <td>
                     @Html.ActionLink("Noten Einsehen", "notenEinsehen", new { id = user.Id })
                 </td>
