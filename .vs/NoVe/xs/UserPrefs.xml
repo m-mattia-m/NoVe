@@ -1,5 +1,6 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Admin/Kompetenzbereiche.cshtml">
     <Files>
       <File FileName="NoVe/Controllers/AdminController.cs" Line="564" Column="57" />
@@ -9,11 +10,22 @@
 =======
   <MonoDevelop.Ide.Workbench>
 >>>>>>> main
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Admin/Faecher.cshtml">
+    <Files>
+      <File FileName="NoVe/Views/Admin/FachEdit.cshtml" Line="51" Column="26" />
+      <File FileName="NoVe/Views/Admin/KompetenzbereichEdit.cshtml" Line="28" Column="1" />
+      <File FileName="NoVe/Controllers/AdminController.cs" Line="523" Column="1" />
+      <File FileName="NoVe/Views/Admin/Kompetenzbereiche.cshtml" Line="52" Column="1" />
+      <File FileName="NoVe/Views/Admin/Faecher.cshtml" Line="55" Column="22" />
+    </Files>
+>>>>>>> e4732b2b2aa069eaf8f12e111dc3651b5f586141
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
+<<<<<<< HEAD
 <<<<<<< HEAD
               <Node name="Controllers" expanded="True" />
               <Node name="Views" expanded="True">
@@ -27,6 +39,13 @@
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
 >>>>>>> main
+=======
+              <Node name="Controllers" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="Faecher.cshtml" selected="True" />
+                </Node>
+>>>>>>> e4732b2b2aa069eaf8f12e111dc3651b5f586141
               </Node>
             </Node>
           </Node>
