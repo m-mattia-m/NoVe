@@ -22,21 +22,45 @@ namespace NoVe.Controllers
 
         public IActionResult Index()
         {
-            return View("Lernende", getLernende());
+            if (HttpContext.Session.GetString("_UserRole") == "berufsbildner")
+            {
+                return View("Lernende", getLernende());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult Lernende()
         {
-            return View(getLernende());
+            if (HttpContext.Session.GetString("_UserRole") == "berufsbildner")
+            {
+                return View(getLernende());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult notenEinsehen(int ID)
         {
-            HttpContext.Session.SetInt32("_StudentID", ID);
-            int studentID = (int)HttpContext.Session.GetInt32("_StudentID");
-            Console.WriteLine("Noten einsehen von: " + studentID);
+            if (HttpContext.Session.GetString("_UserRole") == "berufsbildner")
+            {
+                HttpContext.Session.SetInt32("_StudentID", ID);
+                int studentID = (int)HttpContext.Session.GetInt32("_StudentID");
+                Console.WriteLine("Noten einsehen von: " + studentID);
 
-            return RedirectToAction("Index", "Noten");
+                return RedirectToAction("Index", "Noten");
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         private List<UserWithMark> getLernende()

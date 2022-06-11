@@ -43,79 +43,166 @@ namespace NoVe.Models
 
         public IActionResult BenutzerBestaetigen()
         {
-            return View(getUnconfirmedUsers());
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getUnconfirmedUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult AlleBenutzer()
         {
-            return View(getAllUsers());
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getAllUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult BenutzerArchiv()
         {
-            return View(getAllUsersArchiv());
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getAllUsersArchiv());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult Domains()
         {
-            return View(getAllDomains());
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getAllDomains());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult KlassenVerwalten()
         {
-            return View(getAllKlassen());
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getAllKlassen());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult klassenEdit(int ID)
         {
             HttpContext.Session.SetInt32("_KlassenID", ID);
-            return View(getSpecificKlasse(ID));
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getSpecificKlasse(ID));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult KlassenArchiv()
         {
-            return View(getAllKlassenAchive());
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getAllKlassenAchive());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult Berufe()
         {
-            return View(getBerufe());
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View(getBerufe());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult KlassenHinzufuegen()
         {
-            return View();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult AddKlasse(string KlasseName, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
-            var newKlasse = new Klasse();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                var newKlasse = new Klasse();
+                newKlasse.KlasseName = KlasseName;
+                newKlasse.Startdatum = EingabedatumStart;
+                newKlasse.EndDatum = EingabedatumEnde;
+                newKlasse.KlassenInviteCode = createKey();
 
+                _dbContext.Klasses.Add(newKlasse);
+                _dbContext.SaveChanges();
 
-            newKlasse.KlasseName = KlasseName;
-            newKlasse.Startdatum = EingabedatumStart;
-            newKlasse.EndDatum = EingabedatumEnde;
-            newKlasse.KlassenInviteCode = createKey();
-
-            _dbContext.Klasses.Add(newKlasse);
-            _dbContext.SaveChanges();
-            return View("KlassenVerwalten", getAllKlassen());
+                return View("KlassenVerwalten", getAllKlassen());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult EditKlasse(string KlasseName, string EingabedatumStart, string EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
-            int Id = (int)HttpContext.Session.GetInt32("_KlassenID");
-            var editKlasse = _dbContext.Klasses.Where(x => x.Id == Id).FirstOrDefault();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int Id = (int)HttpContext.Session.GetInt32("_KlassenID");
+                var editKlasse = _dbContext.Klasses.Where(x => x.Id == Id).FirstOrDefault();
 
-            var EingabedatumStartDate = DateTime.Parse(EingabedatumStart);
-            var EingabedatumEndeDate = DateTime.Parse(EingabedatumEnde);
+                var EingabedatumStartDate = DateTime.Parse(EingabedatumStart);
+                var EingabedatumEndeDate = DateTime.Parse(EingabedatumEnde);
 
-            editKlasse.KlasseName = KlasseName;
-            editKlasse.Startdatum = EingabedatumStartDate;
-            editKlasse.EndDatum = EingabedatumEndeDate;
+                editKlasse.KlasseName = KlasseName;
+                editKlasse.Startdatum = EingabedatumStartDate;
+                editKlasse.EndDatum = EingabedatumEndeDate;
 
-            _dbContext.SaveChanges();
-            return View("KlassenVerwalten", getAllKlassen());
+                _dbContext.SaveChanges();
+                return View("KlassenVerwalten", getAllKlassen());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public int createKey()
@@ -135,162 +222,318 @@ namespace NoVe.Models
 
         public IActionResult BerufEdit(int ID)
         {
-            HttpContext.Session.SetInt32("_BerufID", ID);
-            Beruf beruf = _dbContext.Berufs.Where(b => b.Id == ID).FirstOrDefault();
-            ViewBag.Message = string.Format(beruf.Name);
-            return View();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                HttpContext.Session.SetInt32("_BerufID", ID);
+                Beruf beruf = _dbContext.Berufs.Where(b => b.Id == ID).FirstOrDefault();
+                ViewBag.Message = string.Format(beruf.Name);
+                return View();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult KompetenzbereichEdit(int ID)
         {
-            HttpContext.Session.SetInt32("_KompetenzbereichID", ID);
-            Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.Where(b => b.Id == ID).FirstOrDefault();
-            return View(getSpecificKompetenzbereich(ID));
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                HttpContext.Session.SetInt32("_KompetenzbereichID", ID);
+                Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.Where(b => b.Id == ID).FirstOrDefault();
+                return View(getSpecificKompetenzbereich(ID));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult FachEdit(int ID)
         {
-            HttpContext.Session.SetInt32("_FachID", ID);
-            Fach fach = _dbContext.Fachs.Where(b => b.Id == ID).FirstOrDefault();
-            return View(getSpecificFach(ID));
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                HttpContext.Session.SetInt32("_FachID", ID);
+                Fach fach = _dbContext.Fachs.Where(b => b.Id == ID).FirstOrDefault();
+                return View(getSpecificFach(ID));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult benutzerEdit(int ID)
         {
-            HttpContext.Session.SetInt32("_UserEditID", ID);
-            return View(getSpecificUser(ID));
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                HttpContext.Session.SetInt32("_UserEditID", ID);
+                return View(getSpecificUser(ID));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult BenutzerArchive(int ID)
         {
-            int userid = (int)HttpContext.Session.GetInt32("_UserID");
-            if (userid == ID)
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                ViewBag.Message = string.Format("Sie können sich selbst nicht archivieren");
+                int userid = (int)HttpContext.Session.GetInt32("_UserID");
+                if (userid == ID)
+                {
+                    ViewBag.Message = string.Format("Sie können sich selbst nicht archivieren");
+                    return View("AlleBenutzer", getAllUsers());
+                }
+
+                User user = _dbContext.Users.Where(b => b.Id == ID).First();
+                user.archived = true;
+                _dbContext.SaveChanges();
                 return View("AlleBenutzer", getAllUsers());
             }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
 
-            User user = _dbContext.Users.Where(b => b.Id == ID).First();
-            user.archived = true;
-            _dbContext.SaveChanges();
-            return View("AlleBenutzer", getAllUsers());
         }
 
         public IActionResult KlassenArchive(int ID)
         {
-            Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
-            klasse.archived = true;
-            _dbContext.SaveChanges();
-            return View("KlassenVerwalten", getAllKlassen());
-        }
-
-
-        public IActionResult BenutzerWiederherstellen(int ID)
-        {
-            User user = _dbContext.Users.Where(b => b.Id == ID).First();
-            user.archived = false;
-            _dbContext.SaveChanges();
-            return View("BenutzerArchiv", getAllUsersArchiv());
-        }
-        public IActionResult KlasseWiederherstellen(int ID)
-        {
-            Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
-            klasse.archived = false;
-            _dbContext.SaveChanges();
-            return View("KlassenArchiv", getAllKlassenAchive());
-        }
-
-
-        public IActionResult Kompetenzbereiche(int ID)
-        {
-            HttpContext.Session.SetInt32("_BerufID", ID);
-            Beruf beruf = _dbContext.Berufs.Where(b => b.Id == ID).FirstOrDefault();
-
-            return View(getKompetenzbereiche(ID));
-        }
-
-        public IActionResult Faecher(int ID)
-        {
-            HttpContext.Session.SetInt32("_KompetenzbereichID", ID);
-
-            return View(getFaecher(ID));
-        }
-
-        public IActionResult KompetenzbereicheBack()
-        {
-            int id = (int)HttpContext.Session.GetInt32("_BerufID");
-            return View("Kompetenzbereiche", getKompetenzbereiche(id));
-        }
-
-        public IActionResult FachBack()
-        {
-            int id = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
-            return View("Faecher", getFaecher(id));
-        }
-
-        public IActionResult UserBack()
-        {
-            return View("AlleBenutzer", getAllUsers());
-        }
-
-        public IActionResult ToIndexBack()
-        {
-            return View("Index", getUnconfirmedUsers());
-        }
-
-        public IActionResult Bestaetigen(int ID)
-        {
-
-            User user = _dbContext.Users.FirstOrDefault(u => u.Id == ID);
-            user.AdminVerification = 1;
-            _dbContext.SaveChanges();
-
-            AccountController.sendVerificationEmail(user.Email, 0, user.Vorname + " " + user.Nachname, "adminAccepted");
-
-            return View("BenutzerBestaetigen", getUnconfirmedUsers());
-        }
-
-        public IActionResult KlasseLoeschen(int ID)
-        {
-            Klasse klasse = _dbContext.Klasses.Include(x => x.Users).FirstOrDefault(k => k.Id == ID);
-            if (klasse.Users.Count == 0)
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                _dbContext.Remove(klasse);
+                Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
+                klasse.archived = true;
                 _dbContext.SaveChanges();
                 return View("KlassenVerwalten", getAllKlassen());
             }
             else
             {
-                ViewBag.Message = string.Format("Es hat noch Personen in der Klasse, diese zuerst entfernen oder die Klasse archivieren.");
-                return View("KlassenVerwalten", getAllKlassen());
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
             }
+        }
+
+
+        public IActionResult BenutzerWiederherstellen(int ID)
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                User user = _dbContext.Users.Where(b => b.Id == ID).First();
+                user.archived = false;
+                _dbContext.SaveChanges();
+                return View("BenutzerArchiv", getAllUsersArchiv());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
+        }
+        public IActionResult KlasseWiederherstellen(int ID)
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                Klasse klasse = _dbContext.Klasses.Where(b => b.Id == ID).First();
+                klasse.archived = false;
+                _dbContext.SaveChanges();
+                return View("KlassenArchiv", getAllKlassenAchive());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+        }
+
+
+        public IActionResult Kompetenzbereiche(int ID)
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                HttpContext.Session.SetInt32("_BerufID", ID);
+                Beruf beruf = _dbContext.Berufs.Where(b => b.Id == ID).FirstOrDefault();
+                return View(getKompetenzbereiche(ID));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
+        }
+
+        public IActionResult Faecher(int ID)
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                HttpContext.Session.SetInt32("_KompetenzbereichID", ID);
+                return View(getFaecher(ID));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+        }
+
+        public IActionResult KompetenzbereicheBack()
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int id = (int)HttpContext.Session.GetInt32("_BerufID");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
+        }
+
+        public IActionResult FachBack()
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int id = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+                return View("Faecher", getFaecher(id));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
+        }
+
+        public IActionResult UserBack()
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View("AlleBenutzer", getAllUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+        }
+
+        public IActionResult ToIndexBack()
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                return View("Index", getUnconfirmedUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+        }
+
+        public IActionResult Bestaetigen(int ID)
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                User user = _dbContext.Users.FirstOrDefault(u => u.Id == ID);
+                user.AdminVerification = 1;
+                _dbContext.SaveChanges();
+
+                AccountController.sendVerificationEmail(user.Email, 0, user.Vorname + " " + user.Nachname, "adminAccepted");
+
+                return View("BenutzerBestaetigen", getUnconfirmedUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
+        }
+
+        public IActionResult KlasseLoeschen(int ID)
+        {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                Klasse klasse = _dbContext.Klasses.Include(x => x.Users).FirstOrDefault(k => k.Id == ID);
+                if (klasse.Users.Count == 0)
+                {
+                    _dbContext.Remove(klasse);
+                    _dbContext.SaveChanges();
+                    return View("KlassenVerwalten", getAllKlassen());
+                }
+                else
+                {
+                    ViewBag.Message = string.Format("Es hat noch Personen in der Klasse, diese zuerst entfernen oder die Klasse archivieren.");
+                    return View("KlassenVerwalten", getAllKlassen());
+                }
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
         }
 
         public async Task<IActionResult> AblehnenAsync(int ID)
         {
-            User user = _dbContext.Users.FirstOrDefault(u => u.Id == ID);
-            _dbContext.Users.Remove(user);
-            _dbContext.SaveChanges();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                User user = _dbContext.Users.FirstOrDefault(u => u.Id == ID);
+                _dbContext.Users.Remove(user);
+                _dbContext.SaveChanges();
 
-            return View("BenutzerBestaetigen", getUnconfirmedUsers());
+                return View("BenutzerBestaetigen", getUnconfirmedUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> BenutzerLoeschen(int ID)
         {
-            User user = _dbContext.Users.FirstOrDefault(u => u.Id == ID);
-            _dbContext.Users.Remove(user);
-            _dbContext.SaveChanges();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                User user = _dbContext.Users.FirstOrDefault(u => u.Id == ID);
+                _dbContext.Users.Remove(user);
+                _dbContext.SaveChanges();
 
-            return View("AlleBenutzer", getAllUsers());
+                return View("AlleBenutzer", getAllUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> DomainLoeschen(int ID)
         {
-            Domains domain = _dbContext.Domains.FirstOrDefault(d => d.Id == ID);
-            _dbContext.Domains.Remove(domain);
-            _dbContext.SaveChanges();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                Domains domain = _dbContext.Domains.FirstOrDefault(d => d.Id == ID);
+                _dbContext.Domains.Remove(domain);
+                _dbContext.SaveChanges();
 
-            return View("Domains", getAllDomains());
+                return View("Domains", getAllDomains());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         private List<User> getUnconfirmedUsers()
@@ -375,197 +618,294 @@ namespace NoVe.Models
 
         public IActionResult SafeBerufe(string name)
         {
-            var berufSameNameCount = _dbContext.Berufs.Where(b => b.Name == name).Count();
-
-            Console.WriteLine("Anzahl der Berufe: " + berufSameNameCount);
-            Console.WriteLine("neuer Berufs-Name:" + name);
-
-            if (berufSameNameCount < 1)
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                Beruf beruf = new Beruf();
-                beruf.Name = name;
+                var berufSameNameCount = _dbContext.Berufs.Where(b => b.Name == name).Count();
 
-                Console.WriteLine("neuer Berufs-Name:" + beruf.Name);
+                Console.WriteLine("Anzahl der Berufe: " + berufSameNameCount);
+                Console.WriteLine("neuer Berufs-Name:" + name);
 
-                _dbContext.Berufs.Add(beruf);
-                _dbContext.SaveChanges();
-                return View("Berufe", getBerufe());
+                if (berufSameNameCount < 1)
+                {
+                    Beruf beruf = new Beruf();
+                    beruf.Name = name;
+
+                    Console.WriteLine("neuer Berufs-Name:" + beruf.Name);
+
+                    _dbContext.Berufs.Add(beruf);
+                    _dbContext.SaveChanges();
+                    return View("Berufe", getBerufe());
+                }
+                ViewBag.Message = string.Format("Es existiert schon ein Beruf mit diesem Namen.");
+                return View("~/Views/Admin/message.cshtml");
             }
-            ViewBag.Message = string.Format("Es existiert schon ein Beruf mit diesem Namen.");
-            return View("~/Views/Admin/message.cshtml");
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult SafeDomain(string name)
         {
-            var domainCount = _dbContext.Domains.Where(b => b.AllowedDomains == name).Count();
-
-            Console.WriteLine("Anzahl der Domains: " + domainCount);
-            Console.WriteLine("neuer Domain-Name:" + name);
-
-            if (domainCount < 1)
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                Domains domain = new Domains();
-                domain.AllowedDomains = name;
+                var domainCount = _dbContext.Domains.Where(b => b.AllowedDomains == name).Count();
 
-                Console.WriteLine("neuer Berufs-Name:" + domain.AllowedDomains);
+                Console.WriteLine("Anzahl der Domains: " + domainCount);
+                Console.WriteLine("neuer Domain-Name:" + name);
 
-                _dbContext.Domains.Add(domain);
-                _dbContext.SaveChanges();
-                return View("Domains", getAllDomains());
+                if (domainCount < 1)
+                {
+                    Domains domain = new Domains();
+                    domain.AllowedDomains = name;
+
+                    Console.WriteLine("neuer Berufs-Name:" + domain.AllowedDomains);
+
+                    _dbContext.Domains.Add(domain);
+                    _dbContext.SaveChanges();
+                    return View("Domains", getAllDomains());
+                }
+                ViewBag.Message = string.Format("Es existiert schon eine Domain mit diesem Namen.");
+                return View("~/Views/Admin/message.cshtml");
             }
-            ViewBag.Message = string.Format("Es existiert schon eine Domain mit diesem Namen.");
-            return View("~/Views/Admin/message.cshtml");
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> BerufLoeschen(int ID)
         {
-            Beruf beruf = _dbContext.Berufs.FirstOrDefault(b => b.Id == ID);
-            _dbContext.Berufs.Remove(beruf);
-            _dbContext.SaveChanges();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                Beruf beruf = _dbContext.Berufs.FirstOrDefault(b => b.Id == ID);
+                _dbContext.Berufs.Remove(beruf);
+                _dbContext.SaveChanges();
 
-            return View("Berufe", getBerufe());
+                return View("Berufe", getBerufe());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> BerufBearbeiten(string name)
         {
-            int id = (int)HttpContext.Session.GetInt32("_BerufID");
-            Beruf beruf = _dbContext.Berufs.FirstOrDefault(b => b.Id == id);
-            beruf.Name = name;
-            _dbContext.SaveChanges();
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int id = (int)HttpContext.Session.GetInt32("_BerufID");
+                Beruf beruf = _dbContext.Berufs.FirstOrDefault(b => b.Id == id);
+                beruf.Name = name;
+                _dbContext.SaveChanges();
 
-            return View("Berufe", getBerufe());
+                return View("Berufe", getBerufe());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
         }
 
         public async Task<IActionResult> KompetenzbereichLoeschen(int ID)
         {
-            int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
 
-            Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.FirstOrDefault(b => b.Id == ID);
-            _dbContext.Kompetenzbereichs.Remove(kompetenzbereich);
-            _dbContext.SaveChanges();
+                Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.FirstOrDefault(b => b.Id == ID);
+                _dbContext.Kompetenzbereichs.Remove(kompetenzbereich);
+                _dbContext.SaveChanges();
 
-            return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+                return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult SafeKompetenzbereich(string name, int gewichtung, double rundung)
         {
-            int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
-            var kompetenzbereichCount = _dbContext.Kompetenzbereichs.Where(b => b.Name == name).Where(b => b.BerufId == berufId).Count();
-
-
-            if (kompetenzbereichCount < 1)
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                Kompetenzbereich kompetenzbereich = new Kompetenzbereich();
-                kompetenzbereich.Name = name;
-                kompetenzbereich.Gewichtung = gewichtung;
-                kompetenzbereich.Rundung = rundung;
-                kompetenzbereich.BerufId = berufId;
+                int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
+                var kompetenzbereichCount = _dbContext.Kompetenzbereichs.Where(b => b.Name == name).Where(b => b.BerufId == berufId).Count();
 
-                _dbContext.Kompetenzbereichs.Add(kompetenzbereich);
-                _dbContext.SaveChanges();
-                return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+
+                if (kompetenzbereichCount < 1)
+                {
+                    Kompetenzbereich kompetenzbereich = new Kompetenzbereich();
+                    kompetenzbereich.Name = name;
+                    kompetenzbereich.Gewichtung = gewichtung;
+                    kompetenzbereich.Rundung = rundung;
+                    kompetenzbereich.BerufId = berufId;
+
+                    _dbContext.Kompetenzbereichs.Add(kompetenzbereich);
+                    _dbContext.SaveChanges();
+                    return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+                }
+                ViewBag.Message = string.Format("Es existiert schon ein Kompetenzbereich mit diesem Namen in diesem Beruf.");
+                return View("~/Views/Admin/message.cshtml");
             }
-            ViewBag.Message = string.Format("Es existiert schon ein Kompetenzbereich mit diesem Namen in diesem Beruf.");
-            return View("~/Views/Admin/message.cshtml");
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> KompetenzbereichBearbeiten(string name, int gewichtung, double rundung)
         {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+                int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
 
-            int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
-            int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
+                Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.FirstOrDefault(b => b.Id == kompetenzbereichID);
+                kompetenzbereich.Name = name;
+                kompetenzbereich.Gewichtung = gewichtung;
+                kompetenzbereich.Rundung = rundung;
+                _dbContext.SaveChanges();
 
-            Kompetenzbereich kompetenzbereich = _dbContext.Kompetenzbereichs.FirstOrDefault(b => b.Id == kompetenzbereichID);
-            kompetenzbereich.Name = name;
-            kompetenzbereich.Gewichtung = gewichtung;
-            kompetenzbereich.Rundung = rundung;
-            _dbContext.SaveChanges();
+                return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
 
-            return View("Kompetenzbereiche", getKompetenzbereiche(berufId));
         }
 
         public IActionResult SafeFach(string name, int gewichtung, double rundung)
         {
-            int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
-            var fachCount = _dbContext.Fachs.Where(b => b.Name == name).Where(b => b.KompetenzbereichId == kompetenzbereichId).Count();
-
-
-            if (fachCount < 1)
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                Fach fach = new Fach();
-                fach.Name = name;
-                fach.Gewichtung = gewichtung;
-                fach.Rundung = rundung;
-                fach.KompetenzbereichId = kompetenzbereichId;
+                int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+                var fachCount = _dbContext.Fachs.Where(b => b.Name == name).Where(b => b.KompetenzbereichId == kompetenzbereichId).Count();
 
-                _dbContext.Fachs.Add(fach);
-                _dbContext.SaveChanges();
-                return View("Faecher", getFaecher(kompetenzbereichId));
+
+                if (fachCount < 1)
+                {
+                    Fach fach = new Fach();
+                    fach.Name = name;
+                    fach.Gewichtung = gewichtung;
+                    fach.Rundung = rundung;
+                    fach.KompetenzbereichId = kompetenzbereichId;
+
+                    _dbContext.Fachs.Add(fach);
+                    _dbContext.SaveChanges();
+                    return View("Faecher", getFaecher(kompetenzbereichId));
+                }
+                ViewBag.Message = string.Format("Es existiert schon ein Fach mit diesem Namen in diesem Kompetenzbereich.");
+                return View("~/Views/Admin/message.cshtml");
             }
-            ViewBag.Message = string.Format("Es existiert schon ein Fach mit diesem Namen in diesem Kompetenzbereich.");
-            return View("~/Views/Admin/message.cshtml");
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> FachLoeschen(int ID)
         {
-            int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
 
-            Fach fach = _dbContext.Fachs.FirstOrDefault(b => b.Id == ID);
-            _dbContext.Fachs.Remove(fach);
-            _dbContext.SaveChanges();
+                Fach fach = _dbContext.Fachs.FirstOrDefault(b => b.Id == ID);
+                _dbContext.Fachs.Remove(fach);
+                _dbContext.SaveChanges();
 
-            return View("Faecher", getFaecher(kompetenzbereichId));
+                return View("Faecher", getFaecher(kompetenzbereichId));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> FachBearbeiten(string name, int gewichtung, double rundung)
         {
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+                int FachID = (int)HttpContext.Session.GetInt32("_FachID");
 
-            int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
-            int FachID = (int)HttpContext.Session.GetInt32("_FachID");
+                Fach fach = _dbContext.Fachs.FirstOrDefault(b => b.Id == FachID);
+                fach.Name = name;
+                fach.Gewichtung = gewichtung;
+                fach.Rundung = rundung;
+                _dbContext.SaveChanges();
 
-            Fach fach = _dbContext.Fachs.FirstOrDefault(b => b.Id == FachID);
-            fach.Name = name;
-            fach.Gewichtung = gewichtung;
-            fach.Rundung = rundung;
-            _dbContext.SaveChanges();
-
-            return View("Faecher", getFaecher(kompetenzbereichID));
+                return View("Faecher", getFaecher(kompetenzbereichID));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public async Task<IActionResult> UserBearbeiten(string vorname, string nachname, string email, string firma, string role, int klassencode, string lehrmeisterEmail)
         {
-            int editUserId = (int)HttpContext.Session.GetInt32("_UserEditID");
-            User user = _dbContext.Users.FirstOrDefault(b => b.Id == editUserId);
-            user.Vorname = vorname;
-            user.Nachname = nachname;
-            user.Email = email;
-            user.Firma = firma;
-            user.Role = role;
-            user.LehrmeisterEmail = lehrmeisterEmail;
-            if (klassencode != 0)
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                int KlassenCount = _dbContext.Klasses.Where(k => k.KlassenInviteCode == klassencode).Count();
-                if (KlassenCount != 0)
+                int editUserId = (int)HttpContext.Session.GetInt32("_UserEditID");
+                User user = _dbContext.Users.FirstOrDefault(b => b.Id == editUserId);
+                user.Vorname = vorname;
+                user.Nachname = nachname;
+                user.Email = email;
+                user.Firma = firma;
+                user.Role = role;
+                user.LehrmeisterEmail = lehrmeisterEmail;
+                if (klassencode != 0)
                 {
-                    Klasse Klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.KlassenInviteCode == klassencode).FirstOrDefault();
-                    user.Klasse = Klasse;
+                    int KlassenCount = _dbContext.Klasses.Where(k => k.KlassenInviteCode == klassencode).Count();
+                    if (KlassenCount != 0)
+                    {
+                        Klasse Klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.KlassenInviteCode == klassencode).FirstOrDefault();
+                        user.Klasse = Klasse;
+                    }
+                    else
+                    {
+                        ViewBag.Message = string.Format("Keine Klasse mit diesem Einladungscode gefunden.");
+                        return View("benutzerEdit", getSpecificUser(editUserId));
+                    }
                 }
-                else
-                {
-                    ViewBag.Message = string.Format("Keine Klasse mit diesem Einladungscode gefunden.");
-                    return View("benutzerEdit", getSpecificUser(editUserId));
-                }
-            }
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
-            ViewBag.Message = string.Format("Alles erfolgreich gespeichert.");
-            return View("AlleBenutzer", getAllUsers());
+                ViewBag.Message = string.Format("Alles erfolgreich gespeichert.");
+                return View("AlleBenutzer", getAllUsers());
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult ToKompetenzbereichBack()
         {
-            int id = (int)HttpContext.Session.GetInt32("_BerufID");
-            return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            if (HttpContext.Session.GetString("_UserRole") == "admin")
+            {
+                int id = (int)HttpContext.Session.GetInt32("_BerufID");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
+
         }
     }
 }

@@ -20,25 +20,22 @@ namespace NoVe.Controllers
         public IActionResult Index()
         {
             string userRole;
-
-            //try
-            //{
             userRole = HttpContext.Session.GetString("_UserRole");
             Console.WriteLine("SessionRole: " + userRole);
             if (userRole == "schueler" || userRole == "berufsbildner" || userRole == "lehrer" || userRole == "admin")
             {
                 Console.WriteLine("UserID: " + (int)HttpContext.Session.GetInt32("_UserID"));
-                return View(listAllFaecherAndKompetenzbereiche());
-            }
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("Fehler beim auslesen aus der Session");
-            //}
 
+                List<FachKompetenzbereich> fachKompetenzbereiche = listAllFaecherAndKompetenzbereiche();
+                if (fachKompetenzbereiche == null)
+                {
+                    ViewBag.Message = string.Format("Du bist keiner Klasse zugeordnet, melde dich bei einer Klasse an");
+                    return View("~/Views/Account/Message.cshtml");
+                }
+                return View(fachKompetenzbereiche);
+            }
             ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
             return View("~/Views/Account/Message.cshtml");
-            //return View("~/Views/Home/Index.cshtml");
         }
 
         private List<FachKompetenzbereich> listAllFaecherAndKompetenzbereiche()
@@ -56,6 +53,10 @@ namespace NoVe.Controllers
             }
 
             User user = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).FirstOrDefault();
+            if (user.Klasse == null)
+            {
+                return null;
+            }
             List<Kompetenzbereich> kompetenzbereiche = _dbContext.Kompetenzbereichs.Where(k => k.BerufId == user.Klasse.BerufId).ToList();
             List<FachKompetenzbereich> fachKompetenzbereiche = new List<FachKompetenzbereich>();
             Klasse klasse = _dbContext.Klasses.Where(k => k.Id == user.Klasse.Id).FirstOrDefault();
@@ -160,7 +161,16 @@ namespace NoVe.Controllers
         // if notenId == -1 -> es existiert noch keine Note
         public IActionResult NotenEdit(int notenId, int fachId, int kompetenzbereichId)
         {
-            return View(getSpecificNote(notenId, fachId, kompetenzbereichId));
+            string role = HttpContext.Session.GetString("_UserRole");
+            if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
+            {
+                return View(getSpecificNote(notenId, fachId, kompetenzbereichId));
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         private List<Note> getSpecificNote(int Id, int FachId, int KompetenzbereichId)
@@ -193,30 +203,76 @@ namespace NoVe.Controllers
 
         public async Task<IActionResult> NotenBearbeiten(double notenwert)
         {
-            int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
-            Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
-            note.Notenwert = notenwert;
-            note.StudentAlreadyChanged = 1;
-            _dbContext.SaveChanges();
+            string role = HttpContext.Session.GetString("_UserRole");
+            if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
+            {
+                int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
+                Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
+                note.Notenwert = notenwert;
+                note.StudentAlreadyChanged = 1;
+                _dbContext.SaveChanges();
 
-            return View("Index", listAllFaecherAndKompetenzbereiche());
+                List<FachKompetenzbereich> fachKompetenzbereiche = listAllFaecherAndKompetenzbereiche();
+                if (fachKompetenzbereiche == null)
+                {
+                    ViewBag.Message = string.Format("Du bist keiner Klasse zugeordnet, melde dich bei einer Klasse an");
+                    return View("~/Views/Account/Message.cshtml");
+                }
+                return View("Index", fachKompetenzbereiche);
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult NotenEditBack()
         {
-            return View("Noten", listAllFaecherAndKompetenzbereiche());
+            string role = HttpContext.Session.GetString("_UserRole");
+            if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
+            {
+                List<FachKompetenzbereich> fachKompetenzbereiche = listAllFaecherAndKompetenzbereiche();
+                if (fachKompetenzbereiche == null)
+                {
+                    ViewBag.Message = string.Format("Du bist keiner Klasse zugeordnet, melde dich bei einer Klasse an");
+                    return View("~/Views/Account/Message.cshtml");
+                }
+                return View("Noten", fachKompetenzbereiche);
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult NotenToKlasseBack()
         {
-            //return View("Noten", listAllFaecherAndKompetenzbereiche());
-            return RedirectToAction("SchuelerListe", "Lehrer");
+            string role = HttpContext.Session.GetString("_UserRole");
+            if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
+            {
+                return RedirectToAction("SchuelerListe", "Lehrer");
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public IActionResult NotenToLernendeBack()
         {
-            //return View("SchuelerListe", SchuelerListe());
-            return RedirectToAction("SchuelerListe", "Lehrer");
+            string role = HttpContext.Session.GetString("_UserRole");
+            if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
+            {
+                return RedirectToAction("Lernende", "Berufsbildner");
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
+                return View("~/Views/Admin/message.cshtml");
+            }
         }
 
         public double calcKompetenzbereichNote(int kompetenzbereichId)

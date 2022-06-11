@@ -7,6 +7,10 @@
 }
 
 <h1>Liste aller Schüler</h1>
+@if (ViewBag.Message != null)
+{
+    <p>@Html.Raw(ViewBag.Message)</p>
+}
 <table class="table accept-users">
     <thead>
         <tr>
@@ -38,3 +42,18 @@
         }
     </tbody>
 </table>
+
+
+<div class="login-wrapper text-center">
+    @using (Html.BeginForm("InviteStudent", "Lehrer"))
+    {
+        <div class="login-form">
+            <label class="form-login-label" name="name">Email von Schüler</label>
+            <input class="form-login" type="email" name="email" id="email" />
+
+            <div class="login-buttons">
+                <input class="login-submit" type="submit" name="submit" value="Hinzufügen" />
+            </div>
+        </div>
+    }
+</div>
