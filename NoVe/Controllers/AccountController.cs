@@ -124,7 +124,7 @@ namespace NoVe.Controllers
             catch (Exception e)
             {
                 Console.WriteLine("User mit Email: '" + Email + "' exisitert noch nicht");
-                ViewBag.Message = string.Format("Du hast deinen Account noch nicht verifiziert");
+                ViewBag.Message = string.Format("Es gibt noch keinen Account mit dieser Email, bitte registriere dich.");
                 return View("~/Views/Account/Message.cshtml");
             }
 

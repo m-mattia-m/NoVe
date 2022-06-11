@@ -1,20 +1,32 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Admin/Kompetenzbereiche.cshtml">
     <Files>
       <File FileName="NoVe/Controllers/AdminController.cs" Line="564" Column="57" />
       <File FileName="NoVe/Views/Admin/Kompetenzbereiche.cshtml" Line="1" Column="1" />
       <File FileName="NoVe/Views/Admin/Faecher.cshtml" Line="60" Column="140" />
     </Files>
+=======
+  <MonoDevelop.Ide.Workbench>
+>>>>>>> main
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
+<<<<<<< HEAD
               <Node name="Controllers" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Admin" expanded="True">
                   <Node name="Kompetenzbereiche.cshtml" selected="True" />
                 </Node>
+=======
+              <Node name="Controllers" expanded="True">
+                <Node name="AccountController.cs" selected="True" />
+              </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Account" expanded="True" />
+>>>>>>> main
               </Node>
             </Node>
           </Node>
