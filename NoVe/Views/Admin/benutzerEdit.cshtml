@@ -78,6 +78,16 @@
                     <label class="form-login-label" name="lehrmeisterEmail">Lehrmeister Email</label>
                     <input class="form-login" type="email" name="lehrmeisterEmail" id="lehrmeisterEmail" value="@benutzer.LehrmeisterEmail" />
 
+                    <label class="label" name="isAdmin">Hat neben der normalen Rolle auch Administrator Rechte</label>
+                    @if (benutzer.isAdmin == true)
+                    {
+                        <input class="form-login" type="checkbox" name="isAdmin" id="isAdmin" checked="checked" />
+                    }
+                    else
+                    {
+                        <input class="form-login" type="checkbox" name="isAdmin" id="isAdmin" />
+                    }
+
                 }
                 <div class="login-buttons">
                     <input class="login-submit" type="submit" name="submit" value="Speichern" />

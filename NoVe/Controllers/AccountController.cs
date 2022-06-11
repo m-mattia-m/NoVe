@@ -358,6 +358,63 @@ namespace NoVe.Controllers
             }
         }
 
+        public IActionResult changeRole()
+        {
+            int userId = (int)HttpContext.Session.GetInt32("_UserID");
+            string currentUserRole = HttpContext.Session.GetString("_UserRole");
+            if (userId != 0)
+            {
+                User user = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
+                if (user.isAdmin == true)
+                {
+                    if (currentUserRole == "lehrer" || currentUserRole == "berufsbildner" || currentUserRole == "schueler")
+                    {
+                        HttpContext.Session.SetString("_UserRole", "admin");
+                        Console.WriteLine("New Userrole: " + "admin (isAdmin)");
+
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else if (currentUserRole == "admin")
+                    {
+                        HttpContext.Session.SetString("_UserRole", user.Role);
+                        Console.WriteLine("New Userrole: " + user.Role);
+                        if (user.Role.Equals("lehrer"))
+                        {
+                            return View("../Lehrer/Index");
+                        }
+                        else if (user.Role.Equals("schueler"))
+                        {
+                            return RedirectToAction("Index", "Noten");
+                        }
+                        else if (user.Role.Equals("berufsbildner"))
+                        {
+                            return RedirectToAction("Index", "Berufsbildner");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Undefinierter Fehler ist aufgetreten, sie haben eine Rolle die nicht existiert, melden Sie sich beim Administrator mit dieser Fehlermeldung.");
+                        ViewBag.Message = string.Format("Undefinierter Fehler ist aufgetreten, sie haben eine Rolle die nicht existiert, melden Sie sich beim Administrator mit dieser Fehlermeldung.");
+                        return View("~/Views/Account/Message.cshtml");
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = string.Format("Sie haben keine Berechtigung für diese Aktion.");
+                    return View("~/Views/Account/Message.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Sie müssen angemeldet sein, um diese Aktion zu machen.");
+                return View("~/Views/Account/Message.cshtml");
+            }
+        }
+
         public List<User> getSpecificUser(int Id)
         {
             return _dbContext.Users.Where(u => u.Id == Id).ToList();
