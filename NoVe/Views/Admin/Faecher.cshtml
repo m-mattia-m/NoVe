@@ -47,7 +47,12 @@
             <input class="form-login" type="number" name="gewichtung" id="gewichtung" />
 
             <label class="form-login-label" name="rundung">Rundung</label>
-            <input class="form-login" type="number" name="rundung" id="rundung" step="0.1" />
+            @*<input class="form-login" type="number" name="rundung" id="rundung" step="0.1" />*@
+            <select class="form-login" type="number" name="rundung" id="rundung" step="0.1">
+                <option value="0.1">0.1</option>
+                <option value="0.5">0.5</option>
+                <option value="1">1</option>
+            </select>
 
             <div class="login-buttons">
                 <input class="login-submit" type="submit" name="submit" value="Speichern" />
