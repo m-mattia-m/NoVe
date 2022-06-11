@@ -11,11 +11,7 @@
     @foreach (var kompetenzbereich in Model)
     {
         <h1>
-            Noten von @kompetenzbereich.UserName: @if (ViewBag.Message != null)
-            {
-                @Html.Raw(ViewBag.Message)
-            }
-
+            Noten von @kompetenzbereich.UserName: @Html.Raw(ViewBag.Message)
         </h1>
         @if (kompetenzbereich.UserRole == "lehrer")
         {
@@ -32,7 +28,14 @@
 {
     @foreach (var kompetenzbereich in Model)
     {
-        <h2>@kompetenzbereich.Kompetenzbereich.Name @kompetenzbereich.NotenwertKompetenzbereich</h2>
+        <h2>
+            @kompetenzbereich.Kompetenzbereich.Name: @if (@kompetenzbereich.NotenwertKompetenzbereich == 0)
+            {
+                <span>noch keine Noten</span>
+            }
+            else
+            {@kompetenzbereich.NotenwertKompetenzbereich}
+        </h2>
         <table class="table accept-users">
             <thead>
                 <tr>
@@ -48,7 +51,14 @@
                     {
                         <tr>
                             <td>@fach.Fachname</td>
-                            <td>@fach.Notenwert</td>
+                            <td>
+                                @if (@fach.Notenwert == 0)
+                                {
+                                    <span>noch keine Noten</span>
+                                }
+                                else
+                                {@fach.Notenwert}
+                            </td>
                             <td>
                                 @if ((kompetenzbereich.UserRole == "lehrer") || (kompetenzbereich.UserRole == "schueler" && fach.StudentAlreadyChanged == 0 && kompetenzbereich.InEditTime == 1))
                                 {
