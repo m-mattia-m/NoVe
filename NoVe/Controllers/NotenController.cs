@@ -21,20 +21,20 @@ namespace NoVe.Controllers
         {
             string userRole;
 
-            try
+            //try
+            //{
+            userRole = HttpContext.Session.GetString("_UserRole");
+            Console.WriteLine("SessionRole: " + userRole);
+            if (userRole == "schueler" || userRole == "berufsbildner" || userRole == "lehrer" || userRole == "admin")
             {
-                userRole = HttpContext.Session.GetString("_UserRole");
-                Console.WriteLine("SessionRole: " + userRole);
-                if (userRole == "schueler" || userRole == "berufsbildner" || userRole == "lehrer" || userRole == "admin")
-                {
-                    Console.WriteLine("UserID: " + (int)HttpContext.Session.GetInt32("_UserID"));
-                    return View(listAllFaecherAndKompetenzbereiche());
-                }
+                Console.WriteLine("UserID: " + (int)HttpContext.Session.GetInt32("_UserID"));
+                return View(listAllFaecherAndKompetenzbereiche());
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Fehler beim auslesen aus der Session");
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Fehler beim auslesen aus der Session");
+            //}
 
             ViewBag.Message = string.Format("Du hast keinen Zugriff auf die Seite.");
             return View("~/Views/Account/Message.cshtml");
@@ -50,7 +50,8 @@ namespace NoVe.Controllers
             {
                 userId = (int)HttpContext.Session.GetInt32("_StudentID");
             }
-            else {
+            else
+            {
                 userId = (int)HttpContext.Session.GetInt32("_UserID");
             }
 
@@ -58,21 +59,27 @@ namespace NoVe.Controllers
             List<Kompetenzbereich> kompetenzbereiche = _dbContext.Kompetenzbereichs.Where(k => k.BerufId == user.Klasse.BerufId).ToList();
             List<FachKompetenzbereich> fachKompetenzbereiche = new List<FachKompetenzbereich>();
             Klasse klasse = _dbContext.Klasses.Where(k => k.Id == user.Klasse.Id).FirstOrDefault();
+            double Gesamtnote = 0;
+            double GewichtungWoNochKeineNote = 0;
 
             DateTime localDate = DateTime.Now;
             int InEditTime = 0;
 
-            if (klasse.Startdatum < localDate && klasse.EndDatum > localDate)
+            if (userRole == "schueler")
             {
-                InEditTime = 1;
+                if (klasse.Startdatum < localDate && klasse.EndDatum > localDate)
+                {
+                    InEditTime = 1;
+                }
+                else
+                {
+                    InEditTime = 0;
+                }
             }
-            else {
-                InEditTime = 0;
-            }
-
 
             int i = 0;
-            foreach (Kompetenzbereich kompetenzbereich in kompetenzbereiche) {
+            foreach (Kompetenzbereich kompetenzbereich in kompetenzbereiche)
+            {
                 FachKompetenzbereich fachKompetenzbereich = new FachKompetenzbereich();
                 fachKompetenzbereich.Id = i;
                 fachKompetenzbereich.UserId = userId;
@@ -83,11 +90,30 @@ namespace NoVe.Controllers
                 fachKompetenzbereich.InEditTime = InEditTime;
                 fachKompetenzbereich.Kompetenzbereich = kompetenzbereich;
                 fachKompetenzbereich.NoteView = GetNoteView(userId, kompetenzbereich.Id);
+                fachKompetenzbereich.NotenwertKompetenzbereich = runden(calcKompetenzbereichNote(kompetenzbereich.Id), kompetenzbereich.Rundung);
 
                 fachKompetenzbereiche.Add(fachKompetenzbereich);
+
+                // Hier wird die Gesammtnote aller Kompetenzbereiche berechnet
+                if (fachKompetenzbereich.NotenwertKompetenzbereich == 0)
+                {
+                    GewichtungWoNochKeineNote = GewichtungWoNochKeineNote + kompetenzbereich.Gewichtung;
+                }
+                else
+                {
+                    Gesamtnote = (double)(Gesamtnote + fachKompetenzbereich.NotenwertKompetenzbereich * kompetenzbereich.Gewichtung / 100);
+                }
+
                 i++;
             }
 
+            int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
+            double GesamtnoteZusammen = 0;
+            if (GewichtungDieBenotetWurde != 0)
+            {
+                GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            }
+            ViewBag.Message = string.Format(GesamtnoteZusammen.ToString());
             return fachKompetenzbereiche;
         }
 
@@ -98,8 +124,10 @@ namespace NoVe.Controllers
             List<NoteView> notenViews = new List<NoteView>();
 
             int i = 0;
-            if (faecher.Count() != 0) {
-                foreach (Fach fach in faecher) {
+            if (faecher.Count() != 0)
+            {
+                foreach (Fach fach in faecher)
+                {
                     NoteView noteView = new NoteView();
                     noteView.Id = i;
                     noteView.UserId = userId;
@@ -116,7 +144,8 @@ namespace NoVe.Controllers
                         noteView.Semester = currentNote.Semester;
                         noteView.StudentAlreadyChanged = currentNote.StudentAlreadyChanged;
                     }
-                    else {
+                    else
+                    {
                         noteView.Noteid = -1;
                         noteView.Notenwert = 0;
                         noteView.Semester = -1;
@@ -146,7 +175,8 @@ namespace NoVe.Controllers
                 HttpContext.Session.SetInt32("_KompetenzbereichId", KompetenzbereichId);
                 return _dbContext.Notes.Where(n => n.Id == Id).ToList();
             }
-            else {
+            else
+            {
                 Note note = new Note();
                 note.FachbereichId = KompetenzbereichId;
                 note.FachId = FachId;
@@ -161,7 +191,7 @@ namespace NoVe.Controllers
             }
         }
 
-        public async Task<IActionResult> NotenBearbeiten(float notenwert)
+        public async Task<IActionResult> NotenBearbeiten(double notenwert)
         {
             int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
             Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
@@ -187,6 +217,73 @@ namespace NoVe.Controllers
         {
             //return View("SchuelerListe", SchuelerListe());
             return RedirectToAction("SchuelerListe", "Lehrer");
+        }
+
+        public double calcKompetenzbereichNote(int kompetenzbereichId)
+        {
+            int userId = -1;
+            string userRole = HttpContext.Session.GetString("_UserRole");
+            if (userRole == "berufsbildner" || userRole == "lehrer")
+            {
+                userId = (int)HttpContext.Session.GetInt32("_StudentID");
+            }
+            else
+            {
+                userId = (int)HttpContext.Session.GetInt32("_UserID");
+            }
+
+            List<Fach> faecher = _dbContext.Fachs.Where(f => f.KompetenzbereichId == kompetenzbereichId).ToList();
+            double kompetenzbereichSchnitt = 0;
+            double gewichtungWoNochKeineNote = 0;
+
+            foreach (Fach fach in faecher)
+            {
+                double notenWert = getNoteFromFach(fach.Id, userId);
+
+                if (notenWert == 0)
+                {
+                    gewichtungWoNochKeineNote = gewichtungWoNochKeineNote + fach.Gewichtung;
+                }
+                else
+                {
+                    double rundung = fach.Rundung;
+                    double gerundeteNote = runden(notenWert, rundung);
+                    kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + gerundeteNote * fach.Gewichtung / 100);
+                }
+                var asdf = "";
+            }
+            kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
+            return kompetenzbereichSchnitt;
+        }
+
+        public double getNoteFromFach(int fachId, int userId)
+        {
+            Note note = _dbContext.Notes.Where(n => n.FachId == fachId).Where(n => n.UserId == userId).FirstOrDefault();
+            double notenwert = 0;
+            if (note != null)
+            {
+                notenwert = note.Notenwert;
+            }
+            return notenwert;
+        }
+
+        public static double runden(double note, double rundung)
+        {
+            double gerundeteNote = 0;
+            if (rundung == 0.1)
+            {
+                gerundeteNote = Math.Round(note, 1);
+            }
+            else if (rundung == 0.5)
+            {
+                gerundeteNote = Math.Round(Math.Round(note * 2, 0) / 2, 1);
+            }
+            else if (rundung == 1)
+            {
+                gerundeteNote = Math.Round(note, 0);
+            }
+
+            return gerundeteNote;
         }
     }
 }

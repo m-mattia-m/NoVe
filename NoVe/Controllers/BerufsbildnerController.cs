@@ -39,30 +39,112 @@ namespace NoVe.Controllers
             return RedirectToAction("Index", "Noten");
         }
 
-        private List<User> getLernende()
+        private List<UserWithMark> getLernende()
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
             User currentUser = _dbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-            //Set Student into Class - only for testing
-            //Klasse klasse2 = _dbContext.Klasses.Where(k => k.Id == 1).FirstOrDefault();
-            //User user2 = _dbContext.Users.Where(u => u.Id == 5).FirstOrDefault();
-            //user2.Klasse = klasse2;
-            //_dbContext.SaveChanges();
-
             List<User> lernendelist = _dbContext.Users.Include(x => x.Klasse).Where(u => u.LehrmeisterEmail == currentUser.Email).ToList();
-
-            List<User> users = new List<User>(lernendelist.Count);
+            List<UserWithMark> lerndeneListWithMarks = new List<UserWithMark>(lernendelist.Count);
 
             foreach (User user in lernendelist)
             {
                 if (user.Role == "schueler")
                 {
-                    users.Add(user);
+                    UserWithMark userWithMark = new UserWithMark();
+                    userWithMark.Id = user.Id;
+                    userWithMark.Email = user.Email;
+                    userWithMark.Vorname = user.Vorname;
+                    userWithMark.Nachname = user.Nachname;
+                    userWithMark.Klasse = user.Klasse;
+                    userWithMark.Role = user.Role;
+                    userWithMark.LehrmeisterEmail = user.LehrmeisterEmail;
+                    userWithMark.Firma = user.Firma;
+                    userWithMark.archived = user.archived;
+                    userWithMark.NotenWert = GesamtNote(user.Id);
+
+                    lerndeneListWithMarks.Add(userWithMark);
                 }
             }
 
-            return users;
+            return lerndeneListWithMarks;
+        }
+
+        public double GesamtNote(int userId)
+        {
+
+            User user = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).FirstOrDefault();
+            List<Kompetenzbereich> kompetenzbereiche = _dbContext.Kompetenzbereichs.Where(k => k.BerufId == user.Klasse.BerufId).ToList();
+            double Gesamtnote = 0;
+            double GewichtungWoNochKeineNote = 0;
+
+            int i = 0;
+            foreach (Kompetenzbereich kompetenzbereich in kompetenzbereiche)
+            {
+                // Hier wird die Gesammtnote aller Kompetenzbereiche berechnet
+                double NotenwertKompetenzbereich = NotenController.runden(calcKompetenzbereichNote(userId, kompetenzbereich.Id), kompetenzbereich.Rundung);
+                if (NotenwertKompetenzbereich == 0)
+                {
+                    GewichtungWoNochKeineNote = GewichtungWoNochKeineNote + kompetenzbereich.Gewichtung;
+                }
+                else
+                {
+                    Gesamtnote = (double)(Gesamtnote + NotenwertKompetenzbereich * kompetenzbereich.Gewichtung / 100);
+                }
+
+                i++;
+            }
+
+            int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
+            double GesamtnoteZusammen = 0;
+            if (GewichtungDieBenotetWurde != 0)
+            {
+                GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            }
+            return GesamtnoteZusammen;
+        }
+
+        // Whole Method is the same as in NotenController
+        // 1. Change runden() -> NotenController.runden()
+        // 2. Change [param] calcKompetenzbereichNote(int kompetenzbereichId)  -> [param] calcKompetenzbereichNote(int userId, int kompetenzbereichId)
+        public double calcKompetenzbereichNote(int userId, int kompetenzbereichId)
+        {
+            //int userId = (int)HttpContext.Session.GetInt32("_UserID");
+            List<Fach> faecher = _dbContext.Fachs.Where(f => f.KompetenzbereichId == kompetenzbereichId).ToList();
+            double kompetenzbereichSchnitt = 0;
+            double gewichtungWoNochKeineNote = 0;
+
+            foreach (Fach fach in faecher)
+            {
+                double notenWert = getNoteFromFach(fach.Id, userId);
+
+                if (notenWert == 0)
+                {
+                    gewichtungWoNochKeineNote = gewichtungWoNochKeineNote + fach.Gewichtung;
+                }
+                else
+                {
+                    double rundung = fach.Rundung;
+                    double gerundeteNote = NotenController.runden(notenWert, rundung);
+                    kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + gerundeteNote * fach.Gewichtung / 100);
+                }
+            }
+            kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
+            return kompetenzbereichSchnitt;
+        }
+
+        // Whole Method is the same as in NotenController
+        public double getNoteFromFach(int fachId, int userId)
+        {
+            Note note = _dbContext.Notes.Where(n => n.FachId == fachId).Where(n => n.UserId == userId).FirstOrDefault();
+
+            double notenwert = 0;
+            if (note != null)
+            {
+                notenwert = note.Notenwert;
+            }
+
+            return notenwert;
         }
     }
 }

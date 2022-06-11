@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NoVe.Models.User>
+﻿@model IEnumerable<NoVe.Models.UserWithMark>
 @inject DatabaseHelper helper
 
 @{
@@ -12,6 +12,7 @@
         <tr>
             <td>Name</td>
             <td>Email</td>
+            <td>Notendurchschnitt</td>
             <td></td>
         </tr>
     </thead>
@@ -21,6 +22,14 @@
             <tr>
                 <td>@user.Vorname @user.Nachname</td>
                 <td>@user.Email</td>
+                <td>
+                    @if (@user.NotenWert == 0)
+                    {
+                        <span>noch keine Noten</span>
+                    }
+                    else
+                    {@user.NotenWert}
+                </td>
                 <td>
                     @Html.ActionLink("Löschen", "schuelerLoeschen", new { id = user.Id })
                     @Html.ActionLink("Noten Einsehen", "notenEinsehen", new { id = user.Id })

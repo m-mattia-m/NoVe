@@ -16,5 +16,6 @@ namespace NoVe.Models
         public int InEditTime { get; set; }
         public Kompetenzbereich Kompetenzbereich { get; set; }
         public List<NoteView> NoteView { get; set; }
+        public double NotenwertKompetenzbereich { get; set; }
     }
 }
