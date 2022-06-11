@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.EntityFrameworkCore;
+using NoVe.Controllers;
 
 namespace NoVe.Models
 {
@@ -243,6 +244,8 @@ namespace NoVe.Models
             User user = _dbContext.Users.FirstOrDefault(u => u.Id == ID);
             user.AdminVerification = 1;
             _dbContext.SaveChanges();
+
+            AccountController.sendVerificationEmail(user.Email, 0, user.Vorname + " " + user.Nachname, "adminAccepted");
 
             return View("BenutzerBestaetigen", getUnconfirmedUsers());
         }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Razor;
+using NoVe.Models;
 
 namespace NoVe
 {
@@ -28,14 +29,6 @@ namespace NoVe
             services.AddControllersWithViews();
             services.AddDbContextPool<DatabaseHelper>(options => options.UseSqlServer(Configuration.GetConnectionString("NoVeContextConnection")));
 
-            //services.AddControllersWithViews();
-            //services.Configure<RazorViewEngineOptions>(o =>
-            //{
-            //    o.ViewLocationFormats.Clear();
-            //    o.ViewLocationFormats.Add("/Views/Accounts/{0}" + RazorViewEngine.ViewExtension);
-            //    o.ViewLocationFormats.Add("/Views/Home/{0}" + RazorViewEngine.ViewExtension);
-            //    o.ViewLocationFormats.Add("/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
-            //});
             services.AddSession();
 
         }

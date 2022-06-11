@@ -13,6 +13,7 @@
     <None Remove="Views\Lehrer\" />
     <None Remove="Views\Noten\" />
     <None Remove="Views\Berufsbildner\" />
+    <None Remove="MailKit" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.25" />
@@ -23,6 +24,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="MailKit" Version="3.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Lehrer\" />
