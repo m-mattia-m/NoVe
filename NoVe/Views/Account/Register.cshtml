@@ -15,19 +15,19 @@
         @using (Html.BeginForm("registerCheck", "Account"))
         {
             <div class="login-form">
-                <label class="form-login-label" name="email">Email</label>
+                <label class="form-login-label" name="email">Email *</label>
                 <input class="form-login" type="email" name="email" id="email" />
 
-                <label class="form-login-label" name="vorname">Vorname</label>
+                <label class="form-login-label" name="vorname">Vorname *</label>
                 <input class="form-login" type="text" name="vorname" id="vorname" />
 
-                <label class="form-login-label" name="nachname">Nachname</label>
+                <label class="form-login-label" name="nachname">Nachname *</label>
                 <input class="form-login" type="text" name="nachname" id="nachname" />
 
-                <label class="form-login-label" name="password">Password</label>
+                <label class="form-login-label" name="password">Password *</label>
                 <input class="form-login" type="password" name="password" id="password" />
 
-                <label class="form-login-label" name="passwordCheck">Password Bestätigen</label>
+                <label class="form-login-label" name="passwordCheck">Password Bestätigen *</label>
                 <input class="form-login" type="password" name="passwordCheck" id="passwordCheck" />
 
                 @*<label class="form-login-label" name="beruf">Beruf</label>
