@@ -3,20 +3,21 @@
 }
 
 <div class="text-center">
+    <p>Bitte überprüfen Sie auch Ihren Spam-Ordner.</p>
     <h1 class="display-4">Login</h1>
     <div style="display: flex;justify-content: center;">
         <!-- Html.BeginForm(Method, Controller) -->
         @using (Html.BeginForm("verify", "Account"))
         {
-          <div class="login-form" style="margin-top: 30px;">
-            @*<label name="email" class="form-login-label">Email für den zu verifizierenden Account</label>
-            <input type="email" name="email" id="email" class="form-login"/>*@
+            <div class="login-form" style="margin-top: 30px;">
+                @*<label name="email" class="form-login-label">Email für den zu verifizierenden Account</label>
+                    <input type="email" name="email" id="email" class="form-login"/>*@
 
-            <label name="verificationKey" class="form-login-label">Verification-Code</label>
-            <input type="number" name="verificationKey" id="verificationKey" class="form-login"/>
+                <label name="verificationKey" class="form-login-label">Verification-Code</label>
+                <input type="number" name="verificationKey" id="verificationKey" class="form-login" />
 
-            <input type="submit" name="submit" value="submit" class="register-check login-submit"/>
-          </div>
+                <input type="submit" name="submit" value="submit" class="register-check login-submit" />
+            </div>
         }
     </div>
 </div>

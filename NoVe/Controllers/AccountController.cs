@@ -209,9 +209,9 @@ namespace NoVe.Controllers
                     HttpContext.Session.SetString("_RegisterEmail", Email);
 
                     Console.Write("newUser: ");
-                    Console.WriteLine("Email -> VerificationKey: " + VerificationKey);
 
-                    //sendMail();
+                    Console.WriteLine("Email -> VerificationKey: " + VerificationKey);
+                    sendVerificationEmail(Email, VerificationKey, Vorname + " " + Nachname, "erstVerifizierung");
                 }
             }
             return View();
@@ -336,41 +336,6 @@ namespace NoVe.Controllers
             return View("Login");
         }
 
-        public void sendMail()
-        {
-            string From = "nove@mattiamueggler.ch";
-            string Password = "?x9Ls!Uva77vJvic*SsF";
-            string SmtpHost = "asmtp.mail.hostpoint.ch";
-            int SmtpPortSSL = 465;
-            int SmtpPort = 587;
-
-            string To = "mattia@mattiamueggler.ch";
-            string Subject = "TestEmail NoVe";
-            string Body = "Ich bin der body der Testemail";
-
-            MailMessage message = new MailMessage(From, To);
-            message.Subject = Subject;
-            message.Body = Body;
-            message.BodyEncoding = Encoding.UTF8;
-            message.IsBodyHtml = true;
-
-            SmtpClient client = new SmtpClient(SmtpHost, SmtpPortSSL);
-            System.Net.NetworkCredential basicCredential1 = new System.Net.NetworkCredential(From, Password);
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            client.Credentials = basicCredential1;
-
-            try
-            {
-                client.Send(message);
-                Console.WriteLine("Email wurde gesendet");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
-
         public static string hashPassword(string Password)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(Password);
@@ -438,6 +403,7 @@ namespace NoVe.Controllers
             _dbContext.SaveChanges();
 
             Console.WriteLine("Email -> Passwort-Zurücksetz-Code: " + VerificationKey);
+            sendVerificationEmail(email, VerificationKey, user.Vorname + " " + user.Nachname, "passwordChange");
             ViewBag.Message = string.Format("Sie haben eine Stunde Zeit um ihr Passwort zurückzusetzen, danach müssen Sie einen neuen Code anfordern.");
             return View("~/Views/Account/PasswordForgottenVerify.cshtml");
         }
@@ -474,6 +440,7 @@ namespace NoVe.Controllers
                     user.PasswordHash = passwordhash;
                     _dbContext.SaveChanges();
                     ViewBag.Message = string.Format("Passwort wurde erfolgreich gespeichert.");
+                    sendVerificationEmail(email, 0, user.Vorname + " " + user.Nachname, "successfullyPasswordChange");
                     return View("Login");
                 }
                 else
@@ -505,8 +472,51 @@ namespace NoVe.Controllers
             _dbContext.SaveChanges();
 
             Console.WriteLine("Email -> VerificationKeyLater: " + VerificationKey);
+            sendVerificationEmail(email, VerificationKey, user.Vorname + " " + user.Nachname, "lastVerifizierung");
 
             return View("~/Views/Account/RegisterCheck.cshtml");
+        }
+
+        public static void sendVerificationEmail(string toEmail, int verificationKey, string name, string mailType)
+        {
+            string message = "";
+
+            if (mailType == "erstVerifizierung")
+            {
+                message = "<h1>Grüezi" + name + ",</h1>" +
+                "Bitte geben Sie diesen Verifizierungscode bei der Registrierung ein, um sich fertig zu registrieren.<br><br><br>" +
+                "Verifizierungscode: <b>" + verificationKey + " </b><br><br><br>" +
+                "Das NoVe-Team";
+            }
+            else if (mailType == "lastVerifizierung")
+            {
+                message = "<h1>Grüezi" + name + ",</h1>" +
+                "Sie haben einen neuen Verifizierungscode angefordert, um sich fertig zu registrieren.<br><br><br>" +
+                "<b>Verifizierungscode: " + verificationKey + "<b><b><b>" +
+                "Das NoVe-Team";
+            }
+            else if (mailType == "passwordChange")
+            {
+                message = "<h1>Grüezi" + name + ",</h1>" +
+                "Um Ihr Passwort zu ändern, geben sie diesen Verifizierungscode ein. Beachten Sie, dass dieser Code nur eine Stunde gültig ist.<br><br><br>" +
+                "<b>Verifizierungscode: " + verificationKey + "<b><b><b>" +
+                "Das NoVe-Team";
+            }
+            else if (mailType == "successfullyPasswordChange")
+            {
+                message = "<h1>Grüezi" + name + ",</h1>" +
+                "Sie haben Ihr Passwort erfogreich geändert.<br><br><br>" +
+                "Das NoVe-Team";
+            }
+            else if (mailType == "adminAccepted")
+            {
+                message = "<h1>Grüezi" + name + ",</h1>" +
+                "Ihr Administrator hat sie angenommen, sie können jetzt NoVe beitreten.<br><br><br>" +
+                "Das NoVe-Team";
+            }
+
+            MailingController.sendEmail(toEmail, message);
+
         }
     }
 }
