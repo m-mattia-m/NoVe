@@ -6,12 +6,10 @@
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="NotenController.cs" selected="True" />
+                <Node name="AccountController.cs" selected="True" />
               </Node>
               <Node name="Views" expanded="True">
                 <Node name="Account" expanded="True" />
-                <Node name="Lehrer" expanded="True" />
-                <Node name="Noten" expanded="True" />
               </Node>
             </Node>
           </Node>
