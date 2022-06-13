@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.EntityFrameworkCore;
 using NoVe.Controllers;
+using System.Text.RegularExpressions;
 
 namespace NoVe.Models
 {
@@ -213,12 +214,43 @@ namespace NoVe.Models
                 int Id = (int)HttpContext.Session.GetInt32("_KlassenID");
                 var editKlasse = _dbContext.Klasses.Where(x => x.Id == Id).FirstOrDefault();
 
-                var EingabedatumStartDate = DateTime.Parse(EingabedatumStart);
-                var EingabedatumEndeDate = DateTime.Parse(EingabedatumEnde);
-
                 editKlasse.KlasseName = KlasseName;
-                editKlasse.Startdatum = EingabedatumStartDate;
-                editKlasse.EndDatum = EingabedatumEndeDate;
+                _dbContext.SaveChanges();
+                try
+                {
+                    Regex rgDate = new Regex(@"(\d{1,2})\.(\d{1,2})\.(\d{4})");
+                    Regex rgTime = new Regex(@"([0-9][0-9]:[0-9][0-9])");
+
+                    // Format Startzeit
+                    MatchCollection startdatumArray = rgDate.Matches(EingabedatumStart);
+                    MatchCollection startzeitArray = rgTime.Matches(EingabedatumStart);
+                    string startzeitBackslash = startdatumArray[0].ToString().Replace(".", "/");
+                    string startdatumString = startzeitBackslash + " " + startzeitArray[0].ToString();
+
+                    // Format Endzeit
+                    MatchCollection enddatumArray = rgDate.Matches(EingabedatumEnde);
+                    MatchCollection endzeitArray = rgTime.Matches(EingabedatumEnde);
+                    string endzeitBackslash = enddatumArray[0].ToString().Replace(".", "/");
+                    string enddatumString = endzeitBackslash + " " + endzeitArray[0].ToString();
+
+                    editKlasse.Startdatum = DateTime.ParseExact(startdatumString, "dd/MM/yyyy HH:mm", null);
+                    editKlasse.EndDatum = DateTime.ParseExact(enddatumString, "dd/MM/yyyy HH:mm", null);
+                    _dbContext.SaveChanges();
+
+                    //var EingabedatumStartDate = DateTime.Parse(EingabedatumStart);
+                    //var EingabedatumEndeDate = DateTime.Parse(EingabedatumEnde);
+
+                    //editKlasse.Startdatum = EingabedatumStartDate;
+                    //editKlasse.EndDatum = EingabedatumEndeDate;
+                    //_dbContext.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    ViewBag.Message = string.Format("Falsches Datumvormat");
+                    return View("~/Views/Admin/message.cshtml");
+                }
+
 
                 _dbContext.SaveChanges();
                 return View("KlassenVerwalten", getAllKlassen());
