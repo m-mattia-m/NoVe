@@ -111,7 +111,7 @@ namespace NoVe.Models
             HttpContext.Session.SetInt32("_KlassenID", ID);
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                return View(getSpecificKlasse(ID));
+                return View(new KlasseUndBeruf(getSpecificKlasse(ID), getBerufe()));
             }
             else
             {
@@ -150,7 +150,7 @@ namespace NoVe.Models
         {
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                return View();
+                return View(getBerufe());
             }
             else
             {
@@ -159,7 +159,7 @@ namespace NoVe.Models
             }
         }
 
-        public IActionResult AddKlasse(string KlasseName, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
+        public IActionResult AddKlasse(string KlasseName, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, int BerufName)
         {
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
@@ -168,6 +168,7 @@ namespace NoVe.Models
                 newKlasse.Startdatum = EingabedatumStart;
                 newKlasse.EndDatum = EingabedatumEnde;
                 newKlasse.KlassenInviteCode = createKey();
+                newKlasse.BerufId = BerufName;
 
                 _dbContext.Klasses.Add(newKlasse);
                 _dbContext.SaveChanges();
@@ -181,7 +182,7 @@ namespace NoVe.Models
             }
         }
 
-        public IActionResult EditKlasse(string KlasseName, string EingabedatumStart, string EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
+        public IActionResult EditKlasse(string KlasseName, string EingabedatumStart, string EingabedatumEnde, string KlassenlehrerEmail, int BerufName)
         {
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
@@ -194,6 +195,7 @@ namespace NoVe.Models
                 editKlasse.KlasseName = KlasseName;
                 editKlasse.Startdatum = EingabedatumStartDate;
                 editKlasse.EndDatum = EingabedatumEndeDate;
+                editKlasse.BerufId = BerufName;
 
                 _dbContext.SaveChanges();
                 return View("KlassenVerwalten", getAllKlassen());
@@ -575,9 +577,9 @@ namespace NoVe.Models
             return users;
         }
 
-        private List<Klasse> getSpecificKlasse(int Id)
+        private Klasse getSpecificKlasse(int Id)
         {
-            return _dbContext.Klasses.Where(k => k.Id == Id).ToList(); ;
+            return _dbContext.Klasses.Where(k => k.Id == Id).First(); ;
         }
 
         private List<User> getAllUsers()

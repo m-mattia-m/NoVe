@@ -26,7 +26,14 @@
                     {
                         @foreach (Beruf beruf in Model.berufe)
                         {
-                            <option style="color: white !important;" value="@beruf.Id">@beruf.Name</option>
+                            @if (beruf.Id == Model.klasse.BerufId)
+                            {
+                                <option style="color: white !important;" value="@beruf.Id" , selected>@beruf.Name</option>
+                            }
+                            else
+                            {
+                                <option style="color: white !important;" value="@beruf.Id">@beruf.Name</option>
+                            }
                         }
                     }
                 </select>
