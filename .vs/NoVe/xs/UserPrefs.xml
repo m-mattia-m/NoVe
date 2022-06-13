@@ -1,8 +1,10 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/AccountController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/LehrerController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/AccountController.cs" Line="73" Column="47" />
+      <File FileName="NoVe/Controllers/AccountController.cs" Line="622" Column="1" />
       <File FileName="NoVe/Views/Admin/benutzerEdit.cshtml" />
+      <File FileName="NoVe/Controllers/LehrerController.cs" Line="57" Column="54" />
+      <File FileName="NoVe/Views/Admin/message.cshtml" Line="6" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,10 +12,11 @@
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="AccountController.cs" selected="True" />
+                <Node name="LehrerController.cs" selected="True" />
               </Node>
               <Node name="Views" expanded="True">
                 <Node name="Admin" expanded="True" />
+                <Node name="Lehrer" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
             </Node>
@@ -26,7 +29,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.NoVe PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/AccountController.cs" relfile="NoVe/Controllers/AccountController.cs" line="192" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/AccountController.cs" relfile="NoVe/Controllers/AccountController.cs" line="622" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/LehrerController.cs" relfile="NoVe/Controllers/LehrerController.cs" line="103" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
