@@ -455,6 +455,41 @@ namespace NoVe.Controllers
         public async Task<IActionResult> ProfilSpeichern(string vorname, string nachname, string email, string firma, string lehrmeisterEmail, string passwort, string passwortCheck)
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
+
+            // Check if fields are empty
+            if (string.IsNullOrEmpty(vorname))
+            {
+                ViewBag.Message = string.Format("Der Vorname darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(nachname))
+            {
+                ViewBag.Message = string.Format("Der Nachname darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(firma))
+            {
+                ViewBag.Message = string.Format("Die Firma darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(lehrmeisterEmail))
+            {
+                ViewBag.Message = string.Format("Die Email ihres Lehrmeisters darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(passwort))
+            {
+                ViewBag.Message = string.Format("Das Passwort darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(passwortCheck))
+            {
+                ViewBag.Message = string.Format("Das Passwortbestätigen-Feld darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+
+
+
             User user = _dbContext.Users.FirstOrDefault(b => b.Id == userId);
             user.Vorname = vorname;
             user.Nachname = nachname;

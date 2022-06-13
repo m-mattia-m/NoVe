@@ -118,6 +118,19 @@ namespace NoVe.Controllers
 
         public async Task<IActionResult> ZeitSpeichern(string startdatum, string enddatum)
         {
+
+            if (string.IsNullOrEmpty(startdatum))
+            {
+                ViewBag.Message = string.Format("Die Startzeit darf nicht leer sein.");
+                return View("SetZeit", SetZeit());
+            }
+            if (string.IsNullOrEmpty(enddatum))
+            {
+                ViewBag.Message = string.Format("Die Endzeit darf nicht leer sein.");
+                return View("SetZeit", SetZeit());
+            }
+
+
             if (HttpContext.Session.GetString("_UserRole") == "lehrer")
             {
                 int userId = (int)HttpContext.Session.GetInt32("_UserID");

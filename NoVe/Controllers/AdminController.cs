@@ -161,6 +161,7 @@ namespace NoVe.Models
 
         public IActionResult AddKlasse(string KlasseName, System.DateTime EingabedatumStart, System.DateTime EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 var newKlasse = new Klasse();
@@ -183,6 +184,30 @@ namespace NoVe.Models
 
         public IActionResult EditKlasse(string KlasseName, string EingabedatumStart, string EingabedatumEnde, string KlassenlehrerEmail, string BerufName)
         {
+            int klassenId = (int)HttpContext.Session.GetInt32("_KlassenID");
+            if (string.IsNullOrEmpty(KlasseName))
+            {
+                ViewBag.Message = string.Format("Der Klassenname darf nicht leer sein.");
+                return View("KlassenEdit", getSpecificKlasse(klassenId));
+            }
+            if (string.IsNullOrEmpty(EingabedatumStart))
+            {
+                ViewBag.Message = string.Format("Das Startdatum darf nicht leer sein.");
+                return View("KlassenEdit", getSpecificKlasse(klassenId));
+            }
+            if (string.IsNullOrEmpty(EingabedatumEnde))
+            {
+                ViewBag.Message = string.Format("Das Enddatum darf nicht leer sein.");
+                return View("KlassenEdit", getSpecificKlasse(klassenId));
+            }
+            if (string.IsNullOrEmpty(BerufName))
+            {
+                ViewBag.Message = string.Format("Der Berufsname darf nicht leer sein.");
+                return View("KlassenEdit", getSpecificKlasse(klassenId));
+            }
+
+
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 int Id = (int)HttpContext.Session.GetInt32("_KlassenID");
@@ -618,6 +643,13 @@ namespace NoVe.Models
 
         public IActionResult SafeBerufe(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Message = string.Format("Der Kompetenzbereichsname darf nicht leer sein.");
+                return View("Berufe", getBerufe());
+            }
+
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 var berufSameNameCount = _dbContext.Berufs.Where(b => b.Name == name).Count();
@@ -648,6 +680,12 @@ namespace NoVe.Models
 
         public IActionResult SafeDomain(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Message = string.Format("Der Kompetenzbereichsname darf nicht leer sein.");
+                return View("Domains", getAllDomains());
+            }
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 var domainCount = _dbContext.Domains.Where(b => b.AllowedDomains == name).Count();
@@ -695,9 +733,16 @@ namespace NoVe.Models
 
         public async Task<IActionResult> BerufBearbeiten(string name)
         {
+            int id = (int)HttpContext.Session.GetInt32("_BerufID");
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Message = string.Format("Der Berufsname darf nicht leer sein.");
+                return View("BerufEdit");
+            }
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                int id = (int)HttpContext.Session.GetInt32("_BerufID");
+                id = (int)HttpContext.Session.GetInt32("_BerufID");
                 Beruf beruf = _dbContext.Berufs.FirstOrDefault(b => b.Id == id);
                 beruf.Name = name;
                 _dbContext.SaveChanges();
@@ -733,6 +778,23 @@ namespace NoVe.Models
 
         public IActionResult SafeKompetenzbereich(string name, int gewichtung, double rundung)
         {
+            int id = (int)HttpContext.Session.GetInt32("_BerufID");
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Message = string.Format("Der Kompetenzbereichsname darf nicht leer sein.");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+            if (gewichtung == 0)
+            {
+                ViewBag.Message = string.Format("Die Gewichtung darf nicht leer oder 0 sein.");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+            if (rundung == 0)
+            {
+                ViewBag.Message = string.Format("Die Rundung darf nicht leer oder 0 sein.");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 int berufId = (int)HttpContext.Session.GetInt32("_BerufID");
@@ -763,6 +825,25 @@ namespace NoVe.Models
 
         public async Task<IActionResult> KompetenzbereichBearbeiten(string name, int gewichtung, double rundung)
         {
+            int id = (int)HttpContext.Session.GetInt32("_BerufID");
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Message = string.Format("Der Kompetenzbereichsname darf nicht leer sein.");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+            if (gewichtung == 0)
+            {
+                ViewBag.Message = string.Format("Die Gewichtung darf nicht leer oder 0 sein.");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+            if (rundung == 0)
+            {
+                ViewBag.Message = string.Format("Die Rundung darf nicht leer oder 0 sein.");
+                return View("Kompetenzbereiche", getKompetenzbereiche(id));
+            }
+
+
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
@@ -786,6 +867,25 @@ namespace NoVe.Models
 
         public IActionResult SafeFach(string name, int gewichtung, double rundung)
         {
+            int id = (int)HttpContext.Session.GetInt32("_BerufID");
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Message = string.Format("Der Fachname darf nicht leer sein.");
+                return View("Faecher", getFaecher(id));
+            }
+            if (gewichtung == 0)
+            {
+                ViewBag.Message = string.Format("Die Gewichtung darf nicht leer oder 0 sein.");
+                return View("Faecher", getFaecher(id));
+            }
+            if (rundung == 0)
+            {
+                ViewBag.Message = string.Format("Die Rundung darf nicht leer oder 0 sein.");
+                return View("Faecher", getFaecher(id));
+            }
+
+
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
@@ -835,6 +935,23 @@ namespace NoVe.Models
 
         public async Task<IActionResult> FachBearbeiten(string name, int gewichtung, double rundung)
         {
+            int id = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Message = string.Format("Der Fachname darf nicht leer sein.");
+                return View("Faecher", getFaecher(id));
+            }
+            if (gewichtung == 0)
+            {
+                ViewBag.Message = string.Format("Die Gewichtung darf nicht leer oder 0 sein.");
+                return View("Faecher", getFaecher(id));
+            }
+            if (rundung == 0)
+            {
+                ViewBag.Message = string.Format("Die Rundung darf nicht leer oder 0 sein.");
+                return View("Faecher", getFaecher(id));
+            }
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
                 int kompetenzbereichID = (int)HttpContext.Session.GetInt32("_KompetenzbereichID");
@@ -857,9 +974,45 @@ namespace NoVe.Models
 
         public async Task<IActionResult> UserBearbeiten(string vorname, string nachname, string email, string firma, string role, int klassencode, string lehrmeisterEmail, string isAdmin)
         {
+
+            int editUserId = (int)HttpContext.Session.GetInt32("_UserEditID");
+            // Check if fields are empty
+            if (string.IsNullOrEmpty(vorname))
+            {
+                ViewBag.Message = string.Format("Der Vorname darf nicht leer sein.");
+                return View("AlleBenutzer", getAllUsers());
+            }
+            if (string.IsNullOrEmpty(nachname))
+            {
+                ViewBag.Message = string.Format("Der Nachname darf nicht leer sein.");
+                return View("AlleBenutzer", getAllUsers());
+            }
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewBag.Message = string.Format("Die E-Mail-Adresse darf nicht leer sein.");
+                return View("AlleBenutzer", getAllUsers());
+            }
+            if (string.IsNullOrEmpty(firma))
+            {
+                ViewBag.Message = string.Format("Die Firma darf nicht leer sein.");
+                return View("benutzerEdit", benutzerEdit(editUserId));
+            }
+            if (string.IsNullOrEmpty(lehrmeisterEmail))
+            {
+                ViewBag.Message = string.Format("Die Email ihres Lehrmeisters darf nicht leer sein.");
+                return View("benutzerEdit", benutzerEdit(editUserId));
+            }
+            if (string.IsNullOrEmpty(role))
+            {
+                ViewBag.Message = string.Format("Die Rolle darf nicht leer sein.");
+                return View("benutzerEdit", benutzerEdit(editUserId));
+            }
+
+
+
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                int editUserId = (int)HttpContext.Session.GetInt32("_UserEditID");
+                editUserId = (int)HttpContext.Session.GetInt32("_UserEditID");
                 User user = _dbContext.Users.FirstOrDefault(b => b.Id == editUserId);
                 user.Vorname = vorname;
                 user.Nachname = nachname;

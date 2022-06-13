@@ -7,6 +7,10 @@
 }
 
 <h1>Kompetenzbereiche in einem Beruf</h1>
+@if (ViewBag.Message != null)
+{
+    <p>@Html.Raw(ViewBag.Message)</p>
+}
 <table class="table accept-berufe">
     <thead>
         <tr>
