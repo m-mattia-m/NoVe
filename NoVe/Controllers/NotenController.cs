@@ -108,12 +108,21 @@ namespace NoVe.Controllers
                 i++;
             }
 
-            int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
-            double GesamtnoteZusammen = 0;
-            if (GewichtungDieBenotetWurde != 0)
-            {
-                GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
-            }
+            // --------------------------
+
+            //kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
+            double gewichtungWoNote = 100 - GewichtungWoNochKeineNote;
+            double GesamtnoteZusammen = (double)(100 / gewichtungWoNote * Gesamtnote);
+
+
+            // --------------------------
+
+            //int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
+            //double GesamtnoteZusammen = 0;
+            //if (GewichtungDieBenotetWurde != 0)
+            //{
+            //    GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            //}
             ViewBag.Message = string.Format((GesamtnoteZusammen == 0) ? "noch keine Noten" : Math.Round(GesamtnoteZusammen, 2).ToString());
             return fachKompetenzbereiche;
         }
@@ -319,8 +328,17 @@ namespace NoVe.Controllers
                 }
                 var asdf = "";
             }
-            kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
-            return kompetenzbereichSchnitt;
+            //kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
+            double gewichtungWoNote = 100 - gewichtungWoNochKeineNote;
+            kompetenzbereichSchnitt = (double)(100 / gewichtungWoNote * kompetenzbereichSchnitt);
+            if (Double.IsNaN(kompetenzbereichSchnitt))
+            {
+                return 0;
+            }
+            else
+            {
+                return kompetenzbereichSchnitt;
+            }
         }
 
         public double getNoteFromFach(int fachId, int userId)

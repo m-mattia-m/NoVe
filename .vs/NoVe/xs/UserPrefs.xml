@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/NotenController.cs">
     <Files>
-      <File FileName="NoVe/Controllers/NotenController.cs" Line="41" Column="44" />
+      <File FileName="NoVe/Controllers/NotenController.cs" Line="327" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,6 +11,7 @@
               <Node name="Controllers" expanded="True">
                 <Node name="NotenController.cs" selected="True" />
               </Node>
+              <Node name="Models" expanded="True" />
             </Node>
           </Node>
         </State>
