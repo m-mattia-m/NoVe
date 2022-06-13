@@ -461,13 +461,20 @@ namespace NoVe.Controllers
             //user.Email = email;
             user.Firma = firma;
             user.LehrmeisterEmail = lehrmeisterEmail;
+            _dbContext.SaveChanges();
 
             if (passwort != null && passwortCheck != null)
             {
+                if (PasswortPruefen(passwort) == false)
+                {
+                    ViewBag.Message = string.Format("Passwort entspricht nicht den Anforderungen.");
+                    return View("profile", getSpecificUser(userId));
+                }
                 if (passwort == passwortCheck)
                 {
                     string passwordhash = hashPassword(passwort);
                     user.PasswordHash = passwordhash;
+                    _dbContext.SaveChanges();
                 }
                 else
                 {
@@ -476,7 +483,6 @@ namespace NoVe.Controllers
                 }
             }
 
-            _dbContext.SaveChanges();
 
             ViewBag.Message = string.Format("Angaben wurden gespeichert");
             return View("profile", getSpecificUser(userId));
@@ -528,6 +534,12 @@ namespace NoVe.Controllers
         {
             string email = HttpContext.Session.GetString("_VerifyEmail");
             User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
+
+            if (PasswortPruefen(passwort) == false)
+            {
+                ViewBag.Message = string.Format("Passwort entspricht nicht den Anforderungen.");
+                return View("SetNewPassword");
+            }
 
             if (passwort != null && passwortCheck != null)
             {
