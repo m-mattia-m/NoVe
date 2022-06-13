@@ -203,6 +203,17 @@ namespace NoVe.Controllers
 
         public async Task<IActionResult> NotenBearbeiten(double notenwert)
         {
+            if (notenwert > 6 || notenwert < 1)
+            {
+                int notenId = (int)HttpContext.Session.GetInt32("_NoteID");
+                int fachId = (int)HttpContext.Session.GetInt32("_FachID");
+                int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichId");
+                ViewBag.Message = string.Format("Die Note muss zwischen 1 und 6 liegen.");
+                return View("NotenEdit", getSpecificNote(notenId, fachId, kompetenzbereichId));
+            }
+
+
+
             string role = HttpContext.Session.GetString("_UserRole");
             if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
             {
@@ -238,7 +249,7 @@ namespace NoVe.Controllers
                     ViewBag.Message = string.Format("Du bist keiner Klasse zugeordnet, melde dich bei einer Klasse an");
                     return View("~/Views/Account/Message.cshtml");
                 }
-                return View("Noten", fachKompetenzbereiche);
+                return View("Index", fachKompetenzbereiche);
             }
             else
             {
