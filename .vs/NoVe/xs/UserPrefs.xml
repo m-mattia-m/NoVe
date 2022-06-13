@@ -1,21 +1,15 @@
 ﻿<Properties StartupConfiguration="{F0058FF5-CA18-4987-B48B-473F1FD3A60D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Views/Detail/DetailKlasse.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="NoVe/Controllers/HomeController.cs">
     <Files>
-      <File FileName="NoVe/Views/Lehrer/SetZeit.cshtml" Line="5" Column="39" />
-      <File FileName="NoVe/Views/Detail/Detail.cshtml" Line="1" Column="1" />
-      <File FileName="NoVe/Views/Detail/DetailKlasse.cshtml" Line="9" Column="36" />
+      <File FileName="NoVe/Controllers/HomeController.cs" Line="222" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="NoVe" expanded="True">
             <Node name="NoVe" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="Detail" expanded="True">
-                  <Node name="DetailKlasse.cshtml" selected="True" />
-                </Node>
-                <Node name="Lehrer" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="HomeController.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -29,6 +23,7 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/AdminController.cs" relfile="NoVe/Controllers/AdminController.cs" line="772" column="1" />
+      <Breakpoint file="/Users/mattiamueggler/Documents/Lehre/Schule/3-Lehrjahr/NoveNew/Nove/NoVe/Controllers/HomeController.cs" relfile="NoVe/Controllers/HomeController.cs" line="222" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

@@ -114,7 +114,7 @@ namespace NoVe.Controllers
             {
                 GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
             }
-            ViewBag.Message = string.Format((GesamtnoteZusammen == 0) ? "noch keine Noten" : GesamtnoteZusammen.ToString());
+            ViewBag.Message = string.Format((GesamtnoteZusammen == 0) ? "noch keine Noten" : Math.Round(GesamtnoteZusammen, 2).ToString());
             return fachKompetenzbereiche;
         }
 
