@@ -108,13 +108,22 @@ namespace NoVe.Controllers
                 i++;
             }
 
-            int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
-            double GesamtnoteZusammen = 0;
-            if (GewichtungDieBenotetWurde != 0)
-            {
-                GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
-            }
-            ViewBag.Message = string.Format((GesamtnoteZusammen == 0) ? "noch keine Noten" : GesamtnoteZusammen.ToString());
+            // --------------------------
+
+            //kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
+            double gewichtungWoNote = 100 - GewichtungWoNochKeineNote;
+            double GesamtnoteZusammen = (double)(100 / gewichtungWoNote * Gesamtnote);
+
+
+            // --------------------------
+
+            //int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
+            //double GesamtnoteZusammen = 0;
+            //if (GewichtungDieBenotetWurde != 0)
+            //{
+            //    GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            //}
+            ViewBag.Message = string.Format((GesamtnoteZusammen == 0) ? "noch keine Noten" : Math.Round(GesamtnoteZusammen, 2).ToString());
             return fachKompetenzbereiche;
         }
 
@@ -203,6 +212,17 @@ namespace NoVe.Controllers
 
         public async Task<IActionResult> NotenBearbeiten(double notenwert)
         {
+            if (notenwert > 6 || notenwert < 1)
+            {
+                int notenId = (int)HttpContext.Session.GetInt32("_NoteID");
+                int fachId = (int)HttpContext.Session.GetInt32("_FachID");
+                int kompetenzbereichId = (int)HttpContext.Session.GetInt32("_KompetenzbereichId");
+                ViewBag.Message = string.Format("Die Note muss zwischen 1 und 6 liegen.");
+                return View("NotenEdit", getSpecificNote(notenId, fachId, kompetenzbereichId));
+            }
+
+
+
             string role = HttpContext.Session.GetString("_UserRole");
             if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
             {
@@ -238,7 +258,7 @@ namespace NoVe.Controllers
                     ViewBag.Message = string.Format("Du bist keiner Klasse zugeordnet, melde dich bei einer Klasse an");
                     return View("~/Views/Account/Message.cshtml");
                 }
-                return View("Noten", fachKompetenzbereiche);
+                return View("Index", fachKompetenzbereiche);
             }
             else
             {
@@ -308,8 +328,17 @@ namespace NoVe.Controllers
                 }
                 var asdf = "";
             }
-            kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
-            return kompetenzbereichSchnitt;
+            //kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
+            double gewichtungWoNote = 100 - gewichtungWoNochKeineNote;
+            kompetenzbereichSchnitt = (double)(100 / gewichtungWoNote * kompetenzbereichSchnitt);
+            if (Double.IsNaN(kompetenzbereichSchnitt))
+            {
+                return 0;
+            }
+            else
+            {
+                return kompetenzbereichSchnitt;
+            }
         }
 
         public double getNoteFromFach(int fachId, int userId)

@@ -12,13 +12,13 @@
             {
                 <div class="login-form">
                     <label class="form-login-label" name="KlasseName">Klassenname</label>
-                    <input class="form-login" type="text" name="KlasseName" id="KlasseName" value="@klasse.KlasseName"/>
+                    <input class="form-login" type="text" name="KlasseName" id="KlasseName" value="@klasse.KlasseName" />
 
                     <label class="form-login-label" name="EingabedatumStart">Startdatum</label>
-                    <input class="form-login" type="text" name="EingabedatumStart" id="EingabedatumStart" value="@klasse.Startdatum"/>
+                    <input class="form-login" type="datetime" name="EingabedatumStart" id="EingabedatumStart" value="@klasse.Startdatum.ToString("dd.MM.yyyy - HH:mm")" />
 
                     <label class="form-login-label" name="EingabedatumEnde">Enddatum</label>
-                    <input class="form-login" type="text" name="EingabedatumEnde" id="EingabedatumEnde" value="@klasse.EndDatum"/>
+                    <input class="form-login" type="datetime" name="EingabedatumEnde" id="EingabedatumEnde" value="@klasse.EndDatum.ToString("dd.MM.yyyy - HH:mm")" />
 
                     <label class="form-login-label" name="BerufName">Beruf</label>
                     <select class="form-login" name="BerufName" id="BerufName">

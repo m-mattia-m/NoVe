@@ -7,7 +7,10 @@
 }
 
 <h1>Note bearbeiten</h1>
-
+@if (ViewBag.Message != null)
+{
+    <p>@Html.Raw(ViewBag.Message)</p>
+}
 @using (Html.BeginForm("NotenBearbeiten", "Noten"))
 {
 
@@ -16,7 +19,7 @@
         @foreach (var note in Model)
         {
             <label class="form-login-label" name="notenwert">Notenwert</label>
-            <input class="form-login" type="text" name="notenwert" id="notenwert" value="@note.Notenwert" />
+            <input class="form-login" type="text" name="notenwert" id="notenwert" value="@note.Notenwert" min="1" max="6" step="0.05" />
 
         }
         <input class="login-submit" type="submit" name="submit" value="Speichern" />

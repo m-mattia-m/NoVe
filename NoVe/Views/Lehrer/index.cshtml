@@ -1,4 +1,9 @@
 ﻿<div class="text-center">
+    @if (ViewBag.Message != null)
+    {
+        <p>@Html.Raw(ViewBag.Message)</p>
+    }
+
     <h1 class="display-4">Login</h1>
     <div class="admin-nav">
         <a class="nav-link text-dark admin-nav-item" asp-area="" asp-controller="Lehrer" asp-action="SchuelerListe">Schüler verwalten</a>
@@ -6,6 +11,6 @@
         @*<a class="nav-link text-dark admin-nav-item" asp-area="" asp-controller="Admin" asp-action="AlleBenutzer">Benutzer verwalten</a>*@
     </div>
     @*<div class="admin-nav">
-        <a class="nav-link text-dark admin-nav-item" asp-area="" asp-controller="Admin" asp-action="Berufe">Berufe</a>
-    </div>*@
+            <a class="nav-link text-dark admin-nav-item" asp-area="" asp-controller="Admin" asp-action="Berufe">Berufe</a>
+        </div>*@
 </div>
