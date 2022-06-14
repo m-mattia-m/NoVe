@@ -439,6 +439,7 @@ option {
   border: solid 1px white;
   padding: 10px 0px;
   width: 40%;
+  text-align: center;
 }
 
   .login-submit:hover {
@@ -500,4 +501,24 @@ option {
 .klassenverwalten-buttons a {
   display: flex;
   justify-content: center;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.justify-content-center {
+    display: flex;
+    justify-content: center;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.top-button {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

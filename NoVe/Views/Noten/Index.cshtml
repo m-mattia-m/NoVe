@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NoVe.Models.FachKompetenzbereich>
+@model IEnumerable<NoVe.Models.FachKompetenzbereich>
 @inject DatabaseHelper helper
 
 @{
@@ -10,17 +10,19 @@
 {
     @foreach (var kompetenzbereich in Model)
     {
-        <h1>
-            Noten von @kompetenzbereich.UserName: @Html.Raw(ViewBag.Message)
-        </h1>
-        @if (kompetenzbereich.UserRole == "lehrer")
-        {
-            <a class="nav-link login-button login-submit" asp-area="" asp-controller="Noten" asp-action="NotenToKlasseBack">Zurück zur Klasse</a>
-        }
-        @if (kompetenzbereich.UserRole == "berufsbildner")
-        {
-            <a class="nav-link login-button login-submit" asp-area="" asp-controller="Noten" asp-action="NotenToLernendeBack">Zurück zu den Lernenden</a>
-        }
+      <div style="display: flex;justify-content: space-between;">
+          <h1>
+              Noten von @kompetenzbereich.UserName: @Html.Raw(ViewBag.Message)
+          </h1>
+          @if (kompetenzbereich.UserRole == "lehrer")
+          {
+              <a class="nav-link login-button login-submit top-button" asp-area="" asp-controller="Noten" asp-action="NotenToKlasseBack">Zurück zur Klasse</a>
+          }
+          @if (kompetenzbereich.UserRole == "berufsbildner")
+          {
+              <a class="nav-link login-button login-submit top-button" asp-area="" asp-controller="Noten" asp-action="NotenToLernendeBack">Zurück zu den Lernenden</a>
+          }
+        </div>
         break;
     }
 }

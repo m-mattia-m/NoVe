@@ -28,6 +28,7 @@ namespace NoVe
         {
             services.AddControllersWithViews();
             services.AddDbContextPool<DatabaseHelper>(options => options.UseSqlServer(Configuration.GetConnectionString("NoVeContextConnection")));
+            services.AddHttpContextAccessor();
 
             services.AddSession();
 

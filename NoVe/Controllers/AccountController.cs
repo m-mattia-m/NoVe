@@ -43,6 +43,11 @@ namespace NoVe.Controllers
             try
             {
                 string passwordHash = hashPassword(Password);
+                if (_dbContext.Users.Where(b => b.Email == Email).Count() < 1)
+                {
+                    ViewBag.Message = string.Format("Dieser Benutzer existiert nicht.");
+                    return View("~/Views/Account/Message.cshtml");
+                }
                 var user = _dbContext.Users.Where(b => b.Email == Email).FirstOrDefault();
                 if (user.VerificationStatus == 1)
                 {
