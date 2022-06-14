@@ -85,7 +85,7 @@ namespace NoVe.Controllers
                     userWithMark.LehrmeisterEmail = user.LehrmeisterEmail;
                     userWithMark.Firma = user.Firma;
                     userWithMark.archived = user.archived;
-                    userWithMark.NotenWert = GesamtNote(user.Id);
+                    userWithMark.NotenWert = Math.Round(GesamtNote(user.Id), 2);
 
                     lerndeneListWithMarks.Add(userWithMark);
                 }

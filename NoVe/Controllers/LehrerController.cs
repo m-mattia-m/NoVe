@@ -226,7 +226,7 @@ namespace NoVe.Controllers
                     userWithMark.LehrmeisterEmail = user.LehrmeisterEmail;
                     userWithMark.Firma = user.Firma;
                     userWithMark.archived = user.archived;
-                    userWithMark.NotenWert = GesamtNote(user.Id);
+                    userWithMark.NotenWert = Math.Round(GesamtNote(user.Id), 2);
 
                     lerndeneListWithMarks.Add(userWithMark);
                 }
@@ -330,6 +330,11 @@ namespace NoVe.Controllers
             if (HttpContext.Session.GetString("_UserRole") == "lehrer")
             {
                 User student = _dbContext.Users.Include(k => k.Klasse).Where(u => u.Email == email).FirstOrDefault();
+                if (student == null)
+                {
+                    ViewBag.Message = string.Format("Schüler konnte nicht gefunden werden.");
+                    return View("~/Views/Admin/message.cshtml");
+                }
                 if (student.Klasse != null)
                 {
                     ViewBag.Message = string.Format("Der Schüler ist bereits in einer Klasse, melden Sie sich beim Administrator wenn ein Schüler die Klasse welchselt.");
