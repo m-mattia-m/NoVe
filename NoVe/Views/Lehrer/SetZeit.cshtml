@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NoVe.Models.Klasse>
+@model IEnumerable<NoVe.Models.Klasse>
 @inject DatabaseHelper helper
 
 @{
@@ -12,18 +12,24 @@
 {
     @if (@Model.Count() != 0)
     {
+      <div class="login-wrapper text-center">
         @foreach (var klasse in Model)
         {
-            <label class="form-login-label" name="startdatum">Start Datum</label>
-            <input class="form-login" type="datetime" name="startdatum" id="startdatum" value="@klasse.Startdatum.ToString("dd.MM.yyyy - HH:mm")" />
-            @* .ToString("dd.MM.yyyy - HH:mm") *@
+            <div class="login-form">
+              <label class="form-login-label" name="startdatum">Start Datum</label>
+              <input class="form-login" type="datetime" name="startdatum" id="startdatum" value="@klasse.Startdatum.ToString("dd.MM.yyyy - HH:mm")" />
+              @* .ToString("dd.MM.yyyy - HH:mm") *@
 
-            <label class="form-login-label" name="enddatum">End Datum</label>
-            <input class="form-login" type="datetime" name="enddatum" id="enddatum" value="@klasse.EndDatum.ToString("dd.MM.yyyy - HH:mm")" />
+              <label class="form-login-label" name="enddatum">End Datum</label>
+              <input class="form-login" type="datetime" name="enddatum" id="enddatum" value="@klasse.EndDatum.ToString("dd.MM.yyyy - HH:mm")" />
+            </div>
 
         }
-        <input class="login-submit" type="submit" name="submit" value="Speichern" />
-        <a class="nav-link login-button login-submit" asp-area="" asp-controller="Lehrer" asp-action="ZeitBack">Zurück</a>
+        </div>
+        <div class="login-buttons">
+          <input class="login-submit" type="submit" name="submit" value="Speichern" />
+          <a class="nav-link login-button login-submit text-align-center" asp-area="" asp-controller="Lehrer" asp-action="ZeitBack">Zurück</a>
+        </div>
 
     }
 }
