@@ -184,6 +184,7 @@ namespace NoVe.Controllers
 
         private List<Note> getSpecificNote(int Id, int FachId, int KompetenzbereichId)
         {
+            string role = HttpContext.Session.GetString("_UserRole");
             // Wenn noch keine Note exisitert, ist die Id die im Frontend gesetzt ist, -1 also wird automatisch eine neue hier im 'else' erstellt
             int noteCount = _dbContext.Notes.Where(n => n.Id == Id).ToList().Count;
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
@@ -199,7 +200,15 @@ namespace NoVe.Controllers
                 Note note = new Note();
                 note.FachbereichId = KompetenzbereichId;
                 note.FachId = FachId;
-                note.UserId = userId;
+                if (role == "lehrer")
+                {
+                    note.UserId = (int)HttpContext.Session.GetInt32("_StudentID"); ;
+                }
+                else
+                {
+
+                    note.UserId = userId;
+                }
                 _dbContext.Notes.Add(note);
                 _dbContext.SaveChanges();
                 int returnID = note.Id;
@@ -226,11 +235,24 @@ namespace NoVe.Controllers
             string role = HttpContext.Session.GetString("_UserRole");
             if (role == "schueler" || role == "berufsbildner" || role == "lehrer" || role == "admin")
             {
-                int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
-                Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
-                note.Notenwert = notenwert;
-                note.StudentAlreadyChanged = 1;
-                _dbContext.SaveChanges();
+
+                if (role == "lehrer")
+                {
+                    int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
+                    Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
+                    note.Notenwert = notenwert;
+                    note.StudentAlreadyChanged = 1;
+                    _dbContext.SaveChanges();
+                }
+                else
+                {
+                    int NoteId = (int)HttpContext.Session.GetInt32("_NoteID");
+                    Note note = _dbContext.Notes.FirstOrDefault(n => n.Id == NoteId);
+                    note.Notenwert = notenwert;
+                    note.StudentAlreadyChanged = 1;
+                    _dbContext.SaveChanges();
+                }
+
 
                 List<FachKompetenzbereich> fachKompetenzbereiche = listAllFaecherAndKompetenzbereiche();
                 if (fachKompetenzbereiche == null)
