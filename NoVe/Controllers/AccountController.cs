@@ -64,6 +64,7 @@ namespace NoVe.Controllers
                                     Console.WriteLine("Passwort stimmt überein");
                                     try
                                     {
+                                        HttpContext.Session.SetInt32("_IsAdmin", Convert.ToInt32(user.isAdmin));
                                         HttpContext.Session.SetInt32("_UserID", user.Id);
                                         HttpContext.Session.SetString("_UserRole", user.Role);
                                         TempData["UserID"] = user.Id;
@@ -275,6 +276,7 @@ namespace NoVe.Controllers
 
         public IActionResult Logout()
         {
+            HttpContext.Session.SetInt32("_IsAdmin", 0);
             HttpContext.Session.SetInt32("_UserID", -1);
             HttpContext.Session.SetString("_UserRole", "");
             TempData["UserID"] = null;

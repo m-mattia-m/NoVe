@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http
+@using System.Text
 @inject IHttpContextAccessor accessor
 
 <!DOCTYPE html>
@@ -21,20 +22,35 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="profile">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="changeRole">Rolle Ändern</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Administration</a>
-                        </li>
-                        @if (accessor.HttpContext.Session.Get("_UserRole") != null && accessor.HttpContext.Session.Get("_UserRole").Length > 0)
+                        @if (accessor.HttpContext.Session.Get("_UserID") != null && BitConverter.ToInt32(accessor.HttpContext.Session.Get("_UserID")) > 0)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        }
+                        @if (accessor.HttpContext.Session.Get("_UserRole") != null && Encoding.ASCII.GetString(accessor.HttpContext.Session.Get("_UserRole")).Equals("schueler"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Noten" asp-action="Index">Noten</a>
+                            </li>
+                        }
+                        @if (accessor.HttpContext.Session.Get("_IsAdmin") != null && BitConverter.ToInt32(accessor.HttpContext.Session.Get("_IsAdmin")) == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="changeRole">Rolle Ändern</a>
+                            </li>
+                        }
+                        @if (accessor.HttpContext.Session.Get("_UserRole") != null && Encoding.ASCII.GetString(accessor.HttpContext.Session.Get("_UserRole")).Equals("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Administration</a>
+                            </li>
+                        }
+                        @if (accessor.HttpContext.Session.Get("_UserID") != null && BitConverter.ToInt32(accessor.HttpContext.Session.Get("_UserID")) > 0)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="profile">Profil</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
