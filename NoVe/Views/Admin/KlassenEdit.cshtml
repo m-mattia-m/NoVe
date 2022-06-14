@@ -1,4 +1,5 @@
-@model KlasseUndBeruf
+@model IEnumerable<NoVe.Models.KlasseUndBeruf>
+@inject DatabaseHelper helper
 
 @{
     ViewData["Title"] = "Klasse bearbeiten";
@@ -10,41 +11,45 @@
         <!-- Html.BeginForm(Method, Controller) -->
         @using (Html.BeginForm("EditKlasse", "Admin"))
         {
-            @foreach (var klasse in Model)
+            @if (@Model.Count() != 0)
             {
-                <div class="login-form">
-                    <label class="form-login-label" name="KlasseName">Klassenname</label>
-                    <input class="form-login" type="text" name="KlasseName" id="KlasseName" value="@klasse.KlasseName" />
+                @foreach (var currentObject in Model)
+                {
+                    <div class="login-form">
+                        <label class="form-login-label" name="KlasseName">Klassenname</label>
+                        <input class="form-login" type="text" name="KlasseName" id="KlasseName" value="@currentObject.klasse.KlasseName" />
 
-                    <label class="form-login-label" name="EingabedatumStart">Startdatum</label>
-                    <input class="form-login" type="datetime" name="EingabedatumStart" id="EingabedatumStart" value="@klasse.Startdatum.ToString("dd.MM.yyyy - HH:mm")" />
+                        <label class="form-login-label" name="EingabedatumStart">Startdatum</label>
+                        <input class="form-login" type="datetime" name="EingabedatumStart" id="EingabedatumStart" value="@currentObject.klasse.Startdatum.ToString("dd.MM.yyyy - HH:mm")" />
 
-                    <label class="form-login-label" name="EingabedatumEnde">Enddatum</label>
-                    <input class="form-login" type="datetime" name="EingabedatumEnde" id="EingabedatumEnde" value="@klasse.EndDatum.ToString("dd.MM.yyyy - HH:mm")" />
+                        <label class="form-login-label" name="EingabedatumEnde">Enddatum</label>
+                        <input class="form-login" type="datetime" name="EingabedatumEnde" id="EingabedatumEnde" value="@currentObject.klasse.EndDatum.ToString("dd.MM.yyyy - HH:mm")" />
 
-                <label class="form-login-label" name="BerufName">Beruf</label>
-                <select class="form-login" name="BerufName" id="BerufName">
-                    @if (Model.berufe != null)
-                    {
-                        @foreach (Beruf beruf in Model.berufe)
-                        {
-                            @if (beruf.Id == Model.klasse.BerufId)
+                        <label class="form-login-label" name="BerufName">Beruf</label>
+                        <select class="form-login" name="BerufName" id="BerufName">
+                            @if (currentObject.berufe != null)
                             {
-                                <option style="color: white !important;" value="@beruf.Id" , selected>@beruf.Name</option>
+                                @foreach (Beruf beruf in currentObject.berufe)
+                                {
+                                    @if (beruf.Id == currentObject.klasse.BerufId)
+                                    {
+                                        <option style="color: white !important;" value="@beruf.Id" , selected>@beruf.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option style="color: white !important;" value="@beruf.Id">@beruf.Name</option>
+                                    }
+                                }
                             }
-                            else
-                            {
-                                <option style="color: white !important;" value="@beruf.Id">@beruf.Name</option>
-                            }
-                        }
-                    }
-                </select>
+                        </select>
 
-                <div class="login-buttons">
-                    <input class="login-submit" type="submit" name="submit" value="Klasse speichern" />
-                    <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenVerwalten">Zurück zur Verwaltung</a>
-                </div>
-            </div>
+                        <div class="login-buttons">
+                            <input class="login-submit" type="submit" name="submit" value="Klasse speichern" />
+                            <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenVerwalten">Zurück zur Verwaltung</a>
+                        </div>
+                    </div>
+                }
+            }
         }
 
     </div>

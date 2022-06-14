@@ -112,7 +112,9 @@ namespace NoVe.Models
             HttpContext.Session.SetInt32("_KlassenID", ID);
             if (HttpContext.Session.GetString("_UserRole") == "admin")
             {
-                return View(new KlasseUndBeruf(getSpecificKlasse(ID), getBerufe()));
+                List<KlasseUndBeruf> klasseUndBerufe = new List<KlasseUndBeruf>();
+                klasseUndBerufe.Add(new KlasseUndBeruf(getSpecificKlasse(ID), getBerufe()));
+                return View(klasseUndBerufe);
             }
             else
             {
@@ -202,7 +204,7 @@ namespace NoVe.Models
                 ViewBag.Message = string.Format("Das Enddatum darf nicht leer sein.");
                 return View("KlassenEdit", getSpecificKlasse(klassenId));
             }
-            if (string.IsNullOrEmpty(BerufName))
+            if (BerufName == 0)
             {
                 ViewBag.Message = string.Format("Der Berufsname darf nicht leer sein.");
                 return View("KlassenEdit", getSpecificKlasse(klassenId));
