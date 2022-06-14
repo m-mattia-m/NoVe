@@ -37,6 +37,12 @@ namespace NoVe.Controllers
         {
             if (HttpContext.Session.GetString("_UserRole") == "lehrer")
             {
+                List<UserWithMark> users = getUsersFromClass();
+                if (users == null)
+                {
+                    ViewBag.Message = string.Format("Sie müssen zuerst bei einer Klasse als Klassenlehrer eingetragen sein.");
+                    return View("~/Views/Lehrer/index.cshtml");
+                }
                 return View(getUsersFromClass());
             }
             else
@@ -50,7 +56,13 @@ namespace NoVe.Controllers
         {
             if (HttpContext.Session.GetString("_UserRole") == "lehrer")
             {
-                return View(getSpecificClass());
+                List<Klasse> klasses = getSpecificClass();
+                if (klasses == null)
+                {
+                    ViewBag.Message = string.Format("Sie müssen zuerst bei einer Klasse als Klassenlehrer eingetragen sein.");
+                    return View("~/Views/Lehrer/index.cshtml");
+                }
+                return View(klasses);
             }
             else
             {
@@ -89,6 +101,13 @@ namespace NoVe.Controllers
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
             List<User> currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).ToList();
+
+
+            if (currentUser[0].Klasse == null)
+            {
+                return null;
+            }
+
             Klasse klasse = _dbContext.Klasses.Where(k => k.Id == currentUser[0].Klasse.Id).FirstOrDefault();
 
             List<Klasse> klasses = new List<Klasse>();
@@ -99,6 +118,19 @@ namespace NoVe.Controllers
 
         public async Task<IActionResult> ZeitSpeichern(string startdatum, string enddatum)
         {
+
+            if (string.IsNullOrEmpty(startdatum))
+            {
+                ViewBag.Message = string.Format("Die Startzeit darf nicht leer sein.");
+                return View("SetZeit", SetZeit());
+            }
+            if (string.IsNullOrEmpty(enddatum))
+            {
+                ViewBag.Message = string.Format("Die Endzeit darf nicht leer sein.");
+                return View("SetZeit", SetZeit());
+            }
+
+
             if (HttpContext.Session.GetString("_UserRole") == "lehrer")
             {
                 int userId = (int)HttpContext.Session.GetInt32("_UserID");
@@ -170,6 +202,12 @@ namespace NoVe.Controllers
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
             User currentUser = _dbContext.Users.Include(x => x.Klasse).Where(u => u.Id == userId).FirstOrDefault();
+
+            if (currentUser.Klasse == null)
+            {
+                return null;
+            }
+
             Klasse klasse = _dbContext.Klasses.Include(x => x.Users).Where(k => k.Id == currentUser.Klasse.Id).FirstOrDefault();
 
             List<UserWithMark> lerndeneListWithMarks = new List<UserWithMark>(klasse.Users.Count);

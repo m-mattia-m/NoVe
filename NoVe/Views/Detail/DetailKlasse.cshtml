@@ -6,8 +6,8 @@
 
 <p class="page-title">@Model.KlasseName</p>
 <p>Einladungscode: @Model.KlassenInviteCode</p>
-<p>Start Periode: @Model.Startdatum</p>
-<p>Ende Periode: @Model.EndDatum</p>
+<p>Start Periode: @Model.Startdatum.ToString("dd.MM.yyyy - HH:mm")</p>
+<p>Ende Periode: @Model.EndDatum.ToString("dd.MM.yyyy - HH:mm")</p>
 
 <table>
     <tr>

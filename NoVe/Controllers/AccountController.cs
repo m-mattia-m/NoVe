@@ -135,7 +135,7 @@ namespace NoVe.Controllers
 
         public IActionResult RegisterCheck(string Email, string Vorname, string Nachname, string Password, string PasswordCheck, int klasseCode, string berufsbildner)
         {
-            var userCount = _dbContext.Users.Where(b => b.Email == Email).Count();
+            // Check if fields are empty
             if (string.IsNullOrEmpty(Email))
             {
                 ViewBag.Message = string.Format("Die Email darf nicht leer sein.");
@@ -162,7 +162,7 @@ namespace NoVe.Controllers
                 return View("~/Views/Account/Register.cshtml");
             }
 
-            Console.WriteLine("Berufsbildner: " + berufsbildner);
+            // check if domain allowed
             if (berufsbildner != "on")
             {
                 Console.WriteLine("Email-Domain wird überprüft");
@@ -177,6 +177,8 @@ namespace NoVe.Controllers
                     return View("~/Views/Account/Register.cshtml");
                 }
             }
+            // Check if already exist
+            var userCount = _dbContext.Users.Where(b => b.Email == Email).Count();
             if (userCount != 0)
             {
                 Console.WriteLine("Email existiert schon");
@@ -188,7 +190,7 @@ namespace NoVe.Controllers
                 if (Password == PasswordCheck)
                 {
                     Console.WriteLine("Passwörter stimmen überein");
-                    if (!PasswortPruefen(Password))
+                    if (PasswortPruefen(Password) == false)
                     {
                         ViewBag.Message = string.Format("Passwort zu schwach. Passwort muss mindestens 1 Kleinbuchstabe, 1 Grossbuchstabe, 1 Zahl und 1 Sonderzeichen enthalten. Ausserdem muss das Passwort minimum 8 Zeichen lange sein.");
                         return View("~/Views/Account/Register.cshtml");
@@ -453,19 +455,61 @@ namespace NoVe.Controllers
         public async Task<IActionResult> ProfilSpeichern(string vorname, string nachname, string email, string firma, string lehrmeisterEmail, string passwort, string passwortCheck)
         {
             int userId = (int)HttpContext.Session.GetInt32("_UserID");
+
+            // Check if fields are empty
+            if (string.IsNullOrEmpty(vorname))
+            {
+                ViewBag.Message = string.Format("Der Vorname darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(nachname))
+            {
+                ViewBag.Message = string.Format("Der Nachname darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(firma))
+            {
+                ViewBag.Message = string.Format("Die Firma darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(lehrmeisterEmail))
+            {
+                ViewBag.Message = string.Format("Die Email ihres Lehrmeisters darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(passwort))
+            {
+                ViewBag.Message = string.Format("Das Passwort darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+            if (string.IsNullOrEmpty(passwortCheck))
+            {
+                ViewBag.Message = string.Format("Das Passwortbestätigen-Feld darf nicht leer sein.");
+                return View("profile", getSpecificUser(userId));
+            }
+
+
+
             User user = _dbContext.Users.FirstOrDefault(b => b.Id == userId);
             user.Vorname = vorname;
             user.Nachname = nachname;
             //user.Email = email;
             user.Firma = firma;
             user.LehrmeisterEmail = lehrmeisterEmail;
+            _dbContext.SaveChanges();
 
             if (passwort != null && passwortCheck != null)
             {
+                if (PasswortPruefen(passwort) == false)
+                {
+                    ViewBag.Message = string.Format("Passwort entspricht nicht den Anforderungen.");
+                    return View("profile", getSpecificUser(userId));
+                }
                 if (passwort == passwortCheck)
                 {
                     string passwordhash = hashPassword(passwort);
                     user.PasswordHash = passwordhash;
+                    _dbContext.SaveChanges();
                 }
                 else
                 {
@@ -474,7 +518,6 @@ namespace NoVe.Controllers
                 }
             }
 
-            _dbContext.SaveChanges();
 
             ViewBag.Message = string.Format("Angaben wurden gespeichert");
             return View("profile", getSpecificUser(userId));
@@ -526,6 +569,12 @@ namespace NoVe.Controllers
         {
             string email = HttpContext.Session.GetString("_VerifyEmail");
             User user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
+
+            if (PasswortPruefen(passwort) == false)
+            {
+                ViewBag.Message = string.Format("Passwort entspricht nicht den Anforderungen.");
+                return View("SetNewPassword");
+            }
 
             if (passwort != null && passwortCheck != null)
             {
@@ -615,30 +664,9 @@ namespace NoVe.Controllers
 
         public static bool PasswortPruefen(string password)
         {
-            int staerke = 0;
-
-            if (password.Length < 8)
-            {
-                return false;
-            }
-
-            if (Regex.Match(password, @"/[a-z]/", RegexOptions.ECMAScript).Success &&
-              Regex.Match(password, @"/[A-Z]/", RegexOptions.ECMAScript).Success)
-            {
-                staerke++;
-            }
-
-            if (Regex.Match(password, @"/[0-9]/", RegexOptions.ECMAScript).Success)
-            {
-                staerke++;
-            }
-
-            if (Regex.Match(password, @"/.[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]/", RegexOptions.ECMAScript).Success)
-            {
-                staerke++;
-            }
-
-            return staerke == 3;
+            string regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$";
+            bool status = Regex.Match(password, regex).Success;
+            return status;
         }
     }
 }
