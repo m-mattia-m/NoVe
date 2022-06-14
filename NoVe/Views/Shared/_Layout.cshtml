@@ -46,6 +46,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Administration</a>
                             </li>
                         }
+                        @if (accessor.HttpContext.Session.Get("_UserRole") != null && Encoding.ASCII.GetString(accessor.HttpContext.Session.Get("_UserRole")).Equals("lehrer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Lehrer" asp-action="Index">Lehrerübersicht</a>
+                            </li>
+                        }
                         @if (accessor.HttpContext.Session.Get("_UserID") != null && BitConverter.ToInt32(accessor.HttpContext.Session.Get("_UserID")) > 0)
                         {
                             <li class="nav-item">
