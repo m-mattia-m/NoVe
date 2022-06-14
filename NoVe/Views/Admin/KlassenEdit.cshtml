@@ -1,3 +1,5 @@
+@model KlasseUndBeruf
+
 @{
     ViewData["Title"] = "Klasse bearbeiten";
 }
@@ -20,17 +22,29 @@
                     <label class="form-login-label" name="EingabedatumEnde">Enddatum</label>
                     <input class="form-login" type="datetime" name="EingabedatumEnde" id="EingabedatumEnde" value="@klasse.EndDatum.ToString("dd.MM.yyyy - HH:mm")" />
 
-                    <label class="form-login-label" name="BerufName">Beruf</label>
-                    <select class="form-login" name="BerufName" id="BerufName">
-                        <option style="color: white !important;" value="1">Informatiker</option>
-                    </select>
+                <label class="form-login-label" name="BerufName">Beruf</label>
+                <select class="form-login" name="BerufName" id="BerufName">
+                    @if (Model.berufe != null)
+                    {
+                        @foreach (Beruf beruf in Model.berufe)
+                        {
+                            @if (beruf.Id == Model.klasse.BerufId)
+                            {
+                                <option style="color: white !important;" value="@beruf.Id" , selected>@beruf.Name</option>
+                            }
+                            else
+                            {
+                                <option style="color: white !important;" value="@beruf.Id">@beruf.Name</option>
+                            }
+                        }
+                    }
+                </select>
 
-                    <div class="login-buttons">
-                        <input class="login-submit" type="submit" name="submit" value="Klasse speichern" />
-                        <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenVerwalten">Zurück zur Verwaltung</a>
-                    </div>
+                <div class="login-buttons">
+                    <input class="login-submit" type="submit" name="submit" value="Klasse speichern" />
+                    <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenVerwalten">Zurück zur Verwaltung</a>
                 </div>
-            }
+            </div>
         }
 
     </div>

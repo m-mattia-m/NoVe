@@ -1,3 +1,5 @@
+@model IEnumerable<NoVe.Models.Beruf>
+
 @{
     ViewData["Title"] = "Klasse Hinzufügen";
 }
@@ -8,30 +10,36 @@
         <!-- Html.BeginForm(Method, Controller) -->
         @using (Html.BeginForm("AddKlasse", "Admin"))
         {
-          <div class="login-form">
-            <label class="form-login-label" name="KlasseName">Klassenname</label>
-            <input class="form-login" type="text" name="KlasseName" id="KlasseName" />
+            <div class="login-form">
+                <label class="form-login-label" name="KlasseName">Klassenname</label>
+                <input class="form-login" type="text" name="KlasseName" id="KlasseName" />
 
-            <label class="form-login-label" name="EingabedatumStart">Startdatum</label>
-            <input class="form-login" type="date" name="EingabedatumStart" id="EingabedatumStart" />
+                <label class="form-login-label" name="EingabedatumStart">Startdatum</label>
+                <input class="form-login" type="date" name="EingabedatumStart" id="EingabedatumStart" />
 
-            <label class="form-login-label" name="EingabedatumEnde">Enddatum</label>
-            <input class="form-login" type="date" name="EingabedatumEnde" id="EingabedatumEnde" />
+                <label class="form-login-label" name="EingabedatumEnde">Enddatum</label>
+                <input class="form-login" type="date" name="EingabedatumEnde" id="EingabedatumEnde" />
 
-            <label class="form-login-label" name="KlassenlehrerEmail">KlassenlehrerEmail</label>
-            <input class="form-login" type="text" name="KlassenlehrerEmail" id="KlassenlehrerEmail" />
+                <label class="form-login-label" name="KlassenlehrerEmail">KlassenlehrerEmail</label>
+                <input class="form-login" type="text" name="KlassenlehrerEmail" id="KlassenlehrerEmail" />
 
-            <label class="form-login-label" name="BerufName">Beruf</label>
-            <select class="form-login" name="BerufName" id="BerufName">
-                <option style="color: white !important;" value="1">Informatiker</option>
-            </select>
+                <label class="form-login-label" name="BerufName">Beruf</label>
+                <select class="form-login" name="BerufName" id="BerufName">
+                    @if (@Model != null)
+                    {
+                        @foreach (Beruf beruf in Model)
+                        {
+                            <option style="color: white !important;" value="@beruf.Id">@beruf.Name</option>
+                        }
+                    }
+                </select>
 
-            <div class="login-buttons">
-              <input class="login-submit" type="submit" name="submit" value="Klasse Hinzufügen" />
-              <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenVerwalten">Zurück zur Verwaltung</a>
+                <div class="login-buttons">
+                    <input class="login-submit" type="submit" name="submit" value="Klasse Hinzufügen" />
+                    <a class="nav-link login-submit" asp-area="" asp-controller="Admin" asp-action="KlassenVerwalten">Zurück zur Verwaltung</a>
+                </div>
             </div>
-         </div>
         }
-        
+
     </div>
 </div>
