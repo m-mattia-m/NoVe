@@ -260,11 +260,17 @@ namespace NoVe.Controllers
                 i++;
             }
 
-            int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
-            double GesamtnoteZusammen = 0;
-            if (GewichtungDieBenotetWurde != 0)
+            //int GewichtungDieBenotetWurde = (int)(100 - GewichtungWoNochKeineNote);
+            //double GesamtnoteZusammen = 0;
+            //if (GewichtungDieBenotetWurde != 0)
+            //{
+            //    GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+            //}
+            double gewichtungWoNote = 100 - GewichtungWoNochKeineNote;
+            double GesamtnoteZusammen = (double)(100 / gewichtungWoNote * Gesamtnote);
+            if (gewichtungWoNote == 100)
             {
-                GesamtnoteZusammen = 100 / GewichtungDieBenotetWurde * Gesamtnote;
+                return 0;
             }
             return GesamtnoteZusammen;
         }
@@ -294,8 +300,16 @@ namespace NoVe.Controllers
                     kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + gerundeteNote * fach.Gewichtung / 100);
                 }
             }
-            kompetenzbereichSchnitt = (double)(kompetenzbereichSchnitt + kompetenzbereichSchnitt * gewichtungWoNochKeineNote / 100);
-            return kompetenzbereichSchnitt;
+            double gewichtungWoNote = 100 - gewichtungWoNochKeineNote;
+            kompetenzbereichSchnitt = (double)(100 / gewichtungWoNote * kompetenzbereichSchnitt);
+            if (Double.IsNaN(kompetenzbereichSchnitt))
+            {
+                return 0;
+            }
+            else
+            {
+                return kompetenzbereichSchnitt;
+            }
         }
 
         // Whole Method is the same as in NotenController
