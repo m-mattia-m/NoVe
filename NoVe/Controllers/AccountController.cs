@@ -477,16 +477,6 @@ namespace NoVe.Controllers
                 ViewBag.Message = string.Format("Die Email ihres Lehrmeisters darf nicht leer sein.");
                 return View("profile", getSpecificUser(userId));
             }
-            if (string.IsNullOrEmpty(passwort))
-            {
-                ViewBag.Message = string.Format("Das Passwort darf nicht leer sein.");
-                return View("profile", getSpecificUser(userId));
-            }
-            if (string.IsNullOrEmpty(passwortCheck))
-            {
-                ViewBag.Message = string.Format("Das Passwortbestätigen-Feld darf nicht leer sein.");
-                return View("profile", getSpecificUser(userId));
-            }
 
 
 
